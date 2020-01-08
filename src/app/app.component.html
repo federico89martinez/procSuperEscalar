@@ -1,0 +1,155 @@
+<h2>Procesador Super Escalar</h2>
+
+<h5>Número de ciclos de reloj de cada instrucción</h5>
+
+
+<div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ADD
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+          <a class="dropdown-item" href="#">6</a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          SUBD
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+          <a class="dropdown-item" href="#">6</a>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          MULD
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+          <a class="dropdown-item" href="#">6</a>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          DIV
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">1</a>
+          <a class="dropdown-item" href="#">2</a>
+          <a class="dropdown-item" href="#">3</a>
+          <a class="dropdown-item" href="#">4</a>
+          <a class="dropdown-item" href="#">5</a>
+          <a class="dropdown-item" href="#">6</a>
+        </div>
+      </div>
+
+      <button  type="button" class="btn btn-secondary">Agregar</button>
+</div>
+
+
+<br>
+<br/>
+<br>
+<br/>
+<br>
+<br/>
+<h5>Agregar una instrucción</h5>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          INSTRUCTION
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarInst(0)" >ADD</a>
+          <a class="dropdown-item" (click)="agregarInst(1)" >SUBD</a>
+          <a class="dropdown-item" (click)="agregarInst(2)" >MULD</a>
+          <a class="dropdown-item" (click)="agregarInst(3)" >DIV</a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          DST
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarDst(0)" >r0</a>
+          <a class="dropdown-item" (click)="agregarDst(2)" >r2</a>
+          <a class="dropdown-item" (click)="agregarDst(4)">r4</a>
+          <a class="dropdown-item" (click)="agregarDst(6)">r6</a>
+          <a class="dropdown-item" (click)="agregarDst(8)">r8</a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          OP1
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarOp1(0)">r0</a>
+          <a class="dropdown-item" (click)="agregarOp1(2)" >r2</a>
+          <a class="dropdown-item" (click)="agregarOp1(4)">r4</a>
+          <a class="dropdown-item" (click)="agregarOp1(6)">r6</a>
+          <a class="dropdown-item" (click)="agregarOp1(8)">r8</a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          OP2
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarOp2(0)" >r0</a>
+          <a class="dropdown-item" (click)="agregarOp2(2)" >r2</a>
+          <a class="dropdown-item" (click)="agregarOp2(4)">r4</a>
+          <a class="dropdown-item" (click)="agregarOp2(6)">r6</a>
+          <a class="dropdown-item" (click)="agregarOp2(8)">r8</a>
+        </div>
+    </div>
+
+    <button  type="button"  class="btn btn-secondary" (click)="mostrarIns()">Agregar</button>
+
+   <!--  <ul>
+        <li *ngFor="let ins of instruccion">{{ins}}</li>
+        
+    </ul> -->
+</div>
+
+<br><br/>
+
+
+<div class="tabla">
+<table>
+    <tr>
+        <th>#</th>
+        <th>Instrucción</th>
+        <th>Dst</th>
+        <th>Op1</th>
+        <th>Op2</th>
+    </tr>
+    <tr *ngFor="let instru of instruccion">
+        <td>{{s}}</td>
+        <td>{{instru.i}}</td>
+        <td>{{instru.d}}</td>
+        <td>{{instru.op1}}</td>
+        <td>{{instru.op2}}</td> 
+    
+        
+    </tr> 
+</table>
+</div>
+
+
+
+
+<router-outlet></router-outlet>
