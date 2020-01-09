@@ -9,12 +9,12 @@
           ADD
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-          <a class="dropdown-item" href="#">6</a>
+          <a class="dropdown-item" (click)="agregarAdd(1)" >1</a>
+          <a class="dropdown-item" (click)="agregarAdd(2)">2</a>
+          <a class="dropdown-item" (click)="agregarAdd(3)">3</a>
+          <a class="dropdown-item" (click)="agregarAdd(4)">4</a>
+          <a class="dropdown-item" (click)="agregarAdd(5)">5</a>
+          <a class="dropdown-item" (click)="agregarAdd(6)">6</a>
         </div>
     </div>
     <div class="btn-group" role="group">
@@ -22,12 +22,12 @@
           SUBD
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-          <a class="dropdown-item" href="#">6</a>
+          <a class="dropdown-item" (click)="agregarSub(1)">1</a>
+          <a class="dropdown-item" (click)="agregarSub(2)">2</a>
+          <a class="dropdown-item" (click)="agregarSub(3)">3</a>
+          <a class="dropdown-item" (click)="agregarSub(4)">4</a>
+          <a class="dropdown-item" (click)="agregarSub(5)">5</a>
+          <a class="dropdown-item" (click)="agregarSub(6)">6</a>
         </div>
       </div>
       <div class="btn-group" role="group">
@@ -35,12 +35,12 @@
           MULD
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-          <a class="dropdown-item" href="#">6</a>
+          <a class="dropdown-item" (click)="agregarMul(1)">1</a>
+          <a class="dropdown-item" (click)="agregarMul(2)">2</a>
+          <a class="dropdown-item" (click)="agregarMul(3)">3</a>
+          <a class="dropdown-item" (click)="agregarMul(4)">4</a>
+          <a class="dropdown-item" (click)="agregarMul(5)">5</a>
+          <a class="dropdown-item" (click)="agregarMul(6)">6</a>
         </div>
       </div>
       <div class="btn-group" role="group">
@@ -48,16 +48,17 @@
           DIV
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-          <a class="dropdown-item" href="#">5</a>
-          <a class="dropdown-item" href="#">6</a>
+          <a class="dropdown-item" (click)="agregarDiv(1)" (click)="validar11()">1</a>
+          <a class="dropdown-item" (click)="agregarDiv(2)" (click)="validar11()">2</a>
+          <a class="dropdown-item" (click)="agregarDiv(3)" (click)="validar11()">3</a>
+          <a class="dropdown-item" (click)="agregarDiv(4)" (click)="validar11()">4</a>
+          <a class="dropdown-item" (click)="agregarDiv(5)" (click)="validar11()">5</a>
+          <a class="dropdown-item" (click)="agregarDiv(6)" (click)="validar11()">6</a>
         </div>
       </div>
-
-      <button  type="button" class="btn btn-secondary">Agregar</button>
+      <td *ngIf="validar1 == true">
+      <button  type="button" class="btn btn-secondary" (click)="agregarCiclos()">Agregar</button>
+      </td>
 </div>
 
 
@@ -68,20 +69,20 @@
 <br>
 <br/>
 <h5>Agregar una instrucción</h5>
-<div class="btn-group" role="group" aria-label="Basic example">
+<div class="btn-group" role="group" aria-label="Basic example"  >
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           INSTRUCTION
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="agregarInst(0)" >ADD</a>
+          <a class="dropdown-item" (click)="agregarInst(0)"  >ADD</a>
           <a class="dropdown-item" (click)="agregarInst(1)" >SUBD</a>
           <a class="dropdown-item" (click)="agregarInst(2)" >MULD</a>
           <a class="dropdown-item" (click)="agregarInst(3)" >DIV</a>
         </div>
     </div>
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           DST
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -93,7 +94,7 @@
         </div>
     </div>
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           OP1
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -105,24 +106,21 @@
         </div>
     </div>
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button  id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  >
           OP2
         </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="agregarOp2(0)" >r0</a>
-          <a class="dropdown-item" (click)="agregarOp2(2)" >r2</a>
-          <a class="dropdown-item" (click)="agregarOp2(4)">r4</a>
-          <a class="dropdown-item" (click)="agregarOp2(6)">r6</a>
-          <a class="dropdown-item" (click)="agregarOp2(8)">r8</a>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" >
+          <a class="dropdown-item" (click)="agregarOp2(0)" (click)="validar()">r0</a>
+          <a class="dropdown-item" (click)="agregarOp2(2)" (click)="validar()">r2</a>
+          <a class="dropdown-item" (click)="agregarOp2(4)"(click)="validar()">r4</a>
+          <a class="dropdown-item" (click)="agregarOp2(6)"(click)="validar()">r6</a>
+          <a class="dropdown-item" (click)="agregarOp2(8)"(click)="validar()">r8</a>
         </div>
     </div>
+    <td *ngIf="valido == true">
+    <button  type="button"  class="btn btn-secondary" (click)="mostrarIns()"  >Agregar</button>
+    </td>
 
-    <button  type="button"  class="btn btn-secondary" (click)="mostrarIns()">Agregar</button>
-
-   <!--  <ul>
-        <li *ngFor="let ins of instruccion">{{ins}}</li>
-        
-    </ul> -->
 </div>
 
 <br><br/>
@@ -136,20 +134,82 @@
         <th>Dst</th>
         <th>Op1</th>
         <th>Op2</th>
+        <th>Eliminar</th>
     </tr>
-    <tr *ngFor="let instru of instruccion">
-        <td>{{s}}</td>
+     <tr *ngFor="let instru of instruccion; index as i">
+        <td scope="row">S{{i+1}}</td>
         <td>{{instru.i}}</td>
         <td>{{instru.d}}</td>
         <td>{{instru.op1}}</td>
         <td>{{instru.op2}}</td> 
-    
-        
+        <td><button (click)="deleteIns(instru)">X</button></td>
     </tr> 
+ 
 </table>
 </div>
 
 
+<br>
+<br/>
+<br>
+<br/>
+<br>
+<br/>
+<h5>Emision fuera de orden con ventana de 4 instrucciones(estacion de reserva)</h5>
+<div class="tabla2">
+  <table class="egt">
+      <thead>
+      <tr>
+          <th>Ciclos</th>
+          <th colspan="2">Despacho</th>
+          <th colspan="4">Estaciones de Reserva</th>
+          <th>UF1</th>
+          <th>UF2</th>
+          <th colspan="12" >ROB</th>
+      </tr>
+      <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>I</th>
+          <th>S</th>
+          <th>I</th>
+          <th>S</th>
+          <th>I</th>
+          <th>S</th>
+          <th>I</th>
+          <th>S</th>
+          <th>I</th>
+          <th>S</th>
+          <th>I</th>
+          <th>S</th>
+      </tr>
+      
+    </thead>
+    <tbody>
+      <tr *ngFor="let instru of instruccion; index as i">
+        <td scope="row">{{i+1}}</td>
+        <td>d1</td>
+        <td>d2</td>
+        <td>e1</td>
+        <td>e2</td>
+        <td></td>
+        <td></td>
+        <td>uf1</td>
+        <td></td>
+        <td>s1</td>
+        <td>X</td>
+      </tr>
+    </tbody>
+   
+  </table>
+  </div>
 
 
 <router-outlet></router-outlet>
