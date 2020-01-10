@@ -137,7 +137,8 @@
         <th>Eliminar</th>
     </tr>
      <tr *ngFor="let instru of instruccion; index as i">
-        <td scope="row">S{{i+1}}</td>
+        <!-- <td scope="row">S{{i+1}}</td> -->
+        <td>{{instru.s}}</td>
         <td>{{instru.i}}</td>
         <td>{{instru.d}}</td>
         <td>{{instru.op1}}</td>
@@ -156,6 +157,7 @@
 <br>
 <br/>
 <h5>Emision fuera de orden con ventana de 4 instrucciones(estacion de reserva)</h5>
+
 <div class="tabla2">
   <table class="egt">
       <thead>
@@ -166,9 +168,12 @@
           <th>UF1</th>
           <th>UF2</th>
           <th colspan="12" >ROB</th>
+          <div class="b1">
+            <button type="button"  class="btn btn-primary" (click)="siguienteCiclo()" > Siguiente Ciclo</button>
+          </div>
       </tr>
       <tr>
-          <th></th>
+          <th ></th>
           <th></th>
           <th></th>
           <th></th>
@@ -193,23 +198,29 @@
       
     </thead>
     <tbody>
-      <tr *ngFor="let instru of instruccion; index as i">
-        <td scope="row">{{i+1}}</td>
-        <td>d1</td>
-        <td>d2</td>
-        <td>e1</td>
-        <td>e2</td>
+      <tr *ngFor="let instru of robb; index as i">
+        <td td scope="row">{{i+1}}</td>
+        <td>{{instru.d1}}</td>
         <td></td>
         <td></td>
-        <td>uf1</td>
         <td></td>
-        <td>s1</td>
-        <td>X</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     </tbody>
    
   </table>
   </div>
 
+  <br>
+<br/>
+
+
+
+  
 
 <router-outlet></router-outlet>

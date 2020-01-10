@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 import { InstantiateExpr } from '@angular/compiler';
 import { Instru } from 'src/app/models/instruccion';
+import { In } from 'src/app/models/instruccion';
+import { Ins } from 'src/app/models/instruccion';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,8 @@ export class AppComponent {
   title = 'procSuperEscalar';
 
 
+  ii: number = 1;
+  ss:string;
   s:string;
   ins: string;
   add: string;
@@ -28,12 +32,18 @@ export class AppComponent {
 
   r0;r2;r4;r6;r8: string;
 
-  ciclosAdd: string;
-  ciclosSubd: string;
-  ciclosMuld: string;
-  ciclosDiv: string;
+  ciclosAdd: number;
+  ciclosSubd: number;
+  ciclosMuld: number;
+  ciclosDiv: number;
+
+  c: number;
 
   instruccion : any  [] = new Array();
+
+  instrucciones2 : any [] = new Array();
+
+  robb : any [] = new Array();
 
   
    public valido: boolean = false;
@@ -42,18 +52,31 @@ export class AppComponent {
   
   
   instru : Instru ={
-    
+    s: '',
     i: '',
     d: '',
     op1: '',
-    op2: ''
+    op2: '',
+    
   };
 
-  //instrucciones:  Instru [];
+
+  instrucciones: Ins = {
+    ss:'',
+    c:0
+
+  };
+
+  rob:  In = {
+    d1:'', d2: '', e1: '',e2: '',e3: '',e4: '',uf1: '',uf2: '',
+    i1: '',s1: '',i2: '',s2: '',i3: '',s3: '',i4: '',s4: '',i5: '',s5: '',i6: '',s6: ''
+  };
 
   
   
   constructor(){ }
+
+  
 
   validar(){
     this.valido=true;
@@ -134,10 +157,40 @@ export class AppComponent {
     }
   }
 
+  generarS(){
+    this.s = "S" + this.ii;
+    this.ii++;
+   }
+
+    generarInsCicl(){
+    this.instrucciones.ss = this.s;
+    if (this.ins == "ADD"){
+      this.instrucciones.c = this.ciclosAdd;
+    }
+    if (this.ins == "SUBD"){
+      this.instrucciones.c = this.ciclosSubd;
+    }
+    if (this.ins == "MULD"){
+      this.instrucciones.c = this.ciclosMuld;
+    }
+    if (this.ins == "DIV"){
+      this.instrucciones.c = this.ciclosDiv;
+    }
+
+    this.instrucciones2.push(this.instrucciones);
+   } 
+
   mostrarIns(){
     
      //seteamos el objeto
     this.instru = new Object;
+    this.instrucciones = new Object;
+
+    this.generarS();
+    this.generarInsCicl();
+    
+    
+    this.instru.s=this.s;
     this.instru.i=this.ins;
     this.instru.d=this.dst;
     this.instru.op1=this.op1;
@@ -147,7 +200,29 @@ export class AppComponent {
     this.instruccion.push(this.instru);
     this.valido=false;
     
+   
 
   }
+
+  agregarDespacho(){
+     
+     this.robb.push(this.rob.d1);
+
+  }
+
+  
+  
+  
+  
+  siguienteCiclo(){
+    
+    this.generarInsCicl();
+    this.agregarDespacho();
+
+  }
+
+
+
 }
+
 
