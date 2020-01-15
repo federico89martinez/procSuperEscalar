@@ -156,7 +156,7 @@
 <br/>
 <br>
 <br/>
-<h5>Emision fuera de orden con ventana de 4 instrucciones(estacion de reserva)</h5>
+<h5>Emision en orden con ventana de 4 instrucciones(estacion de reserva)</h5>
 
 <div class="tabla2">
   <table class="egt">
@@ -198,18 +198,35 @@
       
     </thead>
     <tbody>
-      <tr *ngFor="let instru of robb; index as i">
-        <td td scope="row">{{i+1}}</td>
-        <td>{{instru.d1}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let ins of robb; index as i">
+        <td td scope="row">{{i+1}}</td> 
+      
+        <td>{{ins.d1}}</td>
+        <td>{{ins.d2}}</td>
+        <td>{{ins.e1}}</td>
+        <td>{{ins.e2}}</td>
+        <td>{{ins.e3}}</td>
+        <td>{{ins.e4}}</td>
+        <td>{{ins.uf1}}</td>
+        <td>{{ins.uf2}}</td>
+
+        <td>{{ins.i1}}</td>
+        <td>{{ins.s1}}</td>
+
+        <td>{{ins.i2}}</td>
+        <td>{{ins.s2}}</td>
+
+        <td>{{ins.i3}}</td>
+        <td>{{ins.s3}}</td>
+
+        <td>{{ins.i4}}</td>
+        <td>{{ins.s4}}</td>
+
+        <td>{{ins.i5}}</td>
+        <td>{{ins.s5}}</td>
+
+        <td>{{ins.i6}}</td>
+        <td>{{ins.s6}}</td>
       </tr>
     </tbody>
    

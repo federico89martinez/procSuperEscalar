@@ -16,7 +16,7 @@ import { Ins } from 'src/app/models/instruccion';
 export class AppComponent {
   title = 'procSuperEscalar';
 
-
+  i : number = 0;
   ii: number = 1;
   ss:string;
   s:string;
@@ -32,17 +32,15 @@ export class AppComponent {
 
   r0;r2;r4;r6;r8: string;
 
-  ciclosAdd: number;
-  ciclosSubd: number;
-  ciclosMuld: number;
-  ciclosDiv: number;
+  
 
   c: number;
+  ciclos:number=-1;
 
   instruccion : any  [] = new Array();
 
   instrucciones2 : any [] = new Array();
-
+  
   robb : any [] = new Array();
 
   
@@ -178,6 +176,7 @@ export class AppComponent {
     }
 
     this.instrucciones2.push(this.instrucciones);
+    
    } 
 
   mostrarIns(){
@@ -200,24 +199,312 @@ export class AppComponent {
     this.instruccion.push(this.instru);
     this.valido=false;
     
+    
    
 
   }
+  
+  
+
+  ///////////////////////////////////////ROB///////////////////////////////
+
+  ins1ss: string = '';
+  ins1c: number = 0;
+
+  ins2ss: string = '';
+  ins2c:number = 0;
+
+  ins3ss: string = '';
+  ins3c:number = 0;
+
+  v : boolean = true;
+  v1: boolean = true;
+  v2: boolean = true;
+  entra3: boolean = true;
+  entra9: boolean = true;
+
+  ciclosAdd: number = 3;
+  ciclosSubd: number = 5;
+  ciclosMuld: number = 4;
+  ciclosDiv: number = 1;
+
 
   agregarDespacho(){
-     
-     this.robb.push(this.rob.d1);
+    if(this.ciclos == -1){      
+       
+       this.ins1ss=this.instrucciones2[this.i].ss;
+       this.ins1c =this.instrucciones2[this.i].c;
+       this.instrucciones2.splice(this.i,1);
+       this.rob.d1=this.ins1ss;
+       this.rob.uf1='';      
+       this.ciclos++;
+       if(this.instrucciones2.length == 0){
+       //this.robb.push(this.rob); 
+       }
 
+       if(this.instrucciones2.length != 0){
+        this.ins2ss=this.instrucciones2[this.i].ss;
+        this.ins2c= this.instrucciones2[this.i].c
+        this.rob.d2=this.ins2ss;
+        this.instrucciones2.splice(this.i,1);
+        this.rob.uf2='';
+        //this.robb.push(this.rob); 
+       }
+    }
+     if(this.ciclos > 0) {
+       if(this.instrucciones2.length != 0){
+        this.ins3ss=this.instrucciones2[this.i].ss;
+        this.ins3c=this.instrucciones2[this.i].c;
+        this.rob.d1=this.ins3ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+    } 
+  
+  }
+     
+         
+
+  
+
+  
+  agregarER(){
+   if(this.ciclos > 0) {    
+     
+     if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
+      this.rob.e1=this.ins1ss;
+    }
+    if((this.robb[this.ciclos-1].uf2 == '') && (this.ins2c != 0)){
+      this.rob.e2=this.ins2ss;
+    }
+
+     if(this.ciclos > 1){
+       //if((this.rob.e1 == this.rob.uf1))
+      // console.log(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
+       //console.log(this.ins3ss != this.robb[this.ciclos-1].uf1)
+       if(this.ins3ss != ''){
+        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins3ss != this.robb[this.ciclos-1].uf1)){
+           this.rob.e1=this.ins3ss;
+           if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '')){
+            if(this.rob.i1 == '' ){}
+            if(this.rob.i2 == '' ){}
+            if(this.rob.i3 == '' ){this.rob.i3=this.ins3ss; this.rob.s3="I"; this.rob.e1=this.ins3ss; console.log('e1')}
+
+           }
+        }
+        /* else{if(this.robb[this.ciclos-1].e1 != this.robb[this.ciclos-1].uf1){
+          if(this.rob.i3 == '' ){this.rob.i3=this.ins3ss; this.rob.s3="I"; this.rob.e1=this.ins3ss};
+        } */
+
+        
+      }
+    }  
+
+  }
+  }
+
+  agregarUf1(){
+    if (this.ciclos > 0) {
+       if(this.ins1c != 0){
+       this.rob.uf1 = this.ins1ss;
+       
+      }
+      if(this.ins2c != 0){
+        this.rob.uf2 = this.ins2ss;
+      } 
+  }
+  if (this.ciclos > 1){
+
+      if((this.ins1c == 0) || (this.ins2c == 0)){
+        if(this.ins3c != 0){
+ 
+         if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins3ss) && (this.ins3c!=0) ) {
+          this.rob.uf1 = this.ins3ss;
+         }else
+         {
+           if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins3ss) && (this.ins3c!=0)){
+           this.rob.uf2 = this.ins3ss;}
+           else{
+             if((this.rob.uf1 == '') && (this.ins3c != 0)){
+              this.rob.uf1 = this.ins3ss;
+             }else{
+              if((this.rob.uf2 == '') && (this.ins3c != 0)){
+              this.rob.uf2 = this.ins3ss;}
+             }
+           }
+         }
+         }
+      }
+    }
+
+  }
+  
+
+  agregarRob(){
+    if (this.ciclos > 0) {
+
+     if(this.rob.i1 == '') {
+       
+       if(this.ins1c != 0){
+        this.ins1c--;
+        this.rob.i1 = this.rob.uf1;
+        this.rob.s1 = "X";
+      //if(this.ins2ss == ''){ 
+        if((this.ins2c == 0) && (this.ins3c == 0)) {
+          //this.robb.push(this.rob);
+          console.log('entra1')
+      }
+      
+
+    }else{
+      if((this.ins1c == 0) && (this.v)){
+        this.rob.i1 = this.ins1ss;
+        this.rob.s1 = "F";
+        this.v = false;
+  
+        if((this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss == '') || (this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss != '')){
+          console.log('entra2')
+          //this.robb.push(this.rob);
+        }
+        
+      }
+
+    }
+  }
+  
+    if((this.rob.i2 == '' ) && (this.ins2ss != '')){
+        if(this.ins2c != 0){
+          this.ins2c--;
+          this.rob.i2= this.rob.uf2;
+          this.rob.s2= "X";
+           
+          //this.robb.push(this.rob);
+          console.log('entra3')
+          
+          
+        }
+        else{
+        if((this.ins2c == 0) && (this.v1)){
+          this.rob.i2 = this.ins2ss;
+          this.rob.s2 = "F";
+          this.v1=false;
+          if(this.rob.s2 == "F"){
+            if((this.ins3ss == '')&&(this.ins2c != 0)){
+            //this.robb.push(this.rob);
+            console.log('entra4')
+            }
+            if((this.ins3ss == '')&&(this.ins1c == 0)){
+              console.log('entra5')
+              //this.robb.push(this.rob);
+              }
+              /* if(this.ins3ss != ''){
+                console.log('entra6')
+                this.robb.push(this.rob);
+              } */
+          
+          }
+          
+      } 
+
+        }
+     }
+
+       if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '')){
+        if(this.rob.i1 == '' ){
+          if((this.ins3ss == this.rob.uf1)  && (this.ins3c != 0) && (this.ins1c != 0)){
+            this.rob.i1=this.ins3ss;
+            this.rob.i1="X";
+            this.ins3c--;
+            //this.robb.push(this.rob);
+            console.log('entra7')
+              
+          }
+          
+        }
+        if(this.rob.i2 == '' ){
+          if((this.ins3ss == this.rob.uf1)  && (this.ins3c != 0) && (this.ins1c != 0)){
+            this.rob.i2=this.ins3ss;
+            this.rob.s2="X";
+            this.ins3c--;
+            //this.robb.push(this.rob);
+            console.log('entra8')
+            
+              
+          }
+          
+        }
+
+
+
+       if(this.rob.i3 == '' ){
+         if((this.ins3ss == this.rob.uf1) && (this.ins3c != 0) || (this.ins3ss == this.rob.uf2) && (this.ins3c != 0) ){
+           this.rob.i3=this.ins3ss;
+           this.rob.s3="X";
+           this.ins3c--;
+           
+           //this.robb.push(this.rob);
+           console.log('entra9')
+           
+             
+         }
+        
+          else{
+          if((this.ins3c == 0) && (this.v2) && (this.ins3ss != '')){
+            
+          this.rob.i3 = this.ins3ss;
+          this.rob.s3 = "F";
+          this.v2=false;
+          if(this.rob.s3 == "F"){
+            
+            //this.robb.push(this.rob);
+            console.log('entra10')
+          
+            
+          }
+        }
+      }
+    }
+        if((this.ins3c != 0) && (this.ins3ss != this.rob.uf1) && (this.ins3ss != this.rob.uf2)){
+              this.rob.i3 = this.ins3ss;
+              this.rob.s3 = "I";
+        }
+      } 
+         
+
+       
+     
+
+    }
   }
 
   
   
-  
-  
   siguienteCiclo(){
-    
-    this.generarInsCicl();
+    this.rob = new Object;
+
+    this.rob.uf1='';
+    this.rob.uf2='';
+    this.rob.i1='';
+    this.rob.s1='';
+    this.rob.i2='';
+    this.rob.s2='';
+    this.rob.i3='';
+    this.rob.s3='';
+    this.rob.i4='';
+    this.rob.s4='';
+    this.rob.i5='';
+    this.rob.s5='';
+    this.rob.i6='';
+    this.rob.s6='';
+
     this.agregarDespacho();
+    this.agregarER();
+    this.agregarUf1();
+    this.agregarRob();
+    this.robb.push(this.rob);
+    
+    
+    this.ciclos++;
+    console.log(this.ciclos)
 
   }
 
