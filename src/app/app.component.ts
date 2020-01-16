@@ -197,10 +197,7 @@ export class AppComponent {
 
     //ingresamos al arreglo el objeto
     this.instruccion.push(this.instru);
-    this.valido=false;
-    
-    
-   
+    this.valido=false;   
 
   }
   
@@ -208,25 +205,33 @@ export class AppComponent {
 
   ///////////////////////////////////////ROB///////////////////////////////
 
-  ins1ss: string = '';
-  ins1c: number = 0;
-
-  ins2ss: string = '';
-  ins2c:number = 0;
-
-  ins3ss: string = '';
-  ins3c:number = 0;
+  ins1ss: string = ''; ins1c: number = 0;
+  ins2ss: string = '';ins2c:number = 0;
+  ins3ss: string = '';ins3c:number = 0;
+  ins4ss: string = '';ins4c:number = 0;
+  ins5ss: string = '';ins5c:number = 0;
+  ins6ss: string = '';ins6c:number = 0;
+  ins7ss: string = '';ins7c:number = 0;
+  ins8ss: string = '';ins8c:number = 0;
 
   v : boolean = true;
   v1: boolean = true;
   v2: boolean = true;
-  entra3: boolean = true;
-  entra9: boolean = true;
+  v3: boolean = true;
+  v4: boolean = true;
+  v5: boolean = true;
+  v6: boolean = true;
+  v7: boolean = true;
+  v8: boolean = true;
 
   ciclosAdd: number = 3;
-  ciclosSubd: number = 5;
+  ciclosSubd: number = 3;
   ciclosMuld: number = 4;
-  ciclosDiv: number = 1;
+  ciclosDiv: number = 3;
+
+  quedaste1: boolean = false;
+  quedaste2: boolean = false;
+  quedaste3: boolean = false;
 
 
   agregarDespacho(){
@@ -238,9 +243,9 @@ export class AppComponent {
        this.rob.d1=this.ins1ss;
        this.rob.uf1='';      
        this.ciclos++;
-       if(this.instrucciones2.length == 0){
-       //this.robb.push(this.rob); 
-       }
+       /* if(this.instrucciones2.length == 0){
+       this.robb.push(this.rob); 
+       } */
 
        if(this.instrucciones2.length != 0){
         this.ins2ss=this.instrucciones2[this.i].ss;
@@ -251,14 +256,54 @@ export class AppComponent {
         //this.robb.push(this.rob); 
        }
     }
-     if(this.ciclos > 0) {
+     if((this.ciclos > 0) && (this.ciclos < 2)) {
        if(this.instrucciones2.length != 0){
         this.ins3ss=this.instrucciones2[this.i].ss;
         this.ins3c=this.instrucciones2[this.i].c;
         this.rob.d1=this.ins3ss;
         this.instrucciones2.splice(this.i,1);
        }
+       if(this.instrucciones2.length != 0){
+        this.ins4ss=this.instrucciones2[this.i].ss;
+        this.ins4c=this.instrucciones2[this.i].c;
+        this.rob.d2=this.ins4ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+       
     } 
+    if((this.ciclos > 1) && (this.ciclos < 3)){
+      if(this.instrucciones2.length != 0){
+        
+        this.ins5ss=this.instrucciones2[this.i].ss;
+        this.ins5c=this.instrucciones2[this.i].c;
+        this.rob.d1=this.ins5ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+       if(this.instrucciones2.length != 0){
+        
+        this.ins6ss=this.instrucciones2[this.i].ss;
+        this.ins6c=this.instrucciones2[this.i].c;
+        this.rob.d2=this.ins6ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+    }
+    if(this.ciclos > 2){
+      if(this.instrucciones2.length != 0){
+        
+        this.ins7ss=this.instrucciones2[this.i].ss;
+        this.ins7c=this.instrucciones2[this.i].c;
+        this.rob.d1=this.ins7ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+       if(this.instrucciones2.length != 0){
+        
+        this.ins8ss=this.instrucciones2[this.i].ss;
+        this.ins8c=this.instrucciones2[this.i].c;
+        this.rob.d2=this.ins8ss;
+        this.instrucciones2.splice(this.i,1);
+       }
+
+    }
   
   }
      
@@ -277,30 +322,57 @@ export class AppComponent {
       this.rob.e2=this.ins2ss;
     }
 
-     if(this.ciclos > 1){
+      if(this.ciclos > 1){
        //if((this.rob.e1 == this.rob.uf1))
       // console.log(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
        //console.log(this.ins3ss != this.robb[this.ciclos-1].uf1)
-       if(this.ins3ss != ''){
+       if((this.ins3ss != '') && (this.ins3c != 0 )){
         if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins3ss != this.robb[this.ciclos-1].uf1)){
-           this.rob.e1=this.ins3ss;
-           if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '')){
+           //this.rob.e1=this.ins3ss;
+           if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '') || (this.rob.i4 == '')){
             if(this.rob.i1 == '' ){}
             if(this.rob.i2 == '' ){}
-            if(this.rob.i3 == '' ){this.rob.i3=this.ins3ss; this.rob.s3="I"; this.rob.e1=this.ins3ss; console.log('e1')}
+            if(this.rob.i3 == '' ){this.rob.e1=this.ins3ss; }
+            if(this.rob.i4 == '' ){this.rob.e2=this.ins4ss; }
+            //if(this.rob.i5 == '' ){this.rob.e3=this.ins5ss; }
 
            }
-        }
+        } }
         /* else{if(this.robb[this.ciclos-1].e1 != this.robb[this.ciclos-1].uf1){
           if(this.rob.i3 == '' ){this.rob.i3=this.ins3ss; this.rob.s3="I"; this.rob.e1=this.ins3ss};
         } */
 
-        
       }
-    }  
+      if(this.ciclos > 2){
+      { if((this.ins5ss != '') && (this.ins5c != 0 )){
+        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins5ss != this.robb[this.ciclos-1].uf1)){
+           if(this.rob.i5 == '' ){this.rob.e3=this.ins5ss; }
+           if(this.rob.i6 == '' ){this.rob.e4=this.ins6ss; }
+        }
 
+
+      }
+      }
+    }
+
+    if(this.ciclos > 3){
+      if((this.ins7ss != '') && (this.ins7c != 0 )){
+        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) 
+        || (this.robb[this.ciclos-1].e2 == this.robb[this.ciclos-1].uf1) 
+        || (this.robb[this.ciclos-1].e3 == this.robb[this.ciclos-1].uf1)
+        || (this.robb[this.ciclos-1].e4 == this.robb[this.ciclos-1].uf1)  
+        && (this.ins7ss != this.robb[this.ciclos-1].uf1)){
+          if(this.rob.i1 == '' ){this.rob.e1=this.ins7ss; }
+        }
+      }
+    }
+
+    }
+    
   }
-  }
+
+  
+  
 
   agregarUf1(){
     if (this.ciclos > 0) {
@@ -334,6 +406,124 @@ export class AppComponent {
          }
          }
       }
+      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0)){
+
+        if(this.ins4c != 0){
+ 
+          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins4ss) && (this.ins4c!=0) ) {
+           this.rob.uf1 = this.ins4ss;
+          }else
+          {
+            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins4ss) && (this.ins4c!=0)){
+            this.rob.uf2 = this.ins4ss;}
+            else{
+              if((this.rob.uf1 == '') && (this.ins4c != 0)){
+               this.rob.uf1 = this.ins4ss;
+              }else{
+               if((this.rob.uf2 == '') && (this.ins4c != 0)){
+               this.rob.uf2 = this.ins4ss;}
+              }
+            }
+          }
+          }
+
+
+      }
+      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0)){
+
+        if(this.ins5c != 0){
+ 
+          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins5ss) && (this.ins5c!=0) ) {
+           this.rob.uf1 = this.ins5ss;
+          }else
+          {
+            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins5ss) && (this.ins5c!=0)){
+            this.rob.uf2 = this.ins5ss;}
+            else{
+              if((this.rob.uf1 == '') && (this.ins5c != 0)){
+               this.rob.uf1 = this.ins5ss;
+              }else{
+               if((this.rob.uf2 == '') && (this.ins5c != 0)){
+               this.rob.uf2 = this.ins5ss;}
+              }
+            }
+          }
+          }
+
+
+      }
+      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)){
+
+        if(this.ins6c != 0){
+ 
+          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins6ss) && (this.ins6c!=0) ) {
+           this.rob.uf1 = this.ins6ss;
+          }else
+          {
+            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins6ss) && (this.ins6c!=0)){
+            this.rob.uf2 = this.ins6ss;}
+            else{
+              if((this.rob.uf1 == '') && (this.ins6c != 0)){
+               this.rob.uf1 = this.ins6ss;
+              }else{
+               if((this.rob.uf2 == '') && (this.ins6c != 0)){
+               this.rob.uf2 = this.ins6ss;}
+              }
+            }
+          }
+          }
+
+
+      }
+      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)
+      || (this.ins6c == 0)){
+
+        if(this.ins7c != 0){
+ 
+          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins7ss) && (this.ins7c!=0) ) {
+           this.rob.uf1 = this.ins7ss;
+          }else
+          {
+            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins7ss) && (this.ins7c!=0)){
+            this.rob.uf2 = this.ins7ss;}
+            else{
+              if((this.rob.uf1 == '') && (this.ins7c != 0)){
+               this.rob.uf1 = this.ins7ss;
+              }else{
+               if((this.rob.uf2 == '') && (this.ins7c != 0)){
+               this.rob.uf2 = this.ins7ss;}
+              }
+            }
+          }
+          }
+
+
+      }
+      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)
+      || (this.ins6c == 0) ||  (this.ins7c == 0)){
+
+        if(this.ins8c != 0){
+ 
+          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins8ss) && (this.ins8c!=0) ) {
+           this.rob.uf1 = this.ins8ss;
+          }else
+          {
+            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins8ss) && (this.ins8c!=0)){
+            this.rob.uf2 = this.ins8ss;}
+            else{
+              if((this.rob.uf1 == '') && (this.ins8c != 0)){
+               this.rob.uf1 = this.ins8ss;
+              }else{
+               if((this.rob.uf2 == '') && (this.ins8c != 0)){
+               this.rob.uf2 = this.ins8ss;}
+              }
+            }
+          }
+          }
+
+
+      }
+
     }
 
   }
@@ -348,10 +538,11 @@ export class AppComponent {
         this.ins1c--;
         this.rob.i1 = this.rob.uf1;
         this.rob.s1 = "X";
+        console.log('entra1')
       //if(this.ins2ss == ''){ 
         if((this.ins2c == 0) && (this.ins3c == 0)) {
           //this.robb.push(this.rob);
-          console.log('entra1')
+          
       }
       
 
@@ -408,7 +599,7 @@ export class AppComponent {
         }
      }
 
-       if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '')){
+       if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '') || (this.rob.i4 == '') || (this.rob.i5 == '')){
         if(this.rob.i1 == '' ){
           if((this.ins3ss == this.rob.uf1)  && (this.ins3c != 0) && (this.ins1c != 0)){
             this.rob.i1=this.ins3ss;
@@ -433,41 +624,283 @@ export class AppComponent {
           
         }
 
-
-
+     ///////instruccion 3
+     if(this.ciclos > 1){
        if(this.rob.i3 == '' ){
          if((this.ins3ss == this.rob.uf1) && (this.ins3c != 0) || (this.ins3ss == this.rob.uf2) && (this.ins3c != 0) ){
+           
            this.rob.i3=this.ins3ss;
            this.rob.s3="X";
            this.ins3c--;
-           
-           //this.robb.push(this.rob);
            console.log('entra9')
-           
-             
-         }
-        
+          }
+          
           else{
           if((this.ins3c == 0) && (this.v2) && (this.ins3ss != '')){
             
           this.rob.i3 = this.ins3ss;
           this.rob.s3 = "F";
           this.v2=false;
-          if(this.rob.s3 == "F"){
-            
-            //this.robb.push(this.rob);
             console.log('entra10')
-          
+        }}}}
+       ///////instruccion 4
+        if(this.ciclos>1){
+        if(this.rob.i4 == '' ){
+          if((this.ins4ss == this.rob.uf1) && (this.ins4c != 0) && (this.ins4ss !='') || 
+          (this.ins4ss == this.rob.uf2) && (this.ins4c != 0) && (this.ins4ss !='') ){
+            this.rob.i4=this.ins4ss;
+            this.rob.s4="X";
+            this.ins4c--;
+            console.log('entra11')
+           }
+          else{
+        if((this.ins4c == 0) && (this.v3) && (this.ins4ss != '')){
             
-          }
+          this.rob.i4 = this.ins4ss;
+          this.rob.s4 = "F";
+          this.v3=false;
+            console.log('entra12')
         }
       }
+    }}
+    ///////instruccion 5
+    if(this.ciclos>1){
+      if(this.rob.i5 == '' ){
+        if((this.ins5ss == this.rob.uf1) && (this.ins5c != 0) && (this.ins5ss !='') || 
+        (this.ins5ss == this.rob.uf2) && (this.ins5c != 0) && (this.ins5ss !='') ){
+          this.rob.i5=this.ins5ss;
+          this.rob.s5="X";
+          this.ins5c--;
+          console.log('entra13')
+         }
+        else{
+      if((this.ins5c == 0) && (this.v4) && (this.ins5ss != '')){
+          
+        this.rob.i5 = this.ins5ss;
+        this.rob.s5 = "F";
+        this.v4=false;
+          console.log('entra14')
+      }
     }
-        if((this.ins3c != 0) && (this.ins3ss != this.rob.uf1) && (this.ins3ss != this.rob.uf2)){
+  }}
+  ///////instruccion 6
+  if(this.ciclos>1){
+    if(this.rob.i6 == '' ){
+      if((this.ins6ss == this.rob.uf1) && (this.ins6c != 0) && (this.ins6ss !='') || 
+      (this.ins6ss == this.rob.uf2) && (this.ins6c != 0) && (this.ins6ss !='') ){
+        this.rob.i6=this.ins6ss;
+        this.rob.s6="X";
+        this.ins6c--;
+        console.log('entra15')
+       }
+      else{
+    if((this.ins6c == 0) && (this.v5) && (this.ins6ss != '')){
+        
+      this.rob.i6 = this.ins6ss;
+      this.rob.s6 = "F";
+      this.v5=false;
+        console.log('entra12')
+    }
+  }
+}}
+
+///////instruccion 7
+if(this.ciclos>1){
+  if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
+  (this.rob.i6 == '' ) ){
+    if((this.ins7ss == this.rob.uf1) && (this.ins7c != 0) && (this.ins7ss !='') || 
+    (this.ins7ss == this.rob.uf2) && (this.ins7c != 0) && (this.ins7ss !='') ){
+      if((this.rob.i1 == '' )  && (this.quedaste1 == false)){  
+      this.rob.i1=this.ins7ss;
+      this.rob.s1="X";
+      this.ins7c--;
+      console.log('entra15')
+      }else{if((this.rob.i2 == '' ) && (this.quedaste2 == false)){ 
+      this.rob.i2=this.ins7ss;
+      this.rob.s2="X";
+      this.ins7c--; }
+      else {if((this.rob.i3 == '' ) && ((this.quedaste3 == false)))
+      this.rob.i3=this.ins7ss;
+      this.rob.s3="X";
+      this.ins7c--}}
+     }
+    else{
+      if((this.ins7c == 0) && (this.v6) && (this.ins7ss != '')){
+        if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
+        (this.rob.i6 == '' )){
+          if((this.rob.i1 == '' ) && (this.quedaste1 == false)){
+                this.rob.i1 = this.ins7ss;
+                this.rob.s1 = "F";
+                this.v6=false;
+                  console.log('entra12')
+          }
+        else{if((this.rob.i2 == '' ) && (this.quedaste2 == false)){
+                  this.rob.i2 = this.ins7ss;
+                  this.rob.s2 = "F";
+                   this.v6=false;}
+                  else {if((this.rob.i3 == '' ) && (this.quedaste2 == false))
+                  this.rob.i3 = this.ins7ss;
+                  this.rob.s3 = "F";
+                   this.v6=false;
+                }}
+  }
+}
+    }}}
+       ///////instruccion 8
+    if(this.ciclos>1){
+      if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
+      (this.rob.i6 == '' ) ){
+        if((this.ins8ss == this.rob.uf1) && (this.ins8c != 0) && (this.ins8ss !='') || 
+        (this.ins8ss == this.rob.uf2) && (this.ins8c != 0) && (this.ins8ss !='') ){
+          if((this.rob.i1 == '' )){
+          this.rob.i1=this.ins8ss;
+          this.rob.s1="X";
+          this.ins8c--;
+          console.log('entra15')
+          }else{if(this.rob.i2 == '' ){ 
+          this.rob.i2=this.ins8ss;
+          this.rob.s2="X";
+          this.ins8c--; }
+          else {if(this.rob.i3 == '' )
+          this.rob.i3=this.ins8ss;
+          this.rob.s3="X";
+          this.ins7c--}}
+         }
+        else{
+          if((this.ins8c == 0) && (this.v7) && (this.ins8ss != '')){
+            if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
+            (this.rob.i6 == '' )){
+              if((this.rob.i1 == '' )){
+                    this.rob.i1 = this.ins8ss;
+                    this.rob.s1 = "F";
+                    this.v7=false;
+                      console.log('entra12')
+              }
+            else{if((this.rob.i2 == '' )){
+                      this.rob.i2 = this.ins8ss;
+                      this.rob.s2 = "F";
+                       this.v7=false;}}
+      }
+    }
+        }}}
+
+    
+      
+    
+       if(this.ciclos>1){
+         if((this.ins3c != 0) && (this.ins3ss != this.rob.uf1) && (this.ins3ss != this.rob.uf2) ){
+              this.rob.e1= this.ins3ss;
               this.rob.i3 = this.ins3ss;
               this.rob.s3 = "I";
+              console.log('entra13')
         }
-      } 
+        if((this.ins4c != 0) && (this.ins4ss != this.rob.uf1) && (this.ins4ss != this.rob.uf2) ){
+          this.rob.e2= this.ins4ss;
+          this.rob.i4 = this.ins4ss;
+          this.rob.s4 = "I";
+          console.log('entra14')
+    }}
+    if(this.ciclos > 2){
+    if((this.ins5c != 0) && (this.ins5ss != this.rob.uf1) && (this.ins5ss != this.rob.uf2) ){
+      /* if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') ){
+        if((this.rob.e1 == ''))
+          this.rob.e1= this.ins5ss;
+          else{
+        if((this.rob.e2 == ''))  
+        this.rob.e2= this.ins5ss;
+         else {
+          if((this.rob.e3 == ''))  
+          this.rob.e3= this.ins5ss;
+         }}
+        
+        } */
+        this.rob.e3= this.ins5ss;
+      this.rob.i5 = this.ins5ss;
+      this.rob.s5 = "I";
+      console.log('entra15')
+        }
+        if((this.ins6c != 0) && (this.ins6ss != this.rob.uf1) && (this.ins6ss != this.rob.uf2) ){
+          this.rob.e4= this.ins6ss;
+          this.rob.i6 = this.ins6ss;
+          this.rob.s6 = "I";
+          console.log('entra16')
+        }
+      }
+      ///////instruccion 7
+      if(this.ciclos > 3){
+        if((this.ins7c != 0) && (this.ins7ss != this.rob.uf1) && (this.ins7ss != this.rob.uf2) ){
+          if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') ){
+            if((this.rob.e1 == '')){
+          this.rob.e1= this.ins7ss;
+          if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
+            if((this.rob.i1 == '') && (this.quedaste1 == false)){
+            this.rob.i1 = this.ins7ss;
+          this.rob.s1 = "I";
+          this.quedaste2=true;
+          this.quedaste3=true;
+        }else{if((this.rob.i2 == '')&& (this.quedaste2 == false)){
+          this.rob.i2 = this.ins7ss;
+        this.rob.s2 = "I";
+        this.quedaste1=true;
+          this.quedaste3=true;;
+      }else{if((this.rob.i3 == '')&& (this.quedaste3 == false)){
+        this.rob.i3 = this.ins7ss;
+      this.rob.s3 = "I";
+      this.quedaste1=true;
+          this.quedaste2=true;;
+    }}}
+          }
+            }else {if((this.rob.e2 == '')){
+              this.rob.e2= this.ins7ss;
+              if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
+                if((this.rob.e1 == '')){
+                this.rob.i1 = this.ins7ss;
+              this.rob.s1 = "I";}
+              }
+          this.rob.i1 = this.ins7ss;
+          this.rob.s2 = "I";
+            }
+          }
+          }
+        }
+       ///////instruccion 8
+        if((this.ins8c != 0) && (this.ins8ss != this.rob.uf1) && (this.ins8ss != this.rob.uf2) ){
+          if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') ){
+            if((this.rob.e1 == '')){
+          this.rob.e1= this.ins8ss;
+          if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
+            if((this.rob.i1 == '')){
+            this.rob.i1 = this.ins8ss;
+          this.rob.s1 = "I";
+        }else{if((this.rob.i2 == '')){
+          this.rob.i2 = this.ins8ss;
+        this.rob.s2 = "I";
+      }else{if((this.rob.i3 == '')){
+        this.rob.i3 = this.ins8ss;
+      this.rob.s3 = "I";
+    }}}
+          }
+            }else {if((this.rob.e2 == '')){
+              this.rob.e2= this.ins8ss;
+              if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
+                if((this.rob.i1 == '')){
+                this.rob.i1 = this.ins8ss;
+              this.rob.s1 = "I"; }
+              else { if ((this.rob.i2 == ''))
+              this.rob.i2 = this.ins8ss;
+              this.rob.s2 = "I";
+            }
+              }
+            }
+          }
+          }
+        }
+
+
+
+      }
+       
+    }
          
 
        
@@ -481,6 +914,10 @@ export class AppComponent {
   siguienteCiclo(){
     this.rob = new Object;
 
+    this.rob.e1='';
+    this.rob.e2='';
+    this.rob.e3='';
+    this.rob.e4='';
     this.rob.uf1='';
     this.rob.uf2='';
     this.rob.i1='';
