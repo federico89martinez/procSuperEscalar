@@ -224,14 +224,19 @@ export class AppComponent {
   v7: boolean = true;
   v8: boolean = true;
 
-  ciclosAdd: number = 3;
-  ciclosSubd: number = 3;
-  ciclosMuld: number = 4;
-  ciclosDiv: number = 3;
+  ciclosAdd: number = 1;
+  ciclosSubd: number = 1;
+  ciclosMuld: number = 1;
+  ciclosDiv: number = 1;
 
-  quedaste1: boolean = false;
-  quedaste2: boolean = false;
-  quedaste3: boolean = false;
+  quedaste71: boolean = false;
+  quedaste72: boolean = false;
+  quedaste73: boolean = false;
+
+  quedaste81: boolean = false;
+  quedaste82: boolean = false;
+  quedaste83: boolean = false;
+
 
 
   agregarDespacho(){
@@ -304,6 +309,8 @@ export class AppComponent {
        }
 
     }
+    
+
   
   }
      
@@ -327,7 +334,8 @@ export class AppComponent {
       // console.log(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
        //console.log(this.ins3ss != this.robb[this.ciclos-1].uf1)
        if((this.ins3ss != '') && (this.ins3c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins3ss != this.robb[this.ciclos-1].uf1)){
+        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins3ss != this.robb[this.ciclos-1].uf1)
+           && (((this.robb[this.ciclos-1].e1 != '') && (this.robb[this.ciclos-1].uf1!='') ))){
            //this.rob.e1=this.ins3ss;
            if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '') || (this.rob.i4 == '')){
             if(this.rob.i1 == '' ){}
@@ -357,7 +365,7 @@ export class AppComponent {
 
     if(this.ciclos > 3){
       if((this.ins7ss != '') && (this.ins7c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) 
+        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
         || (this.robb[this.ciclos-1].e2 == this.robb[this.ciclos-1].uf1) 
         || (this.robb[this.ciclos-1].e3 == this.robb[this.ciclos-1].uf1)
         || (this.robb[this.ciclos-1].e4 == this.robb[this.ciclos-1].uf1)  
@@ -366,6 +374,8 @@ export class AppComponent {
         }
       }
     }
+
+    
 
     }
     
@@ -710,16 +720,16 @@ if(this.ciclos>1){
   (this.rob.i6 == '' ) ){
     if((this.ins7ss == this.rob.uf1) && (this.ins7c != 0) && (this.ins7ss !='') || 
     (this.ins7ss == this.rob.uf2) && (this.ins7c != 0) && (this.ins7ss !='') ){
-      if((this.rob.i1 == '' )  && (this.quedaste1 == false)){  
+      if((this.rob.i1 == '' )  && (this.quedaste71 == false)){  
       this.rob.i1=this.ins7ss;
       this.rob.s1="X";
       this.ins7c--;
       console.log('entra15')
-      }else{if((this.rob.i2 == '' ) && (this.quedaste2 == false)){ 
+      }else{if((this.rob.i2 == '' ) && (this.quedaste72 == false)){ 
       this.rob.i2=this.ins7ss;
       this.rob.s2="X";
       this.ins7c--; }
-      else {if((this.rob.i3 == '' ) && ((this.quedaste3 == false)))
+      else {if((this.rob.i3 == '' ) && ((this.quedaste73 == false)))
       this.rob.i3=this.ins7ss;
       this.rob.s3="X";
       this.ins7c--}}
@@ -728,17 +738,17 @@ if(this.ciclos>1){
       if((this.ins7c == 0) && (this.v6) && (this.ins7ss != '')){
         if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
         (this.rob.i6 == '' )){
-          if((this.rob.i1 == '' ) && (this.quedaste1 == false)){
+          if((this.rob.i1 == '' ) && (this.quedaste71 == false)){
                 this.rob.i1 = this.ins7ss;
                 this.rob.s1 = "F";
                 this.v6=false;
                   console.log('entra12')
           }
-        else{if((this.rob.i2 == '' ) && (this.quedaste2 == false)){
+        else{if((this.rob.i2 == '' ) && (this.quedaste72 == false)){
                   this.rob.i2 = this.ins7ss;
                   this.rob.s2 = "F";
                    this.v6=false;}
-                  else {if((this.rob.i3 == '' ) && (this.quedaste2 == false))
+                  else {if((this.rob.i3 == '' ) && (this.quedaste73 == false))
                   this.rob.i3 = this.ins7ss;
                   this.rob.s3 = "F";
                    this.v6=false;
@@ -752,34 +762,38 @@ if(this.ciclos>1){
       (this.rob.i6 == '' ) ){
         if((this.ins8ss == this.rob.uf1) && (this.ins8c != 0) && (this.ins8ss !='') || 
         (this.ins8ss == this.rob.uf2) && (this.ins8c != 0) && (this.ins8ss !='') ){
-          if((this.rob.i1 == '' )){
+          if((this.rob.i1 == '' ) && (this.quedaste81 == false)){
           this.rob.i1=this.ins8ss;
           this.rob.s1="X";
           this.ins8c--;
           console.log('entra15')
-          }else{if(this.rob.i2 == '' ){ 
+          }else{if((this.rob.i2 == '') && (this.quedaste82 == false)){ 
           this.rob.i2=this.ins8ss;
           this.rob.s2="X";
           this.ins8c--; }
-          else {if(this.rob.i3 == '' )
+          else {if((this.rob.i3 == '') && (this.quedaste83 == false) )
           this.rob.i3=this.ins8ss;
           this.rob.s3="X";
-          this.ins7c--}}
+          this.ins8c--}}
          }
         else{
           if((this.ins8c == 0) && (this.v7) && (this.ins8ss != '')){
             if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
             (this.rob.i6 == '' )){
-              if((this.rob.i1 == '' )){
+              if((this.rob.i1 == '' ) && (this.quedaste81 == false)){
                     this.rob.i1 = this.ins8ss;
                     this.rob.s1 = "F";
                     this.v7=false;
-                      console.log('entra12')
+                    console.log('entra12')
               }
-            else{if((this.rob.i2 == '' )){
+            else{if((this.rob.i2 == '' ) && (this.quedaste82 == false)){
                       this.rob.i2 = this.ins8ss;
                       this.rob.s2 = "F";
-                       this.v7=false;}}
+                       this.v7=false;
+                       }else {if((this.rob.i3 == '' ) && (this.quedaste83 == false))
+                       this.rob.i3 = this.ins8ss;
+                       this.rob.s3 = "F";
+                        this.v7=false;}}
       }
     }
         }}}
@@ -833,21 +847,21 @@ if(this.ciclos>1){
             if((this.rob.e1 == '')){
           this.rob.e1= this.ins7ss;
           if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-            if((this.rob.i1 == '') && (this.quedaste1 == false)){
+            if((this.rob.i1 == '') && (this.quedaste71 == false)){
             this.rob.i1 = this.ins7ss;
           this.rob.s1 = "I";
-          this.quedaste2=true;
-          this.quedaste3=true;
-        }else{if((this.rob.i2 == '')&& (this.quedaste2 == false)){
+          this.quedaste72=true;
+          this.quedaste73=true;
+        }else{if((this.rob.i2 == '')&& (this.quedaste72 == false)){
           this.rob.i2 = this.ins7ss;
         this.rob.s2 = "I";
-        this.quedaste1=true;
-          this.quedaste3=true;;
-      }else{if((this.rob.i3 == '')&& (this.quedaste3 == false)){
+        this.quedaste71=true;
+          this.quedaste73=true;;
+      }else{if((this.rob.i3 == '')&& (this.quedaste73 == false)){
         this.rob.i3 = this.ins7ss;
       this.rob.s3 = "I";
-      this.quedaste1=true;
-          this.quedaste2=true;;
+      this.quedaste71=true;
+          this.quedaste72=true;;
     }}}
           }
             }else {if((this.rob.e2 == '')){
@@ -869,27 +883,44 @@ if(this.ciclos>1){
             if((this.rob.e1 == '')){
           this.rob.e1= this.ins8ss;
           if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-            if((this.rob.i1 == '')){
-            this.rob.i1 = this.ins8ss;
-          this.rob.s1 = "I";
-        }else{if((this.rob.i2 == '')){
-          this.rob.i2 = this.ins8ss;
-        this.rob.s2 = "I";
-      }else{if((this.rob.i3 == '')){
-        this.rob.i3 = this.ins8ss;
-      this.rob.s3 = "I";
-    }}}
-          }
-            }else {if((this.rob.e2 == '')){
-              this.rob.e2= this.ins8ss;
-              if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-                if((this.rob.i1 == '')){
-                this.rob.i1 = this.ins8ss;
-              this.rob.s1 = "I"; }
-              else { if ((this.rob.i2 == ''))
-              this.rob.i2 = this.ins8ss;
-              this.rob.s2 = "I";
-            }
+            if((this.rob.i1 == '') && (this.quedaste81 == false)){
+              this.rob.i1 = this.ins8ss;
+              this.rob.s1 = "I";
+              this.quedaste82=true;
+              this.quedaste83=true;
+            }else {if((this.rob.i2 == '')  && (this.quedaste82 == false)){
+                      this.rob.i2 = this.ins8ss;
+                      this.rob.s2 = "I";
+                      this.quedaste81=true;
+                      this.quedaste83=true;
+                   }else{if((this.rob.i3 == '')  && (this.quedaste83 == false)){
+                            this.rob.i3 = this.ins8ss;
+                            this.rob.s3 = "I";
+                            this.quedaste81=true;
+                            this.quedaste82=true;
+                   }}}
+             }
+             }else {if((this.rob.e2 == '')){
+                       this.rob.e2= this.ins8ss;
+                    if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
+                        if((this.rob.i1 == '')  && (this.quedaste81 == false)){
+                           this.rob.i1 = this.ins8ss;
+                           this.rob.s1 = "I";
+                           this.quedaste82=true;
+                           this.quedaste83=true;
+                           }
+                   else { if ((this.rob.i2 == '')  && (this.quedaste82 == false)){
+                             this.rob.i2 = this.ins8ss;
+                             this.rob.s2 = "I";
+                             this.quedaste81=true;
+                             this.quedaste83=true;
+                             }else{ if ((this.rob.i3 == '')  && (this.quedaste83 == false)){
+                                    this.rob.i3 = this.ins8ss;
+                                    this.rob.s3 = "I";
+                                    this.quedaste81=true;
+                                    this.quedaste82=true;
+                             }}
+                        }
               }
             }
           }
@@ -906,6 +937,15 @@ if(this.ciclos>1){
        
      
 
+    }
+
+    if(this.ciclos > 3){
+      if(this.ins8ss != ''){
+        if((this.rob.e1 != this.ins8ss) && (this.rob.e2 != this.ins8ss) && (this.rob.e3 != this.ins8ss)
+        && (this.rob.e4 != this.ins8ss) && (this.rob.e1 != '') && (this.rob.e2 != '') && (this.rob.e3 != '') && (this.rob.e4 != '')){
+          this.rob.d2=this.ins8ss;
+        }
+      }
     }
   }
 
