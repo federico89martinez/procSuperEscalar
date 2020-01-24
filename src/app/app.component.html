@@ -15,6 +15,10 @@
           <a class="dropdown-item" (click)="agregarAdd(4)">4</a>
           <a class="dropdown-item" (click)="agregarAdd(5)">5</a>
           <a class="dropdown-item" (click)="agregarAdd(6)">6</a>
+          <a class="dropdown-item" (click)="agregarAdd(7)">7</a>
+          <a class="dropdown-item" (click)="agregarAdd(8)">8</a>
+          <a class="dropdown-item" (click)="agregarAdd(9)">9</a>
+          <a class="dropdown-item" (click)="agregarAdd(10)">10</a>
         </div>
     </div>
     <div class="btn-group" role="group">
@@ -28,6 +32,10 @@
           <a class="dropdown-item" (click)="agregarSub(4)">4</a>
           <a class="dropdown-item" (click)="agregarSub(5)">5</a>
           <a class="dropdown-item" (click)="agregarSub(6)">6</a>
+          <a class="dropdown-item" (click)="agregarSub(7)">7</a>
+          <a class="dropdown-item" (click)="agregarSub(8)">8</a>
+          <a class="dropdown-item" (click)="agregarSub(9)">9</a>
+          <a class="dropdown-item" (click)="agregarSub(10)">10</a>
         </div>
       </div>
       <div class="btn-group" role="group">
@@ -41,6 +49,11 @@
           <a class="dropdown-item" (click)="agregarMul(4)">4</a>
           <a class="dropdown-item" (click)="agregarMul(5)">5</a>
           <a class="dropdown-item" (click)="agregarMul(6)">6</a>
+          <a class="dropdown-item" (click)="agregarMul(7)">7</a>
+          <a class="dropdown-item" (click)="agregarMul(8)">8</a>
+          <a class="dropdown-item" (click)="agregarMul(9)">9</a>
+          <a class="dropdown-item" (click)="agregarMul(10)">10</a>
+
         </div>
       </div>
       <div class="btn-group" role="group">
@@ -48,12 +61,50 @@
           DIV
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="agregarDiv(1)" (click)="validar11()">1</a>
-          <a class="dropdown-item" (click)="agregarDiv(2)" (click)="validar11()">2</a>
-          <a class="dropdown-item" (click)="agregarDiv(3)" (click)="validar11()">3</a>
-          <a class="dropdown-item" (click)="agregarDiv(4)" (click)="validar11()">4</a>
-          <a class="dropdown-item" (click)="agregarDiv(5)" (click)="validar11()">5</a>
-          <a class="dropdown-item" (click)="agregarDiv(6)" (click)="validar11()">6</a>
+          <a class="dropdown-item" (click)="agregarDiv(1)" >1</a>
+          <a class="dropdown-item" (click)="agregarDiv(2)" >2</a>
+          <a class="dropdown-item" (click)="agregarDiv(3)" >3</a>
+          <a class="dropdown-item" (click)="agregarDiv(4)" >4</a>
+          <a class="dropdown-item" (click)="agregarDiv(5)" >5</a>
+          <a class="dropdown-item" (click)="agregarDiv(6)" >6</a>
+          <a class="dropdown-item" (click)="agregarDiv(7)" >7</a>
+          <a class="dropdown-item" (click)="agregarDiv(8)" >8</a>
+          <a class="dropdown-item" (click)="agregarDiv(9)" >9</a>
+          <a class="dropdown-item" (click)="agregarDiv(10)" >10</a>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          STD
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarStd(1)" >1</a>
+          <a class="dropdown-item" (click)="agregarStd(2)" >2</a>
+          <a class="dropdown-item" (click)="agregarStd(3)" >3</a>
+          <a class="dropdown-item" (click)="agregarStd(4)" >4</a>
+          <a class="dropdown-item" (click)="agregarStd(5)" >5</a>
+          <a class="dropdown-item" (click)="agregarStd(6)" >6</a>
+          <a class="dropdown-item" (click)="agregarStd(7)" >7</a>
+          <a class="dropdown-item" (click)="agregarStd(8)" >8</a>
+          <a class="dropdown-item" (click)="agregarStd(9)" >9</a>
+          <a class="dropdown-item" (click)="agregarStd(10)" >10</a>
+        </div>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          LDD
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" (click)="agregarLdd(1)" (click)="validar11()">1</a>
+          <a class="dropdown-item" (click)="agregarLdd(2)" (click)="validar11()">2</a>
+          <a class="dropdown-item" (click)="agregarLdd(3)" (click)="validar11()">3</a>
+          <a class="dropdown-item" (click)="agregarLdd(4)" (click)="validar11()">4</a>
+          <a class="dropdown-item" (click)="agregarLdd(5)" (click)="validar11()">5</a>
+          <a class="dropdown-item" (click)="agregarLdd(6)" (click)="validar11()">6</a>
+          <a class="dropdown-item" (click)="agregarLdd(7)" (click)="validar11()">7</a>
+          <a class="dropdown-item" (click)="agregarLdd(8)" (click)="validar11()">8</a>
+          <a class="dropdown-item" (click)="agregarLdd(9)" (click)="validar11()">9</a>
+          <a class="dropdown-item" (click)="agregarLdd(10)" (click)="validar11()">10</a>
         </div>
       </div>
       <td *ngIf="validar1 == true">
@@ -79,6 +130,8 @@
           <a class="dropdown-item" (click)="agregarInst(1)" >SUBD</a>
           <a class="dropdown-item" (click)="agregarInst(2)" >MULD</a>
           <a class="dropdown-item" (click)="agregarInst(3)" >DIV</a>
+          <a class="dropdown-item" (click)="agregarInst(4)" >STD</a>
+          <a class="dropdown-item" (click)="agregarInst(5)" >LDD</a>
         </div>
     </div>
     <div class="btn-group" role="group">
