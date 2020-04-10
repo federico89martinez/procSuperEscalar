@@ -1658,7 +1658,7 @@ if(this.ciclos>1){
   }
 
   
-  
+  //creamos un nuevo objeto para el siguiente cilo
   siguienteCiclo(){
     this.rob = new Object;
 
