@@ -1,15 +1,134 @@
-<h2>Procesador Super Escalar</h2>
 
-<h5>Número de ciclos de reloj de cada instrucción</h5>
+<div>
+  <img src="/assets/images/Selección_044.png">
+</div>
 
 
-<div class="btn-group" role="group" aria-label="Basic example">
+<h2 style="margin-left: 500px">Procesador Super Escalar</h2>
+
+<h5  style="margin-left: 50px">Número de ciclos de reloj de cada instrucción</h5>
+
+<div class="btn-group" role="group">
+  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary"  >ADD:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
+    <option (click)="agregarAdd(1)">1</option>
+    <option (click)="agregarAdd(2)">2</option>
+    <option (click)="agregarAdd(3)">3</option>
+    <option (click)="agregarAdd(4)">4</option>
+    <option (click)="agregarAdd(5)">5</option>
+    <option (click)="agregarAdd(6)">6</option>
+    <option (click)="agregarAdd(7)">7</option>
+    <option (click)="agregarAdd(8)">8</option>
+    <option (click)="agregarAdd(9)">9</option>
+    <option (click)="agregarAdd(10)">10</option>
+ </select>
+  </div>
+
+  <div class="btn-group" role="group">
+  <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >SUBD:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+    <option (click)="agregarSub(1)">1</option>
+    <option (click)="agregarSub(2)">2</option>
+    <option (click)="agregarSub(3)">3</option>
+    <option (click)="agregarSub(4)">4</option>
+    <option (click)="agregarSub(5)">5</option>
+    <option (click)="agregarSub(6)">6</option>
+    <option (click)="agregarSub(7)">7</option>
+    <option (click)="agregarSub(8)">8</option>
+    <option (click)="agregarSub(9)">9</option>
+    <option (click)="agregarSub(10)">10</option>
+  </select> 
+  </div> 
+
+  <div class="btn-group" role="group">
+    <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >MULD:</button>
+    <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+      <option (click)="agregarMul(1)">1</option>
+      <option (click)="agregarMul(2)">2</option>
+      <option (click)="agregarMul(3)">3</option>
+      <option (click)="agregarMul(4)">4</option>
+      <option (click)="agregarMul(5)">5</option>
+      <option (click)="agregarMul(6)">6</option>
+      <option (click)="agregarMul(7)">7</option>
+      <option (click)="agregarMul(8)">8</option>
+      <option (click)="agregarMul(9)">9</option>
+      <option (click)="agregarMul(10)">10</option>
+    </select> 
+    </div> 
+
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          ADD
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="agregarAdd(1)" >1</a>
+      <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DIV:</button>
+      <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+        <option (click)="agregarDiv(1)">1</option>
+        <option (click)="agregarDiv(2)">2</option>
+        <option (click)="agregarDiv(3)">3</option>
+        <option (click)="agregarDiv(4)">4</option>
+        <option (click)="agregarDiv(5)">5</option>
+        <option (click)="agregarDiv(6)">6</option>
+        <option (click)="agregarDiv(7)">7</option>
+        <option (click)="agregarDiv(8)">8</option>
+        <option (click)="agregarDiv(9)">9</option>
+        <option (click)="agregarDiv(10)">10</option>
+      </select> 
+      </div> 
+
+      <div class="btn-group" role="group">
+        <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DIV:</button>
+        <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+          <option (click)="agregarDiv(1)">1</option>
+          <option (click)="agregarDiv(2)">2</option>
+          <option (click)="agregarDiv(3)">3</option>
+          <option (click)="agregarDiv(4)">4</option>
+          <option (click)="agregarDiv(5)">5</option>
+          <option (click)="agregarDiv(6)">6</option>
+          <option (click)="agregarDiv(7)">7</option>
+          <option (click)="agregarDiv(8)">8</option>
+          <option (click)="agregarDiv(9)">9</option>
+          <option (click)="agregarDiv(10)">10</option>
+        </select> 
+        </div> 
+
+        <div class="btn-group" role="group">
+          <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >STD:</button>
+          <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+            <option (click)="agregarStd(1)">1</option>
+            <option (click)="agregarStd(2)">2</option>
+            <option (click)="agregarStd(3)">3</option>
+            <option (click)="agregarStd(4)">4</option>
+            <option (click)="agregarStd(5)">5</option>
+            <option (click)="agregarStd(6)">6</option>
+            <option (click)="agregarStd(7)">7</option>
+            <option (click)="agregarStd(8)">8</option>
+            <option (click)="agregarStd(9)">9</option>
+            <option (click)="agregarStd(10)">10</option>
+          </select> 
+          </div> 
+
+          <div class="btn-group" role="group">
+            <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >LDD:</button>
+            <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+              <option (click)="agregarLdd(1)">1</option>
+              <option (click)="agregarLdd(2)">2</option>
+              <option (click)="agregarLdd(3)">3</option>
+              <option (click)="agregarLdd(4)">4</option>
+              <option (click)="agregarLdd(5)">5</option>
+              <option (click)="agregarLdd(6)">6</option>
+              <option (click)="agregarLdd(7)">7</option>
+              <option (click)="agregarLdd(8)">8</option>
+              <option (click)="agregarLdd(9)">9</option>
+              <option (click)="agregarLdd(10)">10</option>
+            </select> 
+            </div> 
+            
+<!-- <div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        ADD:
+      </button>
+      
+        <div class="dropdown-menu"  aria-labelledby="btnGroupDrop1">
+         
+          <a class="dropdown-item" (click)="agregarAdd(1)">1</a>
           <a class="dropdown-item" (click)="agregarAdd(2)">2</a>
           <a class="dropdown-item" (click)="agregarAdd(3)">3</a>
           <a class="dropdown-item" (click)="agregarAdd(4)">4</a>
@@ -20,6 +139,8 @@
           <a class="dropdown-item" (click)="agregarAdd(9)">9</a>
           <a class="dropdown-item" (click)="agregarAdd(10)">10</a>
         </div>
+     
+      
     </div>
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -110,23 +231,152 @@
       <td *ngIf="validar1 == true">
       <button  type="button" class="btn btn-secondary" (click)="agregarCiclos()">Agregar</button>
       </td>
+</div> -->
+
+
+<br>
+
+
+<br/>
+<h5 style="margin-left: 50px">Agregar una instrucción</h5>
+<div class="btn-group" role="group">
+  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary" >INSTRUCTION:</button>
+  <select   type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+    <option selected>---</option>
+    <option (click)="agregarInst(0)">ADD</option>
+    <option (click)="agregarInst(1)">SUBD</option>
+    <option (click)="agregarInst(2)">MULD</option>
+    <option (click)="agregarInst(3)">DIV</option>
+    <option (click)="agregarInst(4)">STD</option>
+    <option (click)="agregarInst(5)">LDD</option>
+  </select> 
 </div>
 
+<div class="btn-group" role="group">
+  <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DST:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+    <option selected>---</option>
+    <option (click)="agregarDst(0)">r0</option>
+    <option (click)="agregarDst(1)">r1</option>
+    <option (click)="agregarDst(2)">r2</option>
+    <option (click)="agregarDst(3)">r3</option>
+    <option (click)="agregarDst(4)">r4</option>
+    <option (click)="agregarDst(5)">r5</option>
+    <option (click)="agregarDst(6)">r6</option>
+    <option (click)="agregarDst(7)">r7</option>
+    <option (click)="agregarDst(8)">r8</option>
+    <option (click)="agregarDst(9)">r9</option>
+    <option (click)="agregarDst(10)">r10</option>
+    <option (click)="agregarDst(11)">r11</option>
+    <option (click)="agregarDst(12)">r12</option>
+    <option (click)="agregarDst(13)">r13</option>
+    <option (click)="agregarDst(14)">r14</option>
+    <option (click)="agregarDst(15)">r15</option>
+    <option (click)="agregarDst(16)">r16</option>
+    <option (click)="agregarDst(17)">r17</option>
+    <option (click)="agregarDst(18)">r18</option>
+    <option (click)="agregarDst(19)">r19</option>
+    <option (click)="agregarDst(20)">r20</option>
+    <option (click)="agregarDst(21)">r21</option>
+    <option (click)="agregarDst(22)">r22</option>
+    <option (click)="agregarDst(23)">r23</option>
+    <option (click)="agregarDst(24)">r24</option>
+    <option (click)="agregarDst(25)">r25</option>
+    <option (click)="agregarDst(26)">r26</option>
+    <option (click)="agregarDst(27)">r27</option>
+    <option (click)="agregarDst(28)">r28</option>
+    <option (click)="agregarDst(29)">r29</option>
+    <option (click)="agregarDst(30)">r30</option>
+   </select> 
+</div> 
 
-<br>
-<br/>
-<br>
-<br/>
-<br>
-<br/>
-<h5>Agregar una instrucción</h5>
-<div class="btn-group" role="group" aria-label="Basic example"  >
+<div class="btn-group" role="group">
+  <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >OP1:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+    <option selected>---</option>
+    <option (click)="agregarOp1(0)">r0</option>
+    <option (click)="agregarOp1(1)">r1</option>
+    <option (click)="agregarOp1(2)">r2</option>
+    <option (click)="agregarOp1(3)">r3</option>
+    <option (click)="agregarOp1(4)">r4</option>
+    <option (click)="agregarOp1(5)">r5</option>
+    <option (click)="agregarOp1(6)">r6</option>
+    <option (click)="agregarOp1(7)">r7</option>
+    <option (click)="agregarOp1(8)">r8</option>
+    <option (click)="agregarOp1(9)">r9</option>
+    <option (click)="agregarOp1(10)">r10</option>
+    <option (click)="agregarOp1(11)">r11</option>
+    <option (click)="agregarOp1(12)">r12</option>
+    <option (click)="agregarOp1(13)">r13</option>
+    <option (click)="agregarOp1(14)">r14</option>
+    <option (click)="agregarOp1(15)">r15</option>
+    <option (click)="agregarOp1(16)">r16</option>
+    <option (click)="agregarOp1(17)">r17</option>
+    <option (click)="agregarOp1(18)">r18</option>
+    <option (click)="agregarOp1(19)">r19</option>
+    <option (click)="agregarOp1(20)">r20</option>
+    <option (click)="agregarOp1(21)">r21</option>
+    <option (click)="agregarOp1(22)">r22</option>
+    <option (click)="agregarOp1(23)">r23</option>
+    <option (click)="agregarOp1(24)">r24</option>
+    <option (click)="agregarOp1(25)">r25</option>
+    <option (click)="agregarOp1(26)">r26</option>
+    <option (click)="agregarOp1(27)">r27</option>
+    <option (click)="agregarOp1(28)">r28</option>
+    <option (click)="agregarOp1(29)">r29</option>
+    <option (click)="agregarOp1(30)">r30</option>
+   </select> 
+</div> 
+
+<div class="btn-group" role="group">
+  <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >OP2:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+    <option selected>---</option>
+    <option (click)="agregarOp2(0)">r0</option>
+    <option (click)="agregarOp2(1)">r1</option>
+    <option (click)="agregarOp2(2)">r2</option>
+    <option (click)="agregarOp2(3)">r3</option>
+    <option (click)="agregarOp2(4)">r4</option>
+    <option (click)="agregarOp2(5)">r5</option>
+    <option (click)="agregarOp2(6)">r6</option>
+    <option (click)="agregarOp2(7)">r7</option>
+    <option (click)="agregarOp2(8)">r8</option>
+    <option (click)="agregarOp2(9)">r9</option>
+    <option (click)="agregarOp2(10)">r10</option>
+    <option (click)="agregarOp2(11)">r11</option>
+    <option (click)="agregarOp2(12)">r12</option>
+    <option (click)="agregarOp2(13)">r13</option>
+    <option (click)="agregarOp2(14)">r14</option>
+    <option (click)="agregarOp2(15)">r15</option>
+    <option (click)="agregarOp2(16)">r16</option>
+    <option (click)="agregarOp2(17)">r17</option>
+    <option (click)="agregarOp2(18)">r18</option>
+    <option (click)="agregarOp2(19)">r19</option>
+    <option (click)="agregarOp2(20)">r20</option>
+    <option (click)="agregarOp2(21)">r21</option>
+    <option (click)="agregarOp2(22)">r22</option>
+    <option (click)="agregarOp2(23)">r23</option>
+    <option (click)="agregarOp2(24)">r24</option>
+    <option (click)="agregarOp2(25)">r25</option>
+    <option (click)="agregarOp2(26)">r26</option>
+    <option (click)="agregarOp2(27)">r27</option>
+    <option (click)="agregarOp2(28)">r28</option>
+    <option (click)="agregarOp2(29)">r29</option>
+    <option (click)="agregarOp2(30)">r30</option>
+   </select>
+</div> 
+<div class="btn-group" role="group">
+
+  <button  style="margin-left: 10px" type="button"  class="btn btn-secondary"  (click)="mostrarIns()" [disabled]="buttonDisabled" >Agregar</button>
+
+</div>
+<!-- <div class="btn-group" role="group" aria-label="Basic example"  >
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
           INSTRUCTION
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="agregarInst(0)"  >ADD</a>
+          <a class="dropdown-item" aria-haspopup="true" aria-expanded="true" (click)="agregarInst(0)">ADD</a>
           <a class="dropdown-item" (click)="agregarInst(1)" >SUBD</a>
           <a class="dropdown-item" (click)="agregarInst(2)" >MULD</a>
           <a class="dropdown-item" (click)="agregarInst(3)" >DIV</a>
@@ -169,17 +419,17 @@
           <a class="dropdown-item" (click)="agregarOp2(6)"(click)="validar()">r6</a>
           <a class="dropdown-item" (click)="agregarOp2(8)"(click)="validar()">r8</a>
         </div>
-    </div>
-    <td *ngIf="valido == true">
+    </div> -->
+ <!--    <td *ngIf="valido == true">
     <button  type="button"  class="btn btn-secondary" (click)="mostrarIns()"  >Agregar</button>
     </td>
 
-</div>
+</div> -->
 
 <br><br/>
 
-
-<div class="tabla">
+<h5 style="margin-left: 50px">Tabla de instrucciones</h5>
+<div style="margin-left: 50px" class="tabla">
 <table>
     <tr>
         <th>#</th>
@@ -205,13 +455,19 @@
 
 <br>
 <br/>
-<br>
-<br/>
-<br>
-<br/>
-<h5>Emisión en orden y finalización desordenada con ventana de 4 instrucciones(estación de reserva)</h5>
 
-<div class="tabla2">
+<h5 style="margin-left: 50px">Control</h5>
+<div class="btn-group" role="group">
+<button  type="button"  style="margin-left: 50px"  class="btn btn-secondary"  (click)="guardar()">Guardar</button>
+<button  type="button"   class="btn btn-secondary" (click)="editar()" >Editar</button>
+</div>
+
+<br>
+<br/>
+
+<h5 style="margin-left: 50px">Emisión en orden y finalización desordenada con ventana de 4 instrucciones(estación de reserva)</h5>
+
+<div style="margin-left: 50px" class="tabla2">
   <table class="egt">
       <thead>
       <tr>
@@ -222,7 +478,7 @@
           <th>UF2</th>
           <th colspan="12" >ROB</th>
           <div class="b1">
-            <button type="button"  class="btn btn-primary" (click)="siguienteCiclo()" > Siguiente Ciclo</button>
+            <button type="button" class="btn btn-primary" (click)="siguienteCiclo()" [disabled]="buttonEjecutar" > Siguiente Ciclo</button>
           </div>
       </tr>
       <tr>
@@ -285,11 +541,31 @@
    
   </table>
   </div>
-
   <br>
 <br/>
 
 
+<hr />
+
+  <div class="container p-3 my-3 bg-dark text-white">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+          <h6 >Cátedra:</h6>
+          <h6 >
+            Arquitectura de Computadoras y Técnicas Digitales <br>
+          </h6>
+      </div>
+      <div class="col-xs-12 col-md-6">
+      <div class="pull-right">
+      <h6 >Desarrollado por el alumno:</h6>
+      <h6 >
+        Federico Enrique Martinez <br>
+      </h6>
+      </div>
+      
+  </div>
+</div>  
+  </div>
 
   
 

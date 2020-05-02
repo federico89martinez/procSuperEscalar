@@ -16,6 +16,7 @@ import { Ins } from 'src/app/models/instruccion';
 export class AppComponent {
   title = 'procSuperEscalar';
 
+  
   i : number = 0;
   ii: number = 1;
   ss:string;
@@ -29,11 +30,14 @@ export class AppComponent {
   std: string;
   ldd: string;
 
+  
+
   dst: string;
   op1:string;
   op2: string;
 
-  r0;r2;r4;r6;r8: string;
+  r0;r1;r2;r3;r4;r5;r6;r7;r8;r9;r10;r11;r12;r13;r14;r15;
+  r16;r17;r18;r19;r20;r21;r22;r23;r24;r25;r26;r27;r28;r29;r30: string;
 
   
 
@@ -116,6 +120,22 @@ export class AppComponent {
    this.ciclosLdd=ldd;
  }
 
+ buttonDisabled: boolean = false;
+ buttonEjecutar: boolean = true;
+
+ guardar(){
+  alert('Se guardaron los datos');
+  this.buttonDisabled = true;
+  this.buttonEjecutar = false;
+ }
+
+ editar(){
+  this.buttonDisabled = false;
+  this.buttonEjecutar = true;
+ }
+
+
+
 
   
   agregarInst(ins){
@@ -131,30 +151,107 @@ export class AppComponent {
   
 
   agregarDst(dst){
-    if(dst == 0) this.dst= "r0"; 
+    if(dst == 0) this.dst= "r0";
+    if(dst == 1) this.dst= "r1"; 
     if(dst == 2) this.dst= "r2";
+    if(dst == 3) this.dst= "r3";
     if(dst == 4) this.dst= "r4";
+    if(dst == 5) this.dst= "r5";
     if(dst == 6) this.dst= "r6";
-    if(dst == 8) this.dst= "r8";
-
+    if(dst == 7) this.dst= "r7";
+    if(dst == 8) this.dst= "r8"; 
+    if(dst == 9) this.dst= "r9";
+    if(dst == 10) this.dst= "r10";
+    if(dst == 11) this.dst= "r11";
+    if(dst == 12) this.dst= "r12";
+    if(dst == 13) this.dst= "r13";
+    if(dst == 14) this.dst= "r14";
+    if(dst == 15) this.dst= "r15"; 
+    if(dst == 16) this.dst= "r16";
+    if(dst == 17) this.dst= "r17";
+    if(dst == 18) this.dst= "r18";
+    if(dst == 19) this.dst= "r19";
+    if(dst == 20) this.dst= "r20";
+    if(dst == 21) this.dst= "r21";
+    if(dst == 22) this.dst= "r22"; 
+    if(dst == 23) this.dst= "r23";
+    if(dst == 24) this.dst= "r24";
+    if(dst == 25) this.dst= "r25";
+    if(dst == 26) this.dst= "r26";
+    if(dst == 27) this.dst= "r27";
+    if(dst == 28) this.dst= "r28";
+    if(dst == 29) this.dst= "r29";
+    if(dst == 30) this.dst= "r30";
      
   }
 
   agregarOp1(op1){
-    if(op1 == 0)this.op1= "r0";
-    if(op1 == 2)this.op1= "r2"; 
+    if(op1 == 0) this.op1= "r0";
+    if(op1 == 1) this.op1= "r1"; 
+    if(op1 == 2) this.op1= "r2";
+    if(op1 == 3) this.op1= "r3";
     if(op1 == 4) this.op1= "r4";
+    if(op1 == 5) this.op1= "r5";
     if(op1 == 6) this.op1= "r6";
-    if(op1 == 8) this.op1= "r8";
+    if(op1 == 7) this.op1= "r7";
+    if(op1 == 8) this.op1= "r8"; 
+    if(op1 == 9) this.op1= "r9";
+    if(op1 == 10) this.op1= "r10";
+    if(op1 == 11) this.op1= "r11";
+    if(op1 == 12) this.op1= "r12";
+    if(op1 == 13) this.op1= "r13";
+    if(op1 == 14) this.op1= "r14";
+    if(op1 == 15) this.op1= "r15"; 
+    if(op1 == 16) this.op1= "r16";
+    if(op1 == 17) this.op1= "r17";
+    if(op1 == 18) this.op1= "r18";
+    if(op1 == 19) this.op1= "r19";
+    if(op1 == 20) this.op1= "r20";
+    if(op1 == 21) this.op1= "r21";
+    if(op1 == 22) this.op1= "r22"; 
+    if(op1 == 23) this.op1= "r23";
+    if(op1 == 24) this.op1= "r24";
+    if(op1 == 25) this.op1= "r25";
+    if(op1 == 26) this.op1= "r26";
+    if(op1 == 27) this.op1= "r27";
+    if(op1 == 28) this.op1= "r28";
+    if(op1 == 29) this.op1= "r29";
+    if(op1 == 30) this.op1= "r30";
 
   }
 
   agregarOp2(op2){
     if(op2 == 0) this.op2= "r0";
+    if(op2 == 1) this.op2= "r1"; 
     if(op2 == 2) this.op2= "r2";
+    if(op2 == 3) this.op2= "r3";
     if(op2 == 4) this.op2= "r4";
+    if(op2 == 5) this.op2= "r5";
     if(op2 == 6) this.op2= "r6";
-    if(op2 == 8) this.op2= "r8";
+    if(op2 == 7) this.op2= "r7";
+    if(op2 == 8) this.op2= "r8"; 
+    if(op2 == 9) this.op2= "r9";
+    if(op2 == 10) this.op2= "r10";
+    if(op2 == 11) this.op2= "r11";
+    if(op2 == 12) this.op2= "r12";
+    if(op2 == 13) this.op2= "r13";
+    if(op2 == 14) this.op2= "r14";
+    if(op2 == 15) this.op2= "r15"; 
+    if(op2 == 16) this.op2= "r16";
+    if(op2 == 17) this.op2= "r17";
+    if(op2 == 18) this.op2= "r18";
+    if(op2 == 19) this.op2= "r19";
+    if(op2 == 20) this.op2= "r20";
+    if(op2 == 21) this.op2= "r21";
+    if(op2 == 22) this.op2= "r22"; 
+    if(op2 == 23) this.op2= "r23";
+    if(op2 == 24) this.op2= "r24";
+    if(op2 == 25) this.op2= "r25";
+    if(op2 == 26) this.op2= "r26";
+    if(op2 == 27) this.op2= "r27";
+    if(op2 == 28) this.op2= "r28";
+    if(op2 == 29) this.op2= "r29";
+    if(op2 == 30) this.op2= "r30";
 
 
   }
@@ -250,7 +347,7 @@ export class AppComponent {
   ciclosMuld: number = 1;
   ciclosDiv: number = 1;
   ciclosStd: number = 1;
-  ciclosLdd: number = 6;
+  ciclosLdd: number = 1;
 
 
   quedaste71: boolean = false;
