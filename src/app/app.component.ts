@@ -15,7 +15,9 @@ import { Ins } from 'src/app/models/instruccion';
 
 export class AppComponent {
   title = 'procSuperEscalar';
-  netImage:any = "../assets/images/Seleccion_044.png";
+  // netImage:any = "../assets/images/Seleccion_044.png";
+  imageAlt = 'Seleccion_044.png'
+  imageSrc = 'assets/images/Seleccion_044.png'
 
   
   i : number = 0;
