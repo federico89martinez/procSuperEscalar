@@ -4,6 +4,7 @@ import { InstantiateExpr } from '@angular/compiler';
 import { Instru } from 'src/app/models/instruccion';
 import { In } from 'src/app/models/instruccion';
 import { Ins } from 'src/app/models/instruccion';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent {
   imageAlt = 'Seleccion_044.png'
   imageSrc = 'assets/images/Seleccion_044.png'
 
-  
+
   i : number = 0;
   ii: number = 1;
   ss:string;
@@ -33,7 +34,9 @@ export class AppComponent {
   std: string;
   ldd: string;
 
-  
+  cantidadDespacho: number = 1;
+  cantidadER : number = 1;
+  cantidadUF : number = 1;
 
   dst: string;
   op1:string;
@@ -48,8 +51,10 @@ export class AppComponent {
   ciclos:number=-1;
 
   instruccion : any  [] = new Array();
-
   instrucciones2 : any [] = new Array();
+  instrucciones3 : any [] = new Array();
+  instrucciones4 : any [] = new Array();
+  instrucciones5 : any [] = new Array();
   
   robb : any [] = new Array();
 
@@ -76,7 +81,7 @@ export class AppComponent {
   };
 
   rob:  In = {
-    d1:'', d2: '', e1: '',e2: '',e3: '',e4: '',uf1: '',uf2: '',
+    d1:'', d2: '', d3:'',  e1: '',e2: '',e3: '',e4: '',uf1: '',uf2: '',
     i1: '',s1: '',i2: '',s2: '',i3: '',s3: '',i4: '',s4: '',i5: '',s5: '',i6: '',s6: ''
   };
 
@@ -125,11 +130,14 @@ export class AppComponent {
 
  buttonDisabled: boolean = false;
  buttonEjecutar: boolean = true;
+ op2Disabled: boolean = false;
+ verTabla: boolean = false;
 
  guardar(){
-  alert('Se guardaron los datos');
+  //alert('Se guardaron los datos');
   this.buttonDisabled = true;
   this.buttonEjecutar = false;
+  this.verTabla = true;
  }
 
  editar(){
@@ -137,6 +145,17 @@ export class AppComponent {
   this.buttonEjecutar = true;
  }
 
+  instruccionFede: string;
+ 
+
+ obtenerInstru(ins){
+  if(ins == "STD") this.op2Disabled = true;
+  if(ins == "LDD") this.op2Disabled = true;
+  if(ins == "ADD") this.op2Disabled = false;
+  if(ins == "SUBD") this.op2Disabled = false;
+  if(ins == "MULD") this.op2Disabled = false;
+  if(ins == "DIV") this.op2Disabled = false;
+ }
 
 
 
@@ -148,7 +167,7 @@ export class AppComponent {
     if( ins == 3) this.ins = "DIV";
     if( ins == 4) this.ins = "STD";
     if( ins == 5) this.ins = "LDD";
-     
+    this.obtenerInstru(this.ins); 
   }
 
   
@@ -224,6 +243,7 @@ export class AppComponent {
   }
 
   agregarOp2(op2){
+    if(op2 == -1) this.op2= "--";
     if(op2 == 0) this.op2= "r0";
     if(op2 == 1) this.op2= "r1"; 
     if(op2 == 2) this.op2= "r2";
@@ -293,9 +313,9 @@ export class AppComponent {
     if (this.ins == "LDD"){
       this.instrucciones.c = this.ciclosLdd;
     }
-
-    this.instrucciones2.push(this.instrucciones);
     
+    this.instrucciones2.push(this.instrucciones);
+    console.log(this.instrucciones)
    } 
 
   mostrarIns(){
@@ -317,7 +337,6 @@ export class AppComponent {
     //ingresamos al arreglo el objeto
     this.instruccion.push(this.instru);
     this.valido=false;   
-
   }
   
   
@@ -376,116 +395,257 @@ export class AppComponent {
 
 
 
-  agregarDespacho(){
-    if(this.ciclos == -1){      
-       
-       this.ins1ss=this.instrucciones2[this.i].ss;
-       this.ins1c =this.instrucciones2[this.i].c;
-       this.instrucciones2.splice(this.i,1);
-       this.rob.d1=this.ins1ss;
-       this.rob.uf1='';      
-       this.ciclos++;
-       /* if(this.instrucciones2.length == 0){
-       this.robb.push(this.rob); 
-       } */
+  agregarDespacho1(){
+   
 
-       if(this.instrucciones2.length != 0){
-        this.ins2ss=this.instrucciones2[this.i].ss;
-        this.ins2c= this.instrucciones2[this.i].c
-        this.rob.d2=this.ins2ss;
-        this.instrucciones2.splice(this.i,1);
-        this.rob.uf2='';
-        //this.robb.push(this.rob); 
-       }
-    }
-     if((this.ciclos > 0) && (this.ciclos < 2)) {
-       if(this.instrucciones2.length != 0){
-        this.ins3ss=this.instrucciones2[this.i].ss;
-        this.ins3c=this.instrucciones2[this.i].c;
-        this.rob.d1=this.ins3ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-       if(this.instrucciones2.length != 0){
-        this.ins4ss=this.instrucciones2[this.i].ss;
-        this.ins4c=this.instrucciones2[this.i].c;
-        this.rob.d2=this.ins4ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-       
-    } 
-    if((this.ciclos > 1) && (this.ciclos < 3)){
-      if(this.instrucciones2.length != 0){
-        
-        this.ins5ss=this.instrucciones2[this.i].ss;
-        this.ins5c=this.instrucciones2[this.i].c;
-        this.rob.d1=this.ins5ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-       if(this.instrucciones2.length != 0){
-        
-        this.ins6ss=this.instrucciones2[this.i].ss;
-        this.ins6c=this.instrucciones2[this.i].c;
-        this.rob.d2=this.ins6ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-    }
-    if((this.ciclos > 2) && (this.ciclos < 4)){
-      if(this.instrucciones2.length != 0){
-        
-        this.ins7ss=this.instrucciones2[this.i].ss;
-        this.ins7c=this.instrucciones2[this.i].c;
-        this.rob.d1=this.ins7ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-       if(this.instrucciones2.length != 0){
-        
-        this.ins8ss=this.instrucciones2[this.i].ss;
-        this.ins8c=this.instrucciones2[this.i].c;
-        this.rob.d2=this.ins8ss;
-        this.instrucciones2.splice(this.i,1);
-       }
-    }
+      // ins1ss es la isntruccion y ins1c es la cantidad de ciclos que tiene
+    //    this.ins1ss=this.instrucciones2[this.i].ss;
+    //    this.ins1c =this.instrucciones2[this.i].c;
+    //    this.instrucciones2.splice(this.i,1);
+    //    this.rob.d1=this.ins1ss;
+    //    this.rob.uf1='';      
+    //    this.ciclos++;
+    //    /* if(this.instrucciones2.length == 0){
+    //    this.robb.push(this.rob); 
+    //    } */
 
-    if((this.ciclos > 3) && (this.ciclos < 5) ){
-      if(this.instrucciones2.length != 0){
-        this.ins9ss=this.instrucciones2[this.i].ss;
-        this.ins9c=this.instrucciones2[this.i].c;
-        this.instrucciones2.splice(this.i,1);
+    //    if(this.instrucciones2.length != 0){
+    //     this.ins2ss=this.instrucciones2[this.i].ss;
+    //     this.ins2c= this.instrucciones2[this.i].c
+    //     this.rob.d2=this.ins2ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //     this.rob.uf2='';
+    //     //this.robb.push(this.rob); 
+    //    }
+    // }
+    //  if((this.ciclos > 0) && (this.ciclos < 2)) {
+    //    if(this.instrucciones2.length != 0){
+    //     this.ins3ss=this.instrucciones2[this.i].ss;
+    //     this.ins3c=this.instrucciones2[this.i].c;
+    //     this.rob.d1=this.ins3ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+    //    if(this.instrucciones2.length != 0){
+    //     this.ins4ss=this.instrucciones2[this.i].ss;
+    //     this.ins4c=this.instrucciones2[this.i].c;
+    //     this.rob.d2=this.ins4ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+       
+    // } 
+    // if((this.ciclos > 1) && (this.ciclos < 3)){
+    //   if(this.instrucciones2.length != 0){
         
-        /* if(this.rob.d1 == ''){
-        this.ins9ss=this.instrucciones2[this.i].ss;
-        this.ins9c=this.instrucciones2[this.i].c;
-        this.rob.d1=this.ins9ss;
-        this.instrucciones2.splice(this.i,1);
-        }else {if (this.robb[this.ciclos-1].d2 == ''){
-           this.ins9ss=this.instrucciones2[this.i].ss;
-          this.ins9c=this.instrucciones2[this.i].c;
-          this.rob.d2=this.ins9ss;
-          this.instrucciones2.splice(this.i,1); 
-        }} */
-       }
-    }
+    //     this.ins5ss=this.instrucciones2[this.i].ss;
+    //     this.ins5c=this.instrucciones2[this.i].c;
+    //     this.rob.d1=this.ins5ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+    //    if(this.instrucciones2.length != 0){
+        
+    //     this.ins6ss=this.instrucciones2[this.i].ss;
+    //     this.ins6c=this.instrucciones2[this.i].c;
+    //     this.rob.d2=this.ins6ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+    // }
+    // if((this.ciclos > 2) && (this.ciclos < 4)){
+    //   if(this.instrucciones2.length != 0){
+        
+    //     this.ins7ss=this.instrucciones2[this.i].ss;
+    //     this.ins7c=this.instrucciones2[this.i].c;
+    //     this.rob.d1=this.ins7ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+    //    if(this.instrucciones2.length != 0){
+        
+    //     this.ins8ss=this.instrucciones2[this.i].ss;
+    //     this.ins8c=this.instrucciones2[this.i].c;
+    //     this.rob.d2=this.ins8ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //    }
+    // }
+
+    // if((this.ciclos > 3) && (this.ciclos < 5) ){
+    //   if(this.instrucciones2.length != 0){
+    //     this.ins9ss=this.instrucciones2[this.i].ss;
+    //     this.ins9c=this.instrucciones2[this.i].c;
+    //     this.instrucciones2.splice(this.i,1);
+        
+    //     /* if(this.rob.d1 == ''){
+    //     this.ins9ss=this.instrucciones2[this.i].ss;
+    //     this.ins9c=this.instrucciones2[this.i].c;
+    //     this.rob.d1=this.ins9ss;
+    //     this.instrucciones2.splice(this.i,1);
+    //     }else {if (this.robb[this.ciclos-1].d2 == ''){
+    //        this.ins9ss=this.instrucciones2[this.i].ss;
+    //       this.ins9c=this.instrucciones2[this.i].c;
+    //       this.rob.d2=this.ins9ss;
+    //       this.instrucciones2.splice(this.i,1); 
+    //     }} */
+    //    }
+    // }
+
+
+    //agregamos en el primer ciclo las intrucciones dependiendo de la cantidad de despachos
     
-
-  
-  }
-     
          
-
-  
-
-  
-  agregarER(){
-   if(this.ciclos > 0) {    
+     //ins1ss es la isntruccion y ins1c es la cantidad de ciclos que tiene
      
-     if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
-      this.rob.e1=this.ins1ss;
+     if(this.cantidadDespacho == 1 ){
+           if(this.ciclos == -1){
+            if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
+                this.ins1ss=this.instrucciones2[this.i].ss;
+                this.ins1c =this.instrucciones2[this.i].c;
+                this.instrucciones2.splice(this.i,1);
+                this.rob.d1=this.ins1ss;   
+                this.ciclos++;         
+            }
+          }
+            //if(this.ciclos > 0 && this.ciclos < 2){
+              if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
+                if(this.ins2ss == ""){
+                  this.ins2ss=this.instrucciones2[this.i].ss;
+                  this.ins2c=this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins2ss;
+                }else if(this.ins3ss == ''){
+                  this.ins3ss=this.instrucciones2[this.i].ss;
+                  this.ins3c =this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins3ss; 
+
+                }else if (this.ins4ss == ''){
+                  this.ins4ss=this.instrucciones2[this.i].ss;
+                  this.ins4c =this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins4ss; 
+                }
+                else if (this.ins5ss == ''){
+                  this.ins5ss=this.instrucciones2[this.i].ss;
+                  this.ins5c =this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins5ss; 
+                }else if (this.ins6ss == ''){
+                  this.ins6ss=this.instrucciones2[this.i].ss;
+                  this.ins6c =this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins6ss; 
+                }
+                else if (this.ins7ss == ''){
+                  this.ins7ss=this.instrucciones2[this.i].ss;
+                  this.ins7c =this.instrucciones2[this.i].c;
+                  this.instrucciones2.splice(this.i,1);
+                  this.rob.d1=this.ins7ss; 
+                }
+
+            }
+        }
+          //   if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
+          //     this.ins2ss=this.instrucciones2[this.i].ss;
+          //     this.ins2c =this.instrucciones2[this.i].c;
+          //     this.instrucciones2.splice(this.i,1);
+          //     this.rob.d2=this.ins2ss;   
+          //   }
+          //   if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
+          //     this.ins3ss=this.instrucciones2[this.i].ss;
+          //     this.ins3c =this.instrucciones2[this.i].c;
+          //     this.instrucciones2.splice(this.i,1);
+          //     this.rob.d3=this.ins3ss;   
+          //     }
+          //     if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
+          //       this.ins4ss=this.instrucciones2[this.i].ss;
+          //       this.ins4c =this.instrucciones2[this.i].c;
+          //       this.instrucciones2.splice(this.i,1);
+          //       this.rob.d4=this.ins4ss;   
+          //    }
+          //    if(isUndefined(this.rob.d5) && this.instrucciones2.length!= 0 ){
+          //     this.ins5ss=this.instrucciones2[this.i].ss;
+          //     this.ins5c =this.instrucciones2[this.i].c;
+          //     this.instrucciones2.splice(this.i,1);
+          //     this.rob.d5=this.ins5ss;   
+          //  }
+       
+ }
+  agregarDespacho2(){
+   if(this.cantidadDespacho == 2){
+      if(this.ciclos == -1){
+        if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
+            this.ins1ss=this.instrucciones2[this.i].ss;
+            this.ins1c =this.instrucciones2[this.i].c;
+            this.instrucciones2.splice(this.i,1);
+            this.rob.d1=this.ins1ss;   
+            this.ciclos++;         
+        }
+        if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
+          this.ins2ss=this.instrucciones2[this.i].ss;
+          this.ins2c =this.instrucciones2[this.i].c;
+          this.instrucciones2.splice(this.i,1);
+          this.rob.d2=this.ins2ss;     
+       }
+       }
+       if(this.ciclos>0){
+      if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
+          this.ins3ss=this.instrucciones2[this.i].ss;
+          this.ins3c =this.instrucciones2[this.i].c;
+          this.instrucciones2.splice(this.i,1);
+          this.rob.d1=this.ins3ss;     
+      }
+      if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
+        this.ins4ss=this.instrucciones2[this.i].ss;
+        this.ins4c =this.instrucciones2[this.i].c;
+        this.instrucciones2.splice(this.i,1);
+        this.rob.d2=this.ins4ss;     
+        }
+      }
+      
     }
-    if((this.robb[this.ciclos-1].uf2 == '') && (this.ins2c != 0)){
-      this.rob.e2=this.ins2ss;
-    }
+  }
+
+  
+  agregarER1(){
+  if(this.ciclos > 0) { 
+
+
+      if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
+        if(this.ins1ss != '')
+        this.rob.e1=this.ins1ss;
+        else if(this.ins2ss!= '')
+        this.rob.e1=this.ins2ss;
+      }
 
       if(this.ciclos > 1){
+        if(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 && this.ins1c != 0){
+          this.rob.e1 = this.ins1ss;
+          this.rob.uf1= this.ins1ss;
+        }else if (this.ins1c == 0 && this.ins2c != 0){
+          this.rob.e1 = this.ins2ss;
+          this.rob.uf1 = this.ins2ss;
+        }else if (this.ins2c == 0 && this.ins3c != 0){
+          this.rob.e1 = this.ins3ss;
+          this.rob.uf1 = this.ins3ss
+        }else if (this.ins3c == 0 && this.ins4c != 0){
+          this.rob.e1 = this.ins4ss;
+          this.rob.uf1 = this.ins4ss
+        }else if (this.ins4c == 0 && this.ins5c != 0){
+          this.rob.e1 = this.ins5ss;
+          this.rob.uf1 = this.ins5ss
+        }
+
+      }
+    
+    if(this.cantidadER == 2){
+      if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
+        this.rob.e1=this.ins1ss;
+      }
+      if((this.robb[this.ciclos-1].uf2 == '') && (this.ins2c != 0)){
+        this.rob.e2=this.ins2ss;
+      }
+    }
+   //parche para solo probar con ER
+   if(this.cantidadER != 1){
+      if(this.ciclos > 1){
+        
        //if((this.rob.e1 == this.rob.uf1))
       // console.log(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
        //console.log(this.ins3ss != this.robb[this.ciclos-1].uf1)
@@ -545,6 +705,7 @@ export class AppComponent {
     
 
     }
+  }
     
   }
 
@@ -553,13 +714,38 @@ export class AppComponent {
 
   agregarUf1(){
     if (this.ciclos > 0) {
-       if(this.ins1c != 0){
+
+    if(this.cantidadUF == 1){
+
+       if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 == ''){
        this.rob.uf1 = this.ins1ss;
-       
+       }
+       if(this.ciclos > 1){
+       if(this.ins2c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+        this.rob.uf1 = this.ins2ss;
+        }
+        if(this.ins3c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+          this.rob.uf1 = this.ins3ss;
+        }
+        if(this.ins4c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+          this.rob.uf1 = this.ins4ss;
+        }
+        if(this.ins5c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+          this.rob.uf1 = this.ins5ss;
+        }
       }
-      if(this.ins2c != 0){
-        this.rob.uf2 = this.ins2ss;
-      } 
+       
+
+    }
+    if(this.cantidadUF == 2){
+      if(this.ins1c != 0){
+        this.rob.uf1 = this.ins1ss;
+        }
+        if(this.ins2c != 0){
+          this.rob.uf2 = this.ins2ss;
+        }
+    }
+       
   }
   if (this.ciclos > 1){
 
@@ -896,16 +1082,164 @@ export class AppComponent {
   }
   
 
-  agregarRob(){
-    if (this.ciclos > 0) {
+  agregarRob4(cantidadER,cantidadUF){
 
+    // ER == 1 && UF == 1  ROB 4
+    // ER == 2 && UF == 1 || ER == 1 && UF == 2  ROB 6
+    // ER == 2 && UF == 2  || ER == 3 && UF == 1 || ER == 1 && UF == 3 ROB 8 PODEMOS HACERLO HASTA ACA?
+    // ER == 1 && UF == 4 || ER == 2 && UF == 3  || ER == 3 && UF == 2 || ER == 4 && UF == 1 ROB 10
+    // ER == 1 && UF == 5  || ER = 2 && UF=4 || cantidadER == 3 && cantidadUF==3 || cantidadER == 4 && cantidadUF==2  || cantidadER == 5 && cantidadUF==1 ROB 12
+    // cantidadER == 2 && cantidadUF==5 ||  cantidadER == 3 && cantidadUF==4 || cantidadER == 4 && cantidadUF==3 || cantidadER == 5 && cantidadUF==2 ROB 14 
+    // cantidadER == 3 && cantidadUF==5 || "cantidadER == 4 && cantidadUF==4 || cantidadER == 5 && cantidadUF==3 ROB 16
+    // cantidadER == 4 && cantidadUF==5 ||  cantidadER == 5 && cantidadUF==4 ROB 18
+    // cantidadER == 5 && cantidadUF==5  ROB 20
+
+    if (this.ciclos > 0){
+
+      //ROB 4
+      if(cantidadER == 1 && cantidadUF == 1){
+ 
+        if(this.rob.i1 == '') {
+       
+          if(this.ins1c != 0){
+           this.ins1c--;
+           this.rob.i1 = this.rob.uf1;
+           this.rob.s1 = "X";
+         //if(this.ins2ss == ''){ 
+           if((this.ins2c == 0) && (this.ins3c == 0)) {
+             //this.robb.push(this.rob);
+             
+         }
+         
+           }else{
+              if((this.ins1c == 0) && (this.v1)){
+                this.rob.i1 = this.ins1ss;
+                this.rob.s1 = "F";
+                this.v1 = false;
+          
+                if((this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss == '') || (this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss != '')){
+                  //this.robb.push(this.rob);
+                }
+                
+              }
+        
+             }
+      
+         if ((this.ins1c == 0 && !this.v) && (this.rob.s1 != "F") && this.ins2c != 0){
+            this.ins2c--;
+            this.rob.i1 = this.rob.uf1;
+            this.rob.s1 = "X";  
+
+          }else {
+            if((this.ins2c == 0) && (this.v2) && (this.robb[this.ciclos-1].i2 != this.ins2ss)){ //no debe entrar s2
+                  this.rob.i1 = this.ins2ss;
+                  this.rob.s1 = "F";
+                  this.v2 = false;
+                }
+            }
+     
+        if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v1) && (this.ins3c != 0)){
+        this.ins3c--;
+        this.rob.i1 = this.rob.uf1;
+        this.rob.s1 = "X";
+        } else if((this.ins3c == 0) && ("" != this.ins3ss) && (this.v3)){
+          this.rob.i1 = this.ins3ss;
+          this.rob.s1 = "F";
+          this.v3 = false;
+        }
+
+        if((this.ins1c == 0 && !this.v) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c != 0 )){
+          this.ins4c--;
+          this.rob.i1 = this.rob.uf1;
+          this.rob.s1 = "X";
+
+          } else if((this.ins4c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins4ss))  && ("" != this.ins4ss) && (this.v4)){
+            this.rob.i1 = this.ins4ss;
+            this.rob.s1 = "F";
+            this.v4 = false;
+          }
+
+          if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c == 0 && !this.v4)
+          && (this.ins5c != 0)){
+            this.ins5c--;
+            this.rob.i1 = this.rob.uf1;
+            this.rob.s1 = "X";
+            //
+            } else if((this.ins5c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins5ss) || (this.robb[this.ciclos-1].i2 == this.ins5ss)) && ("" != this.ins5ss) && (this.v5)){
+              this.rob.i1 = this.ins5ss;
+              this.rob.s1 = "F";
+              this.v5 = false;
+            }
+
+          
+
+   } 
+   if (this.rob.i2 == ''){
+        if((this.rob.uf1 == this.rob.e1 || this.rob.uf1 != "") && ((this.ins2ss == this.rob.uf1) || (this.ins4ss == this.rob.uf1)) ){
+          if (this.ins2c != 0){
+            this.ins2c--;
+            this.rob.i2 = this.rob.uf1;
+            this.rob.s2 = "X";  
+
+          }else if((this.ins2c == 0) && (this.ins2ss != "") && (this.v2)){
+                  this.rob.i2 = this.ins2ss;
+                  this.rob.s2 = "F";
+                  this.v2 = false;
+
+          }else if (this.ins4c != 0){
+            this.ins4c--;
+            this.rob.i2 = this.rob.uf1;
+            this.rob.s2 = "X";  
+
+          }else if (this.ins5c != 0){
+            this.ins5c--;
+            this.rob.i2 = this.rob.uf1;
+            this.rob.s2 = "X";  
+          }
+            
+        }else if ((this.ins2c == 0) && ("" != this.ins2ss) && (this.robb[this.ciclos-1].i2 == this.ins2ss) && (this.v2) ){
+                  this.rob.i2 = this.ins2ss;
+                  this.rob.s2 = "F";
+                  this.v2= false;
+        }else if ((this.ins4c == 0) && ("" != this.ins4ss) && (this.robb[this.ciclos-1].i2 == this.ins4ss) && (this.v4)){
+          this.rob.i2 = this.ins4ss;
+          this.rob.s2 = "F";
+          this.v4 = false;
+        }else if ((this.ins5c == 0) && ("" != this.ins5ss) &&  (this.robb[this.ciclos-1].i2 == this.ins5ss) && (this.v5)){
+          this.rob.i2 = this.ins5ss;
+          this.rob.s2 = "F";
+          this.v5 = false;
+        }
+        
+   }
+ 
+  } 
+
+    }
+       
+
+
+     if(this.ciclos > 1){
+      
+     }
+      
+
+
+
+
+
+
+
+
+
+    if (this.ciclos > 0) {
+     if(this.cantidadER == 4 && this.cantidadUF == 2){
      if(this.rob.i1 == '') {
        
        if(this.ins1c != 0){
         this.ins1c--;
         this.rob.i1 = this.rob.uf1;
         this.rob.s1 = "X";
-        console.log('entra1')
       //if(this.ins2ss == ''){ 
         if((this.ins2c == 0) && (this.ins3c == 0)) {
           //this.robb.push(this.rob);
@@ -920,7 +1254,6 @@ export class AppComponent {
         this.v = false;
   
         if((this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss == '') || (this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss != '')){
-          console.log('entra2')
           //this.robb.push(this.rob);
         }
         
@@ -1722,12 +2055,6 @@ if(this.ciclos>1){
 
 
       }
-       
-    }
-         
-
-       
-     
 
     }
 
@@ -1756,10 +2083,13 @@ if(this.ciclos>1){
       }
     }
   }
+}
+}
 
   
-  //creamos un nuevo objeto para el siguiente cilo
+  //creamos un nuevo objeto para el siguiente ciclo
   siguienteCiclo(){
+
     this.rob = new Object;
 
     this.rob.e1='';
@@ -1781,20 +2111,55 @@ if(this.ciclos>1){
     this.rob.i6='';
     this.rob.s6='';
 
-    this.agregarDespacho();
-    this.agregarER();
+    if(this.cantidadDespacho==1){
+    this.agregarDespacho1();
+    this.agregarER1();
     this.agregarUf1();
-    this.agregarRob();
-    this.robb.push(this.rob);
+    this.agregarRob4(this.cantidadER,this.cantidadUF);
+    }
+    if(this.cantidadDespacho==2){
+      this.agregarDespacho2();
+      this.agregarER1();
+      this.agregarUf1();
+      this.agregarRob4(this.cantidadER,this.cantidadUF);
+    }
     
+    if (!isUndefined(this.rob.d1) || !isUndefined(this.rob.d2) || 
+    this.rob.e1!= "" || this.rob.e2 != "" || this.rob.e3!= ""  || this.rob.e4!= "" || 
+    this.rob.uf1 != "" || this.rob.uf2!= "" ||
+    this.rob.i1 != "" || this.rob.s1 != ""  ||
+    this.rob.i2 != "" || this.rob.s2 != ""  ||
+    this.rob.i3 != "" || this.rob.s3 != ""  ||
+    this.rob.i4 != "" || this.rob.s4 != ""  ||
+    this.rob.i5 != "" || this.rob.s5 != ""  ||
+    this.rob.i6 != "" || this.rob.s6 != ""      
+    ){
+      
+      this.robb.push(this.rob);
+      this.ciclos++;
+   }
     
-    this.ciclos++;
-    console.log(this.ciclos)
+
+  };
+
+
+
+ // agregamos la cantidad de despacho, ER, UF
+  agregarDesp(cantidadDespacho){
+   this.cantidadDespacho = cantidadDespacho;
+  }
+  agregarEstReser(cantidadER){
+   this.cantidadER = cantidadER;
+  }
+  agregarUFMultFunc(cantidadUF){
+    this.cantidadUF = cantidadUF;
+
+  }
 
   }
 
 
 
-}
+
 
 

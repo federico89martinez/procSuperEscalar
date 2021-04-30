@@ -75,22 +75,6 @@
       </select> 
       </div> 
 
-      <div class="btn-group" role="group">
-        <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DIV:</button>
-        <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-          <option (click)="agregarDiv(1)">1</option>
-          <option (click)="agregarDiv(2)">2</option>
-          <option (click)="agregarDiv(3)">3</option>
-          <option (click)="agregarDiv(4)">4</option>
-          <option (click)="agregarDiv(5)">5</option>
-          <option (click)="agregarDiv(6)">6</option>
-          <option (click)="agregarDiv(7)">7</option>
-          <option (click)="agregarDiv(8)">8</option>
-          <option (click)="agregarDiv(9)">9</option>
-          <option (click)="agregarDiv(10)">10</option>
-        </select> 
-        </div> 
-
         <div class="btn-group" role="group">
           <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >STD:</button>
           <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
@@ -250,8 +234,8 @@
     <option (click)="agregarInst(1)">SUBD</option>
     <option (click)="agregarInst(2)">MULD</option>
     <option (click)="agregarInst(3)">DIV</option>
-    <option (click)="agregarInst(4)">STD</option>
-    <option (click)="agregarInst(5)">LDD</option>
+    <option (click)="agregarInst(4)" (click)="agregarOp2(-1)">STD</option>
+    <option (click)="agregarInst(5)" >LDD</option>
   </select> 
 </div>
 
@@ -330,10 +314,9 @@
     <option (click)="agregarOp1(30)">r30</option>
    </select> 
 </div> 
-
 <div class="btn-group" role="group">
   <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >OP2:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="op2Disabled" [disabled]="buttonDisabled">
     <option selected>---</option>
     <option (click)="agregarOp2(0)">r0</option>
     <option (click)="agregarOp2(1)">r1</option>
@@ -458,18 +441,580 @@
 
 <br>
 <br/>
-
-<h5 style="margin-left: 50px">Control</h5>
+<h5 style="margin-left: 50px">Despacho</h5>
 <div class="btn-group" role="group">
-<button  type="button"  style="margin-left: 50px"  class="btn btn-secondary"  (click)="guardar()">Guardar</button>
+  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary"  >GRADO:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
+    <option (click)="agregarDesp(1)">1</option>
+    <option (click)="agregarDesp(2)">2</option>
+    <option (click)="agregarDesp(3)">3</option>
+    <option (click)="agregarDesp(4)">4</option>
+    <option (click)="agregarDesp(5)">5</option>
+ </select>
+  </div>
+  <br>
+  <br/>
+  <h5 style="margin-left: 50px">Estaciones de Reserva</h5>
+<div class="btn-group" role="group">
+  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary"  >Cantidad:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
+    <option (click)="agregarEstReser(1)">1</option>
+    <option (click)="agregarEstReser(2)">2</option>
+    <option (click)="agregarEstReser(3)">3</option>
+    <option (click)="agregarEstReser(4)">4</option>
+    <option (click)="agregarEstReser(5)">5</option>
+ </select>
+  </div>
+  <br>
+  <br/>
+  <h5 style="margin-left: 50px">Unidades Funcionales</h5>
+<div class="btn-group" role="group">
+  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary"  >Multifuncion:</button>
+  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
+    <option (click)="agregarUFMultFunc(1)">1</option>
+    <option (click)="agregarUFMultFunc(2)">2</option>
+    <option (click)="agregarUFMultFunc(3)">3</option>
+    <option (click)="agregarUFMultFunc(4)">4</option>
+    <option (click)="agregarUFMultFunc(5)">5</option>
+ </select>
+  </div>
+  <br>
+  <br/>
+
+  
+<h5 style="margin-left: 50px">Control:</h5>
+<div class="btn-group" role="group">
+<button  type="button"  style="margin-left: 50px"  class="btn btn-secondary"  (click)="guardar()">Guardar </button>
 <button  type="button"   class="btn btn-secondary" (click)="editar()" >Editar</button>
 </div>
+
+
 
 <br>
 <br/>
 
-<h5 style="margin-left: 50px">Emisión en orden y finalización desordenada con ventana de 4 instrucciones(estación de reserva)</h5>
+<!-- <h5 style="margin-left: 50px">Emisión en orden y finalización desordenada con ventana de 4 instrucciones(estación de reserva)</h5> -->
+<!-- ESTA TABLA ES PARA 2 DESPACHOS Y 4 ESTACIONES DE RESERVA Y 2 UF -->
 
+<td *ngIf="verTabla == true"> 
+  <div  class="tabla2">
+    <table class="egt">
+        <thead>
+         <tr>
+            <th>Ciclos</th>
+            <th *ngIf="cantidadDespacho == 1" colspan="1">Despacho</th>
+            <th *ngIf="cantidadDespacho == 2" colspan="2">Despacho</th>
+            <th *ngIf="cantidadDespacho == 3" colspan="3">Despacho</th>
+            <th *ngIf="cantidadDespacho == 4" colspan="4">Despacho</th>
+            <th *ngIf="cantidadDespacho == 5" colspan="5">Despacho</th>
+            <th *ngIf="cantidadER == 1" colspan="1">Estaciones de Reserva</th>
+            <th *ngIf="cantidadER == 2" colspan="2">Estaciones de Reserva</th>
+            <th *ngIf="cantidadER == 3" colspan="3">Estaciones de Reserva</th>
+            <th *ngIf="cantidadER == 4" colspan="4">Estaciones de Reserva</th>
+            <th *ngIf="cantidadER == 5" colspan="5">Estaciones de Reserva</th>
+
+            <th *ngIf="cantidadUF == 1" colspan="1">UFMultFunc1</th>
+
+            <th *ngIf="cantidadUF == 2" colspan="1">UFMultFunc1</th>
+            <th *ngIf="cantidadUF == 2" colspan="1">UFMultFunc2</th>
+
+            <th *ngIf="cantidadUF == 3" colspan="1">UFMultFunc1</th>
+            <th *ngIf="cantidadUF == 3" colspan="1">UFMultFunc2</th>
+            <th *ngIf="cantidadUF == 3" colspan="1">UFMultFunc3</th>
+
+            <th *ngIf="cantidadUF == 4" colspan="1">UFMultFunc1</th>
+            <th *ngIf="cantidadUF == 4" colspan="1">UFMultFunc2</th>
+            <th *ngIf="cantidadUF == 4" colspan="1">UFMultFunc3</th>
+            <th *ngIf="cantidadUF == 4" colspan="1">UFMultFunc4</th>
+
+            <th *ngIf="cantidadUF == 5" colspan="1">UFMultFunc1</th>
+            <th *ngIf="cantidadUF == 5" colspan="1">UFMultFunc2</th>
+            <th *ngIf="cantidadUF == 5" colspan="1">UFMultFunc3</th>
+            <th *ngIf="cantidadUF == 5" colspan="1">UFMultFunc4</th>
+            <th *ngIf="cantidadUF == 5" colspan="1">UFMultFunc5</th>
+
+
+             <!-- cantidad de ER con 1 -->
+            <th *ngIf="cantidadER == 1 && cantidadUF==1" colspan="4" >ROB</th>
+            <th *ngIf="cantidadER == 1 && cantidadUF==2" colspan="6" >ROB</th>
+            <th *ngIf="cantidadER == 1 && cantidadUF==3" colspan="8" >ROB</th>
+            <th *ngIf="cantidadER == 1 && cantidadUF==4" colspan="10" >ROB</th>
+            <th *ngIf="cantidadER == 1 && cantidadUF==5" colspan="12" >ROB</th>
+             <!-- cantidad de ER con 2 -->
+             <th *ngIf="cantidadER == 2 && cantidadUF==1" colspan="6" >ROB</th>
+             <th *ngIf="cantidadER == 2 && cantidadUF==2" colspan="8" >ROB</th>
+             <th *ngIf="cantidadER == 2 && cantidadUF==3" colspan="10" >ROB</th>
+             <th *ngIf="cantidadER == 2 && cantidadUF==4" colspan="12" >ROB</th>
+             <th *ngIf="cantidadER == 2 && cantidadUF==5" colspan="14" >ROB</th>
+             <!-- cantidad de ER con 3 -->
+             <th *ngIf="cantidadER == 3 && cantidadUF==1" colspan="8" >ROB</th>
+             <th *ngIf="cantidadER == 3 && cantidadUF==2" colspan="10" >ROB</th>
+             <th *ngIf="cantidadER == 3 && cantidadUF==3" colspan="12" >ROB</th>
+             <th *ngIf="cantidadER == 3 && cantidadUF==4" colspan="14" >ROB</th>
+             <th *ngIf="cantidadER == 3 && cantidadUF==5" colspan="16" >ROB</th>
+             <!-- cantidad de ER con 4 -->
+             <th *ngIf="cantidadER == 4 && cantidadUF==1" colspan="10" >ROB</th>
+             <th *ngIf="cantidadER == 4 && cantidadUF==2" colspan="12" >ROB</th>
+             <th *ngIf="cantidadER == 4 && cantidadUF==3" colspan="14" >ROB</th>
+             <th *ngIf="cantidadER == 4 && cantidadUF==4" colspan="16" >ROB</th>
+             <th *ngIf="cantidadER == 4 && cantidadUF==5" colspan="18" >ROB</th>
+             <!-- cantidad de ER con 5 -->
+             <th *ngIf="cantidadER == 5 && cantidadUF==1" colspan="12" >ROB</th>
+             <th *ngIf="cantidadER == 5 && cantidadUF==2" colspan="14" >ROB</th>
+             <th *ngIf="cantidadER == 5 && cantidadUF==3" colspan="16" >ROB</th>
+             <th *ngIf="cantidadER == 5 && cantidadUF==4" colspan="18" >ROB</th>
+             <th *ngIf="cantidadER == 5 && cantidadUF==5" colspan="20" >ROB</th>
+
+            <div class="b1">
+              <button type="button" class="btn btn-primary" (click)="siguienteCiclo()" [disabled]="buttonEjecutar" > Siguiente Ciclo</button>
+            </div>
+        </tr>
+        <tr>
+          <th></th>   
+          <th *ngIf="cantidadDespacho == 1" colspan="1"></th>
+          <th *ngIf="cantidadDespacho == 2" colspan="2"></th>
+          <th *ngIf="cantidadDespacho == 3" colspan="3"></th>
+          <th *ngIf="cantidadDespacho == 4" colspan="4"></th>
+          <th *ngIf="cantidadDespacho == 5" colspan="5"></th>
+          <th *ngIf="cantidadER == 1" colspan="1"></th>
+          <th *ngIf="cantidadER == 2" colspan="2"></th>
+          <th *ngIf="cantidadER == 3" colspan="3"></th>
+          <th *ngIf="cantidadER == 4" colspan="4"></th>
+          <th *ngIf="cantidadER == 5" colspan="5"></th>
+
+          <th *ngIf="cantidadUF == 1" colspan="1"></th>
+          <th *ngIf="cantidadUF == 2" colspan="2"></th>
+          <th *ngIf="cantidadUF == 3" colspan="3"></th>
+          <th *ngIf="cantidadUF == 4" colspan="4"></th>
+          <th *ngIf="cantidadUF == 5" colspan="5"></th>
+          <!-- cantidad de ER con 1 -->
+          <th *ngIf="cantidadER == 1 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==1">S</th>
+
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==2">S</th>
+
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==3">S</th>
+
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==4">S</th>
+
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 1 && cantidadUF==5">S</th>
+
+          <!-- cantidad de ER con 2 -->
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==1">S</th>
+
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==2">S</th>
+
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==3">S</th>
+
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==4">S</th>
+
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 2 && cantidadUF==5">S</th>
+          <!-- cantidad de ER con 3 -->
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==1">S</th>
+
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 3 && cantidadUF==2">S</th>
+
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          
+          <!-- cantidad de ER con 4 -->
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==1">S</th>
+
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==2">S</th>
+
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==3">S</th>
+
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==4">S</th>
+
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 4 && cantidadUF==5">S</th>
+
+          <!-- cantidad de ER con 5 -->
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==1">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==2">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==3">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==4">S</th>
+
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">I</th>
+          <th *ngIf="cantidadER == 5 && cantidadUF==5">S</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        <tr *ngFor="let ins of robb; index as i">
+          <td td scope="row">{{i+1}}</td>
+          <td *ngIf="cantidadDespacho == 1">{{ins.d1}}</td>
+
+          <td *ngIf="cantidadDespacho == 2">{{ins.d1}}</td>
+          <td *ngIf="cantidadDespacho == 2">{{ins.d2}}</td>
+
+          <td *ngIf="cantidadDespacho == 3">{{ins.d1}}</td>
+          <td *ngIf="cantidadDespacho == 3">{{ins.d2}}</td>
+          <td *ngIf="cantidadDespacho == 3">{{ins.d3}}</td>
+
+          <td *ngIf="cantidadDespacho == 4">{{ins.d1}}</td>
+          <td *ngIf="cantidadDespacho == 4">{{ins.d2}}</td>
+          <td *ngIf="cantidadDespacho == 4">{{ins.d3}}</td>
+          <td *ngIf="cantidadDespacho == 4">{{ins.d4}}</td>
+
+          <td *ngIf="cantidadDespacho == 5">{{ins.d1}}</td>
+          <td *ngIf="cantidadDespacho == 5">{{ins.d2}}</td>
+          <td *ngIf="cantidadDespacho == 5">{{ins.d3}}</td>
+          <td *ngIf="cantidadDespacho == 5">{{ins.d4}}</td>
+          <td *ngIf="cantidadDespacho == 5">{{ins.d5}}</td>
+
+          <td *ngIf="cantidadER == 1">{{ins.e1}}</td>
+
+          <td *ngIf="cantidadER == 4">{{ins.e1}}</td>
+          <td *ngIf="cantidadER == 4">{{ins.e2}}</td>
+          <td *ngIf="cantidadER == 4">{{ins.e3}}</td>
+          <td *ngIf="cantidadER == 4">{{ins.e4}}</td>
+
+          <td *ngIf="cantidadUF == 1">{{ins.uf1}}</td>  
+
+          <td *ngIf="cantidadUF == 2">{{ins.uf1}}</td>  
+          <td *ngIf="cantidadUF == 2">{{ins.uf2}}</td>  
+
+          <td *ngIf="cantidadER == 1 && cantidadUF==1">{{ins.i1}}</td>
+          <td *ngIf="cantidadER == 1 && cantidadUF==1">{{ins.s1}}</td>
+          <td *ngIf="cantidadER == 1 && cantidadUF==1">{{ins.i2}}</td>
+          <td *ngIf="cantidadER == 1 && cantidadUF==1">{{ins.s2}}</td>
+
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i1}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s1}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i2}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s2}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i3}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s3}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i4}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s4}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i5}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s5}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.i6}}</td>
+          <td *ngIf="cantidadER == 4 && cantidadUF==2">{{ins.s6}}</td>
+        </tr>
+      </tbody>
+     
+    </table>
+    </div>
+   </td>
+
+<!-- 
+          <table id="tablaER" class="table table-bordered " *ngIf="executingROB">  
+            <thead>
+              <th *ngFor="let header of ERHeaders">
+                {{header}}
+              </th>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <table id="tablaUF" class="table table-bordered " *ngIf="executingROB">  
+            <thead>
+              <th *ngFor="let header of UFHeaders">
+                {{header}}
+              </th>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <table id="tablaROB" class="table table-bordered"  *ngIf="executingROB">  
+            <thead>
+              <th *ngFor="let header of ROBHeaders">
+                {{header}}
+              </th>
+            </thead>
+            <tbody></tbody>
+          </table> -->
+        
+   
+<!-- <td *ngIf="verTabla == true"> 
 <div  class="tabla2">
   <table class="egt">
       <thead>
@@ -477,15 +1022,15 @@
           <th>Ciclos</th>
           <th colspan="2">Despacho</th>
           <th colspan="4">Estaciones de Reserva</th>
-          <th>UF1</th>
-          <th>UF2</th>
+          <th>UFMultFunc1</th>
+          <th>UFMultFunc2</th>
           <th colspan="12" >ROB</th>
           <div class="b1">
             <button type="button" class="btn btn-primary" (click)="siguienteCiclo()" [disabled]="buttonEjecutar" > Siguiente Ciclo</button>
           </div>
       </tr>
       <tr>
-          <th ></th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -544,6 +1089,10 @@
    
   </table>
   </div>
+ </td> -->
+
+
+
   <br>
 <br/>
 
@@ -569,7 +1118,4 @@
   </div>
 </div>  
   </div>
-
-  
-
-<router-outlet></router-outlet>
+  <td *ngIf="cantidadER == 1">{{ins.e1}}</td>

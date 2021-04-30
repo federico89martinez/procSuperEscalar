@@ -125,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "procSuperEscalar"
+    }
+  },
+  "defaultProject": "procSuperEscalar",
+  "cli": {
+    "analytics": "6bce4a6d-6f9a-455b-90e5-d3a0e7e93fa3"
+  }
 }
