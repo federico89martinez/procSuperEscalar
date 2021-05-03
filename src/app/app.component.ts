@@ -601,28 +601,66 @@ export class AppComponent {
       
     }
   }
+  agregarDespacho3(){
+    if(this.ciclos == -1){
+      if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
+          this.ins1ss=this.instrucciones2[this.i].ss;
+          this.ins1c =this.instrucciones2[this.i].c;
+          this.instrucciones2.splice(this.i,1);
+          this.rob.d1=this.ins1ss;   
+          this.ciclos++;         
+      }
+      if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
+        this.ins2ss=this.instrucciones2[this.i].ss;
+        this.ins2c =this.instrucciones2[this.i].c;
+        this.instrucciones2.splice(this.i,1);
+        this.rob.d2=this.ins2ss;     
+     }
+     if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
+      this.ins3ss=this.instrucciones2[this.i].ss;
+      this.ins3c =this.instrucciones2[this.i].c;
+      this.instrucciones2.splice(this.i,1);
+      this.rob.d3=this.ins3ss;     
+   }
+     }
+     if(this.ciclos>0){
+    if(isUndefined(this.rob.d3) && (this.robb[this.ciclos-1].d3 != this.robb[this.ciclos-1].e1) 
+         && (this.robb[this.ciclos-1].d3 != '') ){
+        this.rob.d3=this.ins3ss;     
+    }
+    if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
+      this.ins4ss=this.instrucciones2[this.i].ss;
+      this.ins4c =this.instrucciones2[this.i].c;
+      this.instrucciones2.splice(this.i,1);
+      this.rob.d2=this.ins4ss;     
+      }
+    }
+  }
 
   
   agregarER1(){
   if(this.ciclos > 0) { 
 
 
-      if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
-        if(this.ins1ss != '')
-        this.rob.e1=this.ins1ss;
-        else if(this.ins2ss!= '')
-        this.rob.e1=this.ins2ss;
-      }
+      // if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
+      //   if(this.ins1ss != '')
+      //   this.rob.e1=this.ins1ss;
+      //   else if(this.ins2ss!= '')
+      //   this.rob.e1=this.ins2ss;
+      // }
 
       if(this.ciclos > 1){
-        if(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 && this.ins1c != 0){
-          this.rob.e1 = this.ins1ss;
-          this.rob.uf1= this.ins1ss;
-        }else if (this.ins1c == 0 && this.ins2c != 0){
-          this.rob.e1 = this.ins2ss;
-          this.rob.uf1 = this.ins2ss;
-        }else if (this.ins2c == 0 && this.ins3c != 0){
+        if(this.ins1c != 0){
+          if(this.ins2c != 0 && this.ins1c != 0 ){
+              this.rob.e1 = this.ins2ss;
+              this.rob.uf1= this.ins1ss;
+          }
+        }else if (this.ins1c == 0 && this.ins2c != 0 && this.ins3c != 0){
           this.rob.e1 = this.ins3ss;
+          this.rob.uf1 = this.ins2ss;
+        }else if (this.ins2c == 0 && this.ins3c != 0 ){
+          if(this.ins4c != 0){
+            this.rob.e1 = this.ins4ss;}
           this.rob.uf1 = this.ins3ss
         }else if (this.ins3c == 0 && this.ins4c != 0){
           this.rob.e1 = this.ins4ss;
@@ -1137,7 +1175,7 @@ export class AppComponent {
                   this.v2 = false;
                 }
             }
-     
+            
         if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v1) && (this.ins3c != 0)){
         this.ins3c--;
         this.rob.i1 = this.rob.uf1;
@@ -1146,6 +1184,10 @@ export class AppComponent {
           this.rob.i1 = this.ins3ss;
           this.rob.s1 = "F";
           this.v3 = false;
+        }            //se pone en espera la instruccion en el rob
+        else if(this.ins3c != 0 && (this.rob.e1 == this.ins3ss)){
+          this.rob.i1 = this.rob.e1;
+          this.rob.s1 = "I";
         }
 
         if((this.ins1c == 0 && !this.v) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c != 0 )){
@@ -1157,6 +1199,10 @@ export class AppComponent {
             this.rob.i1 = this.ins4ss;
             this.rob.s1 = "F";
             this.v4 = false;
+          }
+          else if(this.ins3c == 0 && this.ins4c != 0 && (this.rob.e1 == this.ins4ss) && (this.robb[this.ciclos-1].i2 != this.ins4ss)){
+            this.rob.i1 = this.rob.e1;
+            this.rob.s1 = "I";
           }
 
           if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c == 0 && !this.v4)
@@ -1196,8 +1242,20 @@ export class AppComponent {
             this.rob.i2 = this.rob.uf1;
             this.rob.s2 = "X";  
           }
-            
-        }else if ((this.ins2c == 0) && ("" != this.ins2ss) && (this.robb[this.ciclos-1].i2 == this.ins2ss) && (this.v2) ){
+         //le ponemos en espera al rob con la instruccion 
+        }else if(this.ins2c != 0 && (this.rob.e1 == this.ins2ss)){
+            this.rob.i2 = this.rob.e1;
+            this.rob.s2 = "I";
+
+        }else if(this.ins3c != 0 && (this.rob.e1 == this.ins3ss)){
+          this.rob.i2 = this.rob.e1;
+          this.rob.s2 = "I";
+      }else if(this.ins4c != 0 && (this.rob.e1 == this.ins4ss)){
+        this.rob.i2 = this.rob.e1;
+        this.rob.s2 = "I";
+    }
+        
+        else if ((this.ins2c == 0) && ("" != this.ins2ss) && (this.robb[this.ciclos-1].i2 == this.ins2ss) && (this.v2) ){
                   this.rob.i2 = this.ins2ss;
                   this.rob.s2 = "F";
                   this.v2= false;
@@ -2119,6 +2177,12 @@ if(this.ciclos>1){
     }
     if(this.cantidadDespacho==2){
       this.agregarDespacho2();
+      this.agregarER1();
+      this.agregarUf1();
+      this.agregarRob4(this.cantidadER,this.cantidadUF);
+    }
+    if(this.cantidadDespacho==3){
+      this.agregarDespacho3();
       this.agregarER1();
       this.agregarUf1();
       this.agregarRob4(this.cantidadER,this.cantidadUF);
