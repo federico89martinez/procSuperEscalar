@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 import { InstantiateExpr } from '@angular/compiler';
 import { Instru } from 'src/app/models/instruccion';
 import { In } from 'src/app/models/instruccion';
 import { Ins } from 'src/app/models/instruccion';
 import { isUndefined } from 'util';
+
+
+import { Instruccion } from './Instruccion';
+import { ProcesadorSuperEscalar } from './ProcesadorSuperEscalar';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-root',
@@ -14,13 +24,14 @@ import { isUndefined } from 'util';
 
 
 
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'procSuperEscalar';
   // netImage:any = "../assets/images/Seleccion_044.png";
   imageAlt = 'Seleccion_044.png'
   imageSrc = 'assets/images/Seleccion_044.png'
 
 
+  // VARIABLES 
   i : number = 0;
   ii: number = 1;
   ss:string;
@@ -33,7 +44,7 @@ export class AppComponent {
   div: string;
   std: string;
   ldd: string;
-
+  //inicilizamos la cantidad de despacho y la er
   cantidadDespacho: number = 1;
   cantidadER : number = 1;
   cantidadUF : number = 1;
@@ -85,11 +96,43 @@ export class AppComponent {
     i1: '',s1: '',i2: '',s2: '',i3: '',s3: '',i4: '',s4: '',i5: '',s5: '',i6: '',s6: ''
   };
 
+  Instrucciones = [
+    { tipo: "ADD", 
+    ciclo: 1},
+    { tipo: "SUBD", 
+    ciclo: 1},
+    { tipo: "MULD", 
+    ciclo: 1},
+    { tipo: "DIV", 
+    ciclo: 1},
+    { tipo: "STD", 
+    ciclo: 1},
+    { tipo: "LDD", 
+    ciclo: 1}
+  ];
+
+
+  sizeROB:number = 0;
+  procesador:ProcesadorSuperEscalar
+
+
+  cantidadMultiFuncion = 0;
+  cantidadMemoria = 0;
+  cantidadAritmetica = 0;
   
+  filasCiclos: Array<string>;
+  Despacho: Array<string>;
+  EstacionReserva: Array<string>;
+  UnidadFuncional: Array<string>;
+  ROB: Array<string>;
+  listInstrucciones = new Array<Instruccion>();
+  idInstruccion = 1;
+  mostrarTabla = false;
   
   constructor(){ }
 
-  
+  ngOnInit(){
+  }
 
   validar(){
     this.valido=true;
@@ -137,7 +180,14 @@ export class AppComponent {
   //alert('Se guardaron los datos');
   this.buttonDisabled = true;
   this.buttonEjecutar = false;
-  this.verTabla = true;
+   if(this.cantidadMultiFuncion == 0 && this.cantidadAritmetica == 0 && this.cantidadMemoria == 0){
+     
+    alert('Se precisa seleccionar al menos una unidad funcional');
+    this.mostrarTabla = false;
+
+  }else this.mostrarTabla = true;
+
+
  }
 
  editar(){
@@ -315,7 +365,6 @@ export class AppComponent {
     }
     
     this.instrucciones2.push(this.instrucciones);
-    console.log(this.instrucciones)
    } 
 
   mostrarIns(){
@@ -327,7 +376,6 @@ export class AppComponent {
     this.generarS();
     this.generarInsCicl();
     
-    
     this.instru.s=this.s;
     this.instru.i=this.ins;
     this.instru.d=this.dst;
@@ -337,8 +385,67 @@ export class AppComponent {
     //ingresamos al arreglo el objeto
     this.instruccion.push(this.instru);
     this.valido=false;   
+    //this.listInstrucciones.push(this.instru);
+    this.idInstruccion = this.listInstrucciones.length + 1;
+    //let instNueva = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"MULTIFUNCT");
+    if(this.ins == "ADD"){               
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"ARITMETICA");
+      this.listInstrucciones.push(instruccionIngresar);
+        for (const tipoInstruccion of this.Instrucciones){
+          //seteamos los ciclos a la instruccion
+          if(tipoInstruccion.tipo == "ADD"){
+          tipoInstruccion.ciclo = this.ciclosAdd;
+          }
+        }
+    }else if (this.ins == "SUBD"){
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"ARITMETICA");
+      this.listInstrucciones.push(instruccionIngresar);
+        for (let tipoInstruccion of this.Instrucciones){
+          //seteamos los ciclos a la instruccion
+          if(tipoInstruccion.tipo == "SUBD"){
+          tipoInstruccion.ciclo = this.ciclosSubd;
+          }
+        }
+    }else if (this.ins == "MULD"){
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"ARITMETICA");
+      this.listInstrucciones.push(instruccionIngresar);
+      for (let tipoInstruccion of this.Instrucciones){
+        //seteamos los ciclos a la instruccion
+        if(tipoInstruccion.tipo == "MULD")
+          tipoInstruccion.ciclo = this.ciclosMuld;
+      }
+    }else if (this.ins == "DIV"){
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"ARITMETICA");
+      this.listInstrucciones.push(instruccionIngresar);
+      for (let tipoInstruccion of this.Instrucciones){
+        //seteamos los ciclos a la instruccion
+        if(tipoInstruccion.tipo == "DIV")
+        tipoInstruccion.ciclo = this.ciclosDiv;
+      }
+    }else if (this.ins == "STD"){
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"MEMORIA");
+      this.listInstrucciones.push(instruccionIngresar);
+      for (let tipoInstruccion of this.Instrucciones){
+        //seteamos los ciclos a la instruccion
+        if(tipoInstruccion.tipo == "STD")
+        tipoInstruccion.ciclo = this.ciclosStd;
+      }
+     }else if (this.ins == "LDD"){
+      let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"MEMORIA");
+      this.listInstrucciones.push(instruccionIngresar);
+      for (let tipoInstruccion of this.Instrucciones){
+        //seteamos los ciclos a la instruccion
+        if(tipoInstruccion.tipo == "LDD")
+        tipoInstruccion.ciclo = this.ciclosLdd;
+      }
+     }    
+    //let instNueva = new  Instruccion("S" + this.idInstruccion,"ADD", "DST","OP1","","MULTIFUNCT");
+    
   }
   
+  guardarCiclos(){
+    this.saveCiclos();
+  }
   
 
   ///////////////////////////////////////ROB///////////////////////////////
@@ -358,12 +465,9 @@ export class AppComponent {
   v2: boolean = true;
   v3: boolean = true;
   v4: boolean = true;
-  v5: boolean = true;
-  v6: boolean = true;
-  v7: boolean = true;
-  v8: boolean = true;
-  v9: boolean = true;
 
+
+  //Inicializamos los ciclos de cada instruccion
   ciclosAdd: number = 1;
   ciclosSubd: number = 1;
   ciclosMuld: number = 1;
@@ -371,122 +475,8 @@ export class AppComponent {
   ciclosStd: number = 1;
   ciclosLdd: number = 1;
 
-
-  quedaste71: boolean = false;
-  quedaste72: boolean = false;
-  quedaste73: boolean = false;
-  quedaste74: boolean = false;
-  quedaste75: boolean = false;
-  quedaste76: boolean = false;
-
-  quedaste81: boolean = false;
-  quedaste82: boolean = false;
-  quedaste83: boolean = false;
-  quedaste84: boolean = false;
-  quedaste85: boolean = false;
-  quedaste86: boolean = false;
-
-  quedaste91: boolean = false;
-  quedaste92: boolean = false;
-  quedaste93: boolean = false;
-  quedaste94: boolean = false;
-  quedaste95: boolean = false;
-  quedaste96: boolean = false;
-
-
-
   agregarDespacho1(){
-   
-
-      // ins1ss es la isntruccion y ins1c es la cantidad de ciclos que tiene
-    //    this.ins1ss=this.instrucciones2[this.i].ss;
-    //    this.ins1c =this.instrucciones2[this.i].c;
-    //    this.instrucciones2.splice(this.i,1);
-    //    this.rob.d1=this.ins1ss;
-    //    this.rob.uf1='';      
-    //    this.ciclos++;
-    //    /* if(this.instrucciones2.length == 0){
-    //    this.robb.push(this.rob); 
-    //    } */
-
-    //    if(this.instrucciones2.length != 0){
-    //     this.ins2ss=this.instrucciones2[this.i].ss;
-    //     this.ins2c= this.instrucciones2[this.i].c
-    //     this.rob.d2=this.ins2ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //     this.rob.uf2='';
-    //     //this.robb.push(this.rob); 
-    //    }
-    // }
-    //  if((this.ciclos > 0) && (this.ciclos < 2)) {
-    //    if(this.instrucciones2.length != 0){
-    //     this.ins3ss=this.instrucciones2[this.i].ss;
-    //     this.ins3c=this.instrucciones2[this.i].c;
-    //     this.rob.d1=this.ins3ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-    //    if(this.instrucciones2.length != 0){
-    //     this.ins4ss=this.instrucciones2[this.i].ss;
-    //     this.ins4c=this.instrucciones2[this.i].c;
-    //     this.rob.d2=this.ins4ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-       
-    // } 
-    // if((this.ciclos > 1) && (this.ciclos < 3)){
-    //   if(this.instrucciones2.length != 0){
-        
-    //     this.ins5ss=this.instrucciones2[this.i].ss;
-    //     this.ins5c=this.instrucciones2[this.i].c;
-    //     this.rob.d1=this.ins5ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-    //    if(this.instrucciones2.length != 0){
-        
-    //     this.ins6ss=this.instrucciones2[this.i].ss;
-    //     this.ins6c=this.instrucciones2[this.i].c;
-    //     this.rob.d2=this.ins6ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-    // }
-    // if((this.ciclos > 2) && (this.ciclos < 4)){
-    //   if(this.instrucciones2.length != 0){
-        
-    //     this.ins7ss=this.instrucciones2[this.i].ss;
-    //     this.ins7c=this.instrucciones2[this.i].c;
-    //     this.rob.d1=this.ins7ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-    //    if(this.instrucciones2.length != 0){
-        
-    //     this.ins8ss=this.instrucciones2[this.i].ss;
-    //     this.ins8c=this.instrucciones2[this.i].c;
-    //     this.rob.d2=this.ins8ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //    }
-    // }
-
-    // if((this.ciclos > 3) && (this.ciclos < 5) ){
-    //   if(this.instrucciones2.length != 0){
-    //     this.ins9ss=this.instrucciones2[this.i].ss;
-    //     this.ins9c=this.instrucciones2[this.i].c;
-    //     this.instrucciones2.splice(this.i,1);
-        
-    //     /* if(this.rob.d1 == ''){
-    //     this.ins9ss=this.instrucciones2[this.i].ss;
-    //     this.ins9c=this.instrucciones2[this.i].c;
-    //     this.rob.d1=this.ins9ss;
-    //     this.instrucciones2.splice(this.i,1);
-    //     }else {if (this.robb[this.ciclos-1].d2 == ''){
-    //        this.ins9ss=this.instrucciones2[this.i].ss;
-    //       this.ins9c=this.instrucciones2[this.i].c;
-    //       this.rob.d2=this.ins9ss;
-    //       this.instrucciones2.splice(this.i,1); 
-    //     }} */
-    //    }
-    // }
-
-
+ 
     //agregamos en el primer ciclo las intrucciones dependiendo de la cantidad de despachos
     
          
@@ -541,31 +531,7 @@ export class AppComponent {
 
             }
         }
-          //   if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
-          //     this.ins2ss=this.instrucciones2[this.i].ss;
-          //     this.ins2c =this.instrucciones2[this.i].c;
-          //     this.instrucciones2.splice(this.i,1);
-          //     this.rob.d2=this.ins2ss;   
-          //   }
-          //   if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
-          //     this.ins3ss=this.instrucciones2[this.i].ss;
-          //     this.ins3c =this.instrucciones2[this.i].c;
-          //     this.instrucciones2.splice(this.i,1);
-          //     this.rob.d3=this.ins3ss;   
-          //     }
-          //     if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
-          //       this.ins4ss=this.instrucciones2[this.i].ss;
-          //       this.ins4c =this.instrucciones2[this.i].c;
-          //       this.instrucciones2.splice(this.i,1);
-          //       this.rob.d4=this.ins4ss;   
-          //    }
-          //    if(isUndefined(this.rob.d5) && this.instrucciones2.length!= 0 ){
-          //     this.ins5ss=this.instrucciones2[this.i].ss;
-          //     this.ins5c =this.instrucciones2[this.i].c;
-          //     this.instrucciones2.splice(this.i,1);
-          //     this.rob.d5=this.ins5ss;   
-          //  }
-       
+         
  }
   agregarDespacho2(){
    if(this.cantidadDespacho == 2){
@@ -622,19 +588,24 @@ export class AppComponent {
       this.instrucciones2.splice(this.i,1);
       this.rob.d3=this.ins3ss;     
    }
+   if(this.instrucciones2.length!= 0 ){
+    this.ins4ss=this.instrucciones2[this.i].ss;
+    this.ins4c =this.instrucciones2[this.i].c;
+    this.instrucciones2.splice(this.i,1); 
+ }
      }
      if(this.ciclos>0){
     if(isUndefined(this.rob.d3) && (this.robb[this.ciclos-1].d3 != this.robb[this.ciclos-1].e1) 
-         && (this.robb[this.ciclos-1].d3 != '') ){
+         && (!isUndefined(this.robb[this.ciclos-1].d3)) ){
         this.rob.d3=this.ins3ss;     
     }
-    if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
-      this.ins4ss=this.instrucciones2[this.i].ss;
-      this.ins4c =this.instrucciones2[this.i].c;
-      this.instrucciones2.splice(this.i,1);
-      this.rob.d2=this.ins4ss;     
+    //if(this.ciclos>1){
+    if((this.robb[this.ciclos-1].d2 != this.robb[this.ciclos-1].e1) 
+    && (!isUndefined(this.robb[this.ciclos-1].d2) )){
+      this.rob.d2=this.ins4ss;      
       }
-    }
+    //}
+  }
   }
 
   
@@ -727,29 +698,53 @@ export class AppComponent {
           if(this.rob.i1 == '' ){this.rob.e1=this.ins7ss; }
         }
       }
+    }
 
-      /* if((this.ins8ss != '') && (this.ins8c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
-        || (this.robb[this.ciclos-1].e2 == this.robb[this.ciclos-1].uf1) 
-        || (this.robb[this.ciclos-1].e3 == this.robb[this.ciclos-1].uf1)
-        || (this.robb[this.ciclos-1].e4 == this.robb[this.ciclos-1].uf1)  
-        && (this.ins8ss != this.robb[this.ciclos-1].uf1)){
-          if(this.rob.i1 == '' ){this.rob.e2=this.ins8ss; }
+    
+
+    }
+  }
+    
+  }
+
+  agregarER2(){
+    if(this.ciclos > 0) { 
+        if(this.ciclos == 1){
+          this.rob.e1 = this.ins1ss;
+          this.rob.e2 = this.ins2ss;
         }
-      } */
-      
-    }
+      if(this.ciclos > 1){
+        if(this.ins1c != 0){
+          if(this.ins2c != 0 && this.instrucciones2.length == 0){
+                this.rob.e2 = this.ins2ss;
+          }
 
-    
+          if(this.ins2c != 0 && this.ins3c != 0 && this.ins1c != 0 ){
+              this.rob.e1 = this.ins2ss;
+              this.rob.e2 = this.ins3ss;
+              this.rob.uf1= this.ins1ss;
+          }
+        }else if (this.ins1c == 0 && this.ins2c != 0 && this.ins3c != 0){
+          this.rob.e1 = this.ins3ss;
+          if(this.ins4c != 0){
+              this.rob.e2 = this.ins4ss;
+          }
+          this.rob.uf1 = this.ins2ss;
+        }else if (this.ins2c == 0 && this.ins3c != 0 ){
+          if(this.ins4c != 0){
+            this.rob.e2 = this.ins4ss;}
+          this.rob.uf1 = this.ins3ss
+         }else if (this.ins3c == 0 && this.ins4c != 0){
+           this.rob.e2 = this.ins4ss;
+           this.rob.uf1 = this.ins4ss
+        }else if (this.ins4c == 0 && this.ins5c != 0){
+          this.rob.e1 = this.ins5ss;
+          this.rob.uf1 = this.ins5ss
+        }
 
-    }
+      }
+    } 
   }
-    
-  }
-
-  
-  
-
   agregarUf1(){
     if (this.ciclos > 0) {
 
@@ -759,7 +754,10 @@ export class AppComponent {
        this.rob.uf1 = this.ins1ss;
        }
        if(this.ciclos > 1){
-       if(this.ins2c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+        if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 != '') {
+          this.rob.uf1 = this.ins1ss;
+        }
+       if(this.ins2c != 0 && this.ins1c == 0 && this.robb[this.ciclos-1].uf1 != ''){
         this.rob.uf1 = this.ins2ss;
         }
         if(this.ins3c != 0 && this.robb[this.ciclos-1].uf1 == ''){
@@ -775,352 +773,43 @@ export class AppComponent {
        
 
     }
-    if(this.cantidadUF == 2){
-      if(this.ins1c != 0){
-        this.rob.uf1 = this.ins1ss;
-        }
-        if(this.ins2c != 0){
-          this.rob.uf2 = this.ins2ss;
-        }
-    }
-       
+   
+      
   }
-  if (this.ciclos > 1){
-
-      if((this.ins1c == 0) || (this.ins2c == 0)){
-        if(this.ins3c != 0){
- 
-         if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins3ss) && (this.ins3c!=0) ) {
-          this.rob.uf1 = this.ins3ss;
-         }else
-         {
-           if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins3ss) && (this.ins3c!=0)){
-           this.rob.uf2 = this.ins3ss;}
-           else{
-             if((this.rob.uf1 == '') && (this.ins3c != 0)){
-              this.rob.uf1 = this.ins3ss;
-             }else{
-              if((this.rob.uf2 == '') && (this.ins3c != 0)){
-              this.rob.uf2 = this.ins3ss;}
-             }
-           }
-         }
-         }
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0)){
-
-        if(this.ins4c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins4ss) && (this.ins4c!=0) ) {
-           this.rob.uf1 = this.ins4ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins4ss) && (this.ins4c!=0)){
-            this.rob.uf2 = this.ins4ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins4c != 0)){
-               this.rob.uf1 = this.ins4ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins4c != 0)){
-               this.rob.uf2 = this.ins4ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0)){
-
-        if(this.ins5c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins5ss) && (this.ins5c!=0) ) {
-           this.rob.uf1 = this.ins5ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins5ss) && (this.ins5c!=0)){
-            this.rob.uf2 = this.ins5ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins5c != 0)){
-               this.rob.uf1 = this.ins5ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins5c != 0)){
-               this.rob.uf2 = this.ins5ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)){
-
-        if(this.ins6c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins6ss) && (this.ins6c!=0) ) {
-           this.rob.uf1 = this.ins6ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins6ss) && (this.ins6c!=0)){
-            this.rob.uf2 = this.ins6ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins6c != 0)){
-               this.rob.uf1 = this.ins6ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins6c != 0)){
-               this.rob.uf2 = this.ins6ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)
-      || (this.ins6c == 0)){
-
-        if(this.ins7c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins7ss) && (this.ins7c!=0) ) {
-           this.rob.uf1 = this.ins7ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins7ss) && (this.ins7c!=0)){
-            this.rob.uf2 = this.ins7ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins7c != 0)){
-               this.rob.uf1 = this.ins7ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins7c != 0)){
-               this.rob.uf2 = this.ins7ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)
-      || (this.ins6c == 0) ||  (this.ins7c == 0)){
-
-        if(this.ins8c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins8ss) && (this.ins8c!=0) ) {
-           this.rob.uf1 = this.ins8ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins8ss) && (this.ins8c!=0)){
-            this.rob.uf2 = this.ins8ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins8c != 0)){
-               this.rob.uf1 = this.ins8ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins8c != 0)){
-               this.rob.uf2 = this.ins8ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-      if((this.ins1c == 0) || (this.ins2c == 0) || (this.ins3c == 0) || (this.ins4c == 0) || (this.ins5c == 0)
-      || (this.ins6c == 0) ||  (this.ins7c == 0) || (this.ins8c == 0)){
-
-        if(this.ins9c != 0){
- 
-          if( (this.rob.uf1 == '') && (this.robb[this.ciclos-1].uf1 == this.ins9ss) && (this.ins9c!=0) ) {
-           this.rob.uf1 = this.ins9ss;
-          }else
-          {
-            if((this.rob.uf2 == '') && (this.robb[this.ciclos-1].uf2 == this.ins9ss) && (this.ins9c!=0)){
-            this.rob.uf2 = this.ins9ss;}
-            else{
-              if((this.rob.uf1 == '') && (this.ins9c != 0)){
-               this.rob.uf1 = this.ins9ss;
-              }else{
-               if((this.rob.uf2 == '') && (this.ins9c != 0)){
-               this.rob.uf2 = this.ins9ss;}
-              }
-            }
-          }
-          }
-
-
-      }
-
-    }
-
   }
 
-  analizar7(){
-    if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') ||
-          (this.rob.i5 == '') || (this.rob.i6 == '')){
-            if((this.rob.i1 == '') && (this.quedaste71 == false)){
-            this.rob.i1 = this.ins7ss;
-            this.rob.s1 = "I";
-            this.quedaste72=true;
-            this.quedaste73=true;
-            this.quedaste74=true;
-            this.quedaste75=true;
-            this.quedaste76=true;
-        }else{if((this.rob.i2 == '') && (this.quedaste72 == false)){
-          this.rob.i2 = this.ins7ss;
-          this.rob.s2 = "I";
-          this.quedaste71=true;
-          this.quedaste73=true;
-          this.quedaste74=true;
-          this.quedaste75=true;
-          this.quedaste76=true;
-      }else{if((this.rob.i3 == '') && (this.quedaste73 == false)){
-          this.rob.i3 = this.ins7ss;
-          this.rob.s3 = "I";
-          this.quedaste71=true;
-          this.quedaste72=true;
-          this.quedaste74=true;
-          this.quedaste75=true;
-          this.quedaste76=true;
-    }else {if ((this.rob.i4 == '') && (this.quedaste74 == false)){
-      this.rob.i4 = this.ins7ss;
-      this.rob.s4 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste75=true;
-      this.quedaste76=true;
-    }else {if((this.rob.i5 == '') && (this.quedaste75 == false)){
-      this.rob.i5 = this.ins7ss;
-      this.rob.s5 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste74=true;
-      this.quedaste76=true;
-    }else {if ((this.rob.i6 == '') && (this.quedaste76 == false)){
-      this.rob.i6 = this.ins7ss;
-      this.rob.s6 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste74=true;
-      this.quedaste75=true;
-
-    }} }}}}
-          }
-  }
-
-  analizar8(){
-    if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') ||
-    (this.rob.i5 == '') || (this.rob.i6 == '')){
-      if((this.rob.i1 == '') && (this.quedaste81 == false)){
-        this.rob.i1 = this.ins8ss;
-        this.rob.s1 = "I";
-        this.quedaste82=true;
-        this.quedaste83=true;
-        this.quedaste84=true;
-        this.quedaste85=true;
-        this.quedaste86=true;
-      }else {if((this.rob.i2 == '')  && (this.quedaste82 == false)){
-                this.rob.i2 = this.ins8ss;
-                this.rob.s2 = "I";
-                this.quedaste81=true;
-                this.quedaste83=true;
-                this.quedaste84=true;
-                this.quedaste85=true;
-                this.quedaste86=true;
-             }else{if((this.rob.i3 == '')  && (this.quedaste83 == false)){
-                      this.rob.i3 = this.ins8ss;
-                      this.rob.s3 = "I";
-                      this.quedaste81=true;
-                      this.quedaste82=true;
-                      this.quedaste84=true;
-                      this.quedaste85=true;
-                      this.quedaste86=true;
-             }else {if((this.rob.i4 == '')  && (this.quedaste84 == false)){
-                      this.rob.i4 = this.ins8ss;
-                      this.rob.s4 = "I";
-                      this.quedaste81=true;
-                      this.quedaste82=true;
-                      this.quedaste83=true;
-                      this.quedaste85=true;
-                      this.quedaste86=true;
-             }else {if((this.rob.i5 == '')  && (this.quedaste85 == false)){
-                      this.rob.i5 = this.ins8ss;
-                      this.rob.s5 = "I";
-                      this.quedaste81=true;
-                      this.quedaste82=true;
-                      this.quedaste83=true;
-                      this.quedaste84=true;
-                      this.quedaste86=true;
-             }else {if ((this.rob.i6 == '')  && (this.quedaste86 == false)){
-                    this.rob.i6 = this.ins8ss;
-                    this.rob.s6 = "I";
-                    this.quedaste81=true;
-                    this.quedaste82=true;
-                    this.quedaste83=true;
-                    this.quedaste84=true;
-                    this.quedaste85=true;
-             } }} }}}
+  agregarUf2(){
+    if(this.ciclos> 0){
+    if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+      this.rob.uf1 = this.ins1ss;
+      }
+      if(this.ins2c != 0 && this.robb[this.ciclos-1].uf2 == ''){
+        this.rob.uf2 = this.ins2ss;
+      }
+      if(this.ciclos > 1){
+       if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 != '') {
+         this.rob.uf1 = this.ins1ss;
        }
-  }
-
-  analizar9(){
-    if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') || (this.rob.i5=='')
-          || (this.rob.i6 == '') ){
-    if((this.rob.i1 == '') && (this.quedaste91 == false)){
-      this.rob.i1 = this.ins9ss;
-      this.rob.s1 = "I";
-      this.quedaste92=true;
-      this.quedaste93=true;
-      this.quedaste94=true;
-      this.quedaste95=true;
-      this.quedaste96=true;
-    }else {if((this.rob.i2 == '')  && (this.quedaste92 == false)){
-              this.rob.i2 = this.ins9ss;
-              this.rob.s2 = "I";
-              this.quedaste91=true;
-              this.quedaste93=true;
-              this.quedaste94=true;
-              this.quedaste95=true;
-              this.quedaste96=true;
-           }else{if((this.rob.i3 == '')  && (this.quedaste93 == false)){
-                    this.rob.i3 = this.ins9ss;
-                    this.rob.s3 = "I";
-                    this.quedaste91=true;
-                    this.quedaste92=true;
-                    this.quedaste94=true;
-                    this.quedaste95=true;
-                    this.quedaste96=true;
-           }else {if((this.rob.i4 == '')  && (this.quedaste94 == false)){
-                    this.rob.i4 = this.ins9ss;
-                    this.rob.s4 = "I";
-                    this.quedaste91=true;
-                    this.quedaste92=true;
-                    this.quedaste93=true;
-                    this.quedaste95=true;
-                    this.quedaste96=true;
-           }else {if((this.rob.i5 == '')  && (this.quedaste95 == false)){
-                    this.rob.i5 = this.ins9ss;
-                    this.rob.s5 = "I";
-                    this.quedaste91=true;
-                    this.quedaste92=true;
-                    this.quedaste93=true;
-                    this.quedaste94=true;
-                    this.quedaste96=true;
-           }else {if ((this.rob.i6 == '')  && (this.quedaste96 == false)){
-                  this.rob.i6 = this.ins9ss;
-                  this.rob.s6 = "I";
-                  this.quedaste91=true;
-                  this.quedaste92=true;
-                  this.quedaste93=true;
-                  this.quedaste94=true;
-                  this.quedaste95=true;
-           } }} }}}
-          }
+      if(this.ins2c != 0 &&  this.robb[this.ciclos-1].uf1 != ''){
+       this.rob.uf2 = this.ins2ss;
+       }
+       if(this.ins3c != 0 && this.ins1c == 0  &&  this.robb[this.ciclos-1].uf1 != ''){
+         this.rob.uf1 = this.ins3ss;
+       }else if (this.ins3c != 0 && this.ins2c == 0  &&  this.robb[this.ciclos-1].uf1 != ''){
+         this.rob.uf2 = this.ins3ss;
+       }
+       if(this.ins4c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+         this.rob.uf1 = this.ins4ss;
+       }
+       if(this.ins5c != 0 && this.robb[this.ciclos-1].uf1 == ''){
+         this.rob.uf1 = this.ins5ss;
+       }
+     }
+    }
+    
   }
   
-
-  agregarRob4(cantidadER,cantidadUF){
+   agregarRob4(cantidadER,cantidadUF){
 
     // ER == 1 && UF == 1  ROB 4
     // ER == 2 && UF == 1 || ER == 1 && UF == 2  ROB 6
@@ -1211,10 +900,10 @@ export class AppComponent {
             this.rob.i1 = this.rob.uf1;
             this.rob.s1 = "X";
             //
-            } else if((this.ins5c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins5ss) || (this.robb[this.ciclos-1].i2 == this.ins5ss)) && ("" != this.ins5ss) && (this.v5)){
+            } else if((this.ins5c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins5ss) || (this.robb[this.ciclos-1].i2 == this.ins5ss)) && ("" != this.ins5ss) ){
               this.rob.i1 = this.ins5ss;
               this.rob.s1 = "F";
-              this.v5 = false;
+             // this.v5 = false;
             }
 
           
@@ -1263,10 +952,10 @@ export class AppComponent {
           this.rob.i2 = this.ins4ss;
           this.rob.s2 = "F";
           this.v4 = false;
-        }else if ((this.ins5c == 0) && ("" != this.ins5ss) &&  (this.robb[this.ciclos-1].i2 == this.ins5ss) && (this.v5)){
+        }else if ((this.ins5c == 0) && ("" != this.ins5ss) &&  (this.robb[this.ciclos-1].i2 == this.ins5ss)){
           this.rob.i2 = this.ins5ss;
           this.rob.s2 = "F";
-          this.v5 = false;
+          //this.v5 = false;
         }
         
    }
@@ -1274,937 +963,9 @@ export class AppComponent {
   } 
 
     }
-       
+  }       
 
 
-     if(this.ciclos > 1){
-      
-     }
-      
-
-
-
-
-
-
-
-
-
-    if (this.ciclos > 0) {
-     if(this.cantidadER == 4 && this.cantidadUF == 2){
-     if(this.rob.i1 == '') {
-       
-       if(this.ins1c != 0){
-        this.ins1c--;
-        this.rob.i1 = this.rob.uf1;
-        this.rob.s1 = "X";
-      //if(this.ins2ss == ''){ 
-        if((this.ins2c == 0) && (this.ins3c == 0)) {
-          //this.robb.push(this.rob);
-          
-      }
-      
-
-    }else{
-      if((this.ins1c == 0) && (this.v)){
-        this.rob.i1 = this.ins1ss;
-        this.rob.s1 = "F";
-        this.v = false;
-  
-        if((this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss == '') || (this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss != '')){
-          //this.robb.push(this.rob);
-        }
-        
-      }
-
-    }
-  }
-  
-    if((this.rob.i2 == '' ) && (this.ins2ss != '')){
-        if(this.ins2c != 0){
-          this.ins2c--;
-          this.rob.i2= this.rob.uf2;
-          this.rob.s2= "X";
-          console.log('entra3')
-          
-          
-        }
-        else{
-        if((this.ins2c == 0) && (this.v1)){
-          this.rob.i2 = this.ins2ss;
-          this.rob.s2 = "F";
-          this.v1=false;
-        } 
-
-        }
-     }
-
-       if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '') || (this.rob.i4 == '') || (this.rob.i5 == '')){
-        if(this.rob.i1 == '' ){
-          if((this.ins3ss == this.rob.uf1)  && (this.ins3c != 0) && (this.ins1c != 0)){
-            this.rob.i1=this.ins3ss;
-            this.rob.i1="X";
-            this.ins3c--;
-            console.log('entra7')
-              
-          }
-          
-        }
-        if(this.rob.i2 == '' ){
-          if((this.ins3ss == this.rob.uf1)  && (this.ins3c != 0) && (this.ins1c != 0)){
-            this.rob.i2=this.ins3ss;
-            this.rob.s2="X";
-            this.ins3c--;
-            console.log('entra8')
-            
-              
-          }
-          
-        }
-
-     ///////instruccion 3
-     if(this.ciclos > 1){
-       if(this.rob.i3 == '' ){
-         if((this.ins3ss == this.rob.uf1) && (this.ins3c != 0) || (this.ins3ss == this.rob.uf2) && (this.ins3c != 0) ){
-           this.rob.i3=this.ins3ss;
-           this.rob.s3="X";
-           this.ins3c--;
-           console.log('entra9')
-          }
-          
-          else{
-          if((this.ins3c == 0) && (this.v2) && (this.ins3ss != '')){
-            
-              this.rob.i3 = this.ins3ss;
-              this.rob.s3 = "F";
-              this.v2=false;
-            console.log('entra10')
-        }}}}
-       ///////instruccion 4
-        if(this.ciclos>1){
-        if(this.rob.i4 == '' ){
-          if((this.ins4ss == this.rob.uf1) && (this.ins4c != 0) && (this.ins4ss !='') || 
-          (this.ins4ss == this.rob.uf2) && (this.ins4c != 0) && (this.ins4ss !='') ){
-            this.rob.i4=this.ins4ss;
-            this.rob.s4="X";
-            this.ins4c--;
-            console.log('entra11')
-           }
-          else{
-        if((this.ins4c == 0) && (this.v3) && (this.ins4ss != '')){
-            
-          this.rob.i4 = this.ins4ss;
-          this.rob.s4 = "F";
-          this.v3=false;
-            console.log('entra12')
-        }
-      }
-    }}
-    ///////instruccion 5
-    if(this.ciclos>1){
-      if(this.rob.i5 == '' ){
-        if((this.ins5ss == this.rob.uf1) && (this.ins5c != 0) && (this.ins5ss !='') || 
-        (this.ins5ss == this.rob.uf2) && (this.ins5c != 0) && (this.ins5ss !='') ){
-          this.rob.i5=this.ins5ss;
-          this.rob.s5="X";
-          this.ins5c--;
-          console.log('entra13')
-         }
-        else{
-      if((this.ins5c == 0) && (this.v4) && (this.ins5ss != '')){
-          
-        this.rob.i5 = this.ins5ss;
-        this.rob.s5 = "F";
-        this.v4=false;
-          console.log('entra14')
-      }
-    }
-  }}
-  ///////instruccion 6
-  if(this.ciclos>1){
-    if(this.rob.i6 == '' ){
-      if((this.ins6ss == this.rob.uf1) && (this.ins6c != 0) && (this.ins6ss !='') || 
-      (this.ins6ss == this.rob.uf2) && (this.ins6c != 0) && (this.ins6ss !='') ){
-        this.rob.i6=this.ins6ss;
-        this.rob.s6="X";
-        this.ins6c--;
-        console.log('entra15')
-       }
-      else{
-    if((this.ins6c == 0) && (this.v5) && (this.ins6ss != '')){
-        
-      this.rob.i6 = this.ins6ss;
-      this.rob.s6 = "F";
-      this.v5=false;
-        console.log('entra12')
-    }
-  }
-}}
-
-///////instruccion 7
-if(this.ciclos>1){
-  if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-  (this.rob.i6 == '' ) ){
-    if((this.ins7ss == this.rob.uf1) && (this.ins7c != 0) && (this.ins7ss !='') || 
-    (this.ins7ss == this.rob.uf2) && (this.ins7c != 0) && (this.ins7ss !='') ){
-      if((this.rob.i1 == '' )  && (this.quedaste71 == false)){  
-      this.rob.i1=this.ins7ss;
-      this.rob.s1="X";
-      this.ins7c--;
-      console.log('entra15')
-      }else{if((this.rob.i2 == '' ) && (this.quedaste72 == false)){ 
-      this.rob.i2=this.ins7ss;
-      this.rob.s2="X";
-      this.ins7c--; }
-      else {if((this.rob.i3 == '' ) && ((this.quedaste73 == false))){
-      this.rob.i3=this.ins7ss;
-      this.rob.s3="X";
-      this.ins7c--}
-      else {if ((this.rob.i4 == '' ) && ((this.quedaste74 == false))){
-      this.rob.i4=this.ins7ss;
-      this.rob.s4="X";
-      this.ins7c--}
-       else {if((this.rob.i5 == '' ) && ((this.quedaste75 == false))){
-        this.rob.i5=this.ins7ss;
-      this.rob.s5="X";
-      this.ins7c--
-       }else{if ((this.rob.i6 == '' ) && ((this.quedaste76 == false))){
-        this.rob.i6=this.ins7ss;
-        this.rob.s6="X";
-        this.ins7c--
-       }} }}}}
-     }
-    else{
-      if((this.ins7c == 0) && (this.v6) && (this.ins7ss != '')){
-        if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-        (this.rob.i6 == '' )){
-          if((this.rob.i1 == '' ) && (this.quedaste71 == false)){
-                this.rob.i1 = this.ins7ss;
-                this.rob.s1 = "F";
-                this.v6=false;
-                  console.log('entra12')
-          }
-        else{if((this.rob.i2 == '' ) && (this.quedaste72 == false)){
-                  this.rob.i2 = this.ins7ss;
-                  this.rob.s2 = "F";
-                   this.v6=false;}
-                  else {if((this.rob.i3 == '' ) && (this.quedaste73 == false)){
-                  this.rob.i3 = this.ins7ss;
-                  this.rob.s3 = "F";
-                   this.v6=false;
-                  }else {if ((this.rob.i4 == '' ) && (this.quedaste74 == false)){
-                    this.rob.i4 = this.ins7ss;
-                    this.rob.s4 = "F";
-                    this.v6=false;
-                  }else {if ((this.rob.i5 == '' ) && (this.quedaste75 == false)){
-                    this.rob.i5 = this.ins7ss;
-                    this.rob.s5 = "F";
-                    this.v6=false;
-                  } else{if ((this.rob.i6 == '' ) && (this.quedaste76 == false)){
-                    this.rob.i6 = this.ins7ss;
-                    this.rob.s6 = "F";
-                    this.v6=false;
-                  }}}}}}
-  }
-}
-    }}}
-       ///////instruccion 8
-    if(this.ciclos>1){
-      if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-      (this.rob.i6 == '' ) ){
-        if((this.ins8ss == this.rob.uf1) && (this.ins8c != 0) && (this.ins8ss !='') || 
-        (this.ins8ss == this.rob.uf2) && (this.ins8c != 0) && (this.ins8ss !='') ){
-          if((this.rob.i1 == '' ) && (this.quedaste81 == false)){
-          this.rob.i1=this.ins8ss;
-          this.rob.s1="X";
-          this.ins8c--;
-          console.log('entra15')
-          }else{if((this.rob.i2 == '') && (this.quedaste82 == false)){ 
-          this.rob.i2=this.ins8ss;
-          this.rob.s2="X";
-          this.ins8c--; }
-          else {if((this.rob.i3 == '') && (this.quedaste83 == false) ){
-          this.rob.i3=this.ins8ss;
-          this.rob.s3="X";
-          this.ins8c--}
-          else {if((this.rob.i4 == '') && (this.quedaste84 == false)){
-          this.rob.i4=this.ins8ss;
-          this.rob.s4="X";
-          this.ins8c--}  
-          else{if ((this.rob.i5 == '') && (this.quedaste85 == false)) {
-          this.rob.i5=this.ins8ss;
-          this.rob.s5="X";
-          this.ins8c--  }
-          else{if ((this.rob.i6 == '') && (this.quedaste86 == false)){
-          this.rob.i6=this.ins8ss;
-          this.rob.s6="X";
-          this.ins8c--}   
-          }}}}}
-         }
-        else{
-          if((this.ins8c == 0) && (this.v7) && (this.ins8ss != '')){
-            if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-            (this.rob.i6 == '' )){
-              if((this.rob.i1 == '' ) && (this.quedaste81 == false)){
-                    this.rob.i1 = this.ins8ss;
-                    this.rob.s1 = "F";
-                    this.v7=false;
-                    console.log('entra12')
-              }
-            else{if((this.rob.i2 == '' ) && (this.quedaste82 == false)){
-                      this.rob.i2 = this.ins8ss;
-                      this.rob.s2 = "F";
-                       this.v7=false;
-                       }else {if((this.rob.i3 == '' ) && (this.quedaste83 == false)){
-                       this.rob.i3 = this.ins8ss;
-                       this.rob.s3 = "F";
-                        this.v7=false;}
-                        else {if ((this.rob.i4 == '' ) && (this.quedaste84 == false)){
-                          this.rob.i4 = this.ins8ss;
-                          this.rob.s4 = "F";
-                           this.v7=false;
-                        }else {if ((this.rob.i5 == '' ) && (this.quedaste85 == false)){
-                          this.rob.i5 = this.ins8ss;
-                          this.rob.s5 = "F";
-                           this.v7=false;
-                        }else {if ((this.rob.i6 == '' ) && (this.quedaste86 == false)){
-                          this.rob.i6 = this.ins8ss;
-                          this.rob.s6 = "F";
-                           this.v7=false;
-
-                        } } }}}}
-      }
-    }
-        }}}
-
-        ////instruccion 9
-        if(this.ciclos>1){
-          if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-          (this.rob.i6 == '' ) ){
-            if((this.ins9ss == this.rob.uf1) && (this.ins9c != 0) && (this.ins9ss !='') || 
-            (this.ins9ss == this.rob.uf2) && (this.ins9c != 0) && (this.ins9ss !='') ){
-              if((this.rob.i1 == '' ) && (this.quedaste91 == false)){
-              this.rob.i1=this.ins9ss;
-              this.rob.s1="X";
-              this.ins9c--;
-              
-              }else{if((this.rob.i2 == '') && (this.quedaste92 == false)){ 
-              this.rob.i2=this.ins9ss;
-              this.rob.s2="X";
-              this.ins9c--; }
-              else {if((this.rob.i3 == '') && (this.quedaste93 == false) ){
-              this.rob.i3=this.ins9ss;
-              this.rob.s3="X";
-              this.ins9c--}
-              else {if((this.rob.i4 == '') && (this.quedaste94 == false)){
-              this.rob.i4=this.ins9ss;
-              this.rob.s4="X";
-              this.ins9c--}  
-              else{if ((this.rob.i5 == '') && (this.quedaste95 == false)) {
-              this.rob.i5=this.ins9ss;
-              this.rob.s5="X";
-              this.ins9c--  }
-              else{if ((this.rob.i6 == '') && (this.quedaste96 == false)){
-              this.rob.i6=this.ins9ss;
-              this.rob.s6="X";
-              this.ins9c--}   
-              }}}}}
-             }
-            else{
-              if((this.ins9c == 0) && (this.v8) && (this.ins9ss != '')){
-                if((this.rob.i1 == '' ) || (this.rob.i2 == '' ) || (this.rob.i3 == '' ) || (this.rob.i4 == '' ) || (this.rob.i5 == '' ) ||
-                (this.rob.i6 == '' )){
-                  if((this.rob.i1 == '' ) && (this.quedaste91 == false)){
-                        this.rob.i1 = this.ins9ss;
-                        this.rob.s1 = "F";
-                        this.v8=false;
-                        
-                  }
-                else{if((this.rob.i2 == '' ) && (this.quedaste92 == false)){
-                          this.rob.i2 = this.ins9ss;
-                          this.rob.s2 = "F";
-                           this.v8=false;
-                           }else {if((this.rob.i3 == '' ) && (this.quedaste93 == false)){
-                           this.rob.i3 = this.ins9ss;
-                           this.rob.s3 = "F";
-                            this.v8=false;}
-                            else {if ((this.rob.i4 == '' ) && (this.quedaste94 == false)){
-                              this.rob.i4 = this.ins9ss;
-                              this.rob.s4 = "F";
-                               this.v8=false;
-                            }else {if ((this.rob.i5 == '' ) && (this.quedaste95 == false)){
-                              this.rob.i5 = this.ins9ss;
-                              this.rob.s5 = "F";
-                               this.v8=false;
-                            }else {if ((this.rob.i6 == '' ) && (this.quedaste96 == false)){
-                              this.rob.i6 = this.ins9ss;
-                              this.rob.s6 = "F";
-                               this.v8=false;
-    
-                            } } }}}}
-          }
-        }
-            }}}
-
-    
-      
-    
-       if(this.ciclos>1){
-         if((this.ins3c != 0) && (this.ins3ss != this.rob.uf1) && (this.ins3ss != this.rob.uf2) ){
-              this.rob.e1= this.ins3ss;
-              this.rob.i3 = this.ins3ss;
-              this.rob.s3 = "I";
-              console.log('entra13')
-        }
-        if((this.ins4c != 0) && (this.ins4ss != this.rob.uf1) && (this.ins4ss != this.rob.uf2) ){
-          this.rob.e2= this.ins4ss;
-          this.rob.i4 = this.ins4ss;
-          this.rob.s4 = "I";
-          console.log('entra14')
-    }}
-    if(this.ciclos > 2){
-    if((this.ins5c != 0) && (this.ins5ss != this.rob.uf1) && (this.ins5ss != this.rob.uf2) ){
-        this.rob.e3= this.ins5ss;
-      this.rob.i5 = this.ins5ss;
-      this.rob.s5 = "I";
-      console.log('entra15')
-        }
-        if((this.ins6c != 0) && (this.ins6ss != this.rob.uf1) && (this.ins6ss != this.rob.uf2) ){
-          this.rob.e4= this.ins6ss;
-          this.rob.i6 = this.ins6ss;
-          this.rob.s6 = "I";
-          console.log('entra16')
-        }
-      }
-
-
-      ///////instruccion 7
-      if(this.ciclos > 3){
-        if((this.ins7c != 0) && (this.ins7ss != this.rob.uf1) && (this.ins7ss != this.rob.uf2) ){
-          if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') || (this.rob.e4 == '')){
-            if((this.rob.e1 == '')){
-          this.rob.e1= this.ins7ss;
-          this.analizar7();
-          /* if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') ||
-          (this.rob.i5 == '') || (this.rob.i6 == '')){
-            if((this.rob.i1 == '') && (this.quedaste71 == false)){
-            this.rob.i1 = this.ins7ss;
-            this.rob.s1 = "I";
-            this.quedaste72=true;
-            this.quedaste73=true;
-            this.quedaste74=true;
-            this.quedaste75=true;
-            this.quedaste76=true;
-        }else{if((this.rob.i2 == '') && (this.quedaste72 == false)){
-          this.rob.i2 = this.ins7ss;
-          this.rob.s2 = "I";
-          this.quedaste71=true;
-          this.quedaste73=true;
-          this.quedaste74=true;
-          this.quedaste75=true;
-          this.quedaste76=true;
-      }else{if((this.rob.i3 == '') && (this.quedaste73 == false)){
-          this.rob.i3 = this.ins7ss;
-          this.rob.s3 = "I";
-          this.quedaste71=true;
-          this.quedaste72=true;
-          this.quedaste74=true;
-          this.quedaste75=true;
-          this.quedaste76=true;
-    }else {if ((this.rob.i4 == '') && (this.quedaste74 == false)){
-      this.rob.i4 = this.ins7ss;
-      this.rob.s4 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste75=true;
-      this.quedaste76=true;
-    }else {if((this.rob.i5 == '') && (this.quedaste75 == false)){
-      this.rob.i5 = this.ins7ss;
-      this.rob.s5 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste74=true;
-      this.quedaste76=true;
-    }else {if ((this.rob.i6 == '') && (this.quedaste76 == false)){
-      this.rob.i6 = this.ins7ss;
-      this.rob.s6 = "I";
-      this.quedaste71=true;
-      this.quedaste72=true;
-      this.quedaste73=true;
-      this.quedaste74=true;
-      this.quedaste75=true;
-
-    }} }}}}
-          } */
-            }else {if((this.rob.e2 == '')){
-              this.rob.e2= this.ins7ss;
-              this.analizar7();
-              /* if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-                if((this.rob.i1 == '') && (this.quedaste71 == false)){
-                  this.rob.i1 = this.ins7ss;
-                  this.rob.s1 = "I";
-                  this.quedaste72=true;
-                  this.quedaste73=true;
-                  this.quedaste74=true;
-                  this.quedaste75=true;
-                  this.quedaste76=true;
-              }else{if((this.rob.i2 == '') && (this.quedaste72 == false)){
-                this.rob.i2 = this.ins7ss;
-                this.rob.s2 = "I";
-                this.quedaste71=true;
-                this.quedaste73=true;
-                this.quedaste74=true;
-                this.quedaste75=true;
-                this.quedaste76=true;
-            }else{if((this.rob.i3 == '') && (this.quedaste73 == false)){
-                this.rob.i3 = this.ins7ss;
-                this.rob.s3 = "I";
-                this.quedaste71=true;
-                this.quedaste72=true;
-                this.quedaste74=true;
-                this.quedaste75=true;
-                this.quedaste76=true;
-          }else {if ((this.rob.i4 == '') && (this.quedaste74 == false)){
-            this.rob.i4 = this.ins7ss;
-            this.rob.s4 = "I";
-            this.quedaste71=true;
-            this.quedaste72=true;
-            this.quedaste73=true;
-            this.quedaste75=true;
-            this.quedaste76=true;
-          }else {if((this.rob.i5 == '') && (this.quedaste75 == false)){
-            this.rob.i5 = this.ins7ss;
-            this.rob.s5 = "I";
-            this.quedaste71=true;
-            this.quedaste72=true;
-            this.quedaste73=true;
-            this.quedaste74=true;
-            this.quedaste76=true;
-          }else {if ((this.rob.i6 == '') && (this.quedaste76 == false)){
-            this.rob.i6 = this.ins7ss;
-            this.rob.s6 = "I";
-            this.quedaste71=true;
-            this.quedaste72=true;
-            this.quedaste73=true;
-            this.quedaste74=true;
-            this.quedaste75=true;
-      
-          }} }}}}
-              } */
-            }else {if (this.rob.e3 == ''){
-              this.rob.e3= this.ins7ss;
-              this.analizar7();
-            }else{if (this.rob.e4 == ''){
-              this.rob.e4= this.ins7ss;
-              this.analizar7();
-            }}}
-          }
-          }
-        }
-       ///////instruccion 8
-        if((this.ins8c != 0) && (this.ins8ss != this.rob.uf1) && (this.ins8ss != this.rob.uf2) ){
-          if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') || (this.rob.e4 == '')){
-            if((this.rob.e1 == '')){
-                this.rob.e1= this.ins8ss;
-                this.analizar8();
-         /*  if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') ||
-          (this.rob.i5 == '') || (this.rob.i6 == '')){
-            if((this.rob.i1 == '') && (this.quedaste81 == false)){
-              this.rob.i1 = this.ins8ss;
-              this.rob.s1 = "I";
-              this.quedaste82=true;
-              this.quedaste83=true;
-              this.quedaste84=true;
-              this.quedaste85=true;
-              this.quedaste86=true;
-            }else {if((this.rob.i2 == '')  && (this.quedaste82 == false)){
-                      this.rob.i2 = this.ins8ss;
-                      this.rob.s2 = "I";
-                      this.quedaste81=true;
-                      this.quedaste83=true;
-                      this.quedaste84=true;
-                      this.quedaste85=true;
-                      this.quedaste86=true;
-                   }else{if((this.rob.i3 == '')  && (this.quedaste83 == false)){
-                            this.rob.i3 = this.ins8ss;
-                            this.rob.s3 = "I";
-                            this.quedaste81=true;
-                            this.quedaste82=true;
-                            this.quedaste84=true;
-                            this.quedaste85=true;
-                            this.quedaste86=true;
-                   }else {if((this.rob.i4 == '')  && (this.quedaste84 == false)){
-                            this.rob.i4 = this.ins8ss;
-                            this.rob.s4 = "I";
-                            this.quedaste81=true;
-                            this.quedaste82=true;
-                            this.quedaste83=true;
-                            this.quedaste85=true;
-                            this.quedaste86=true;
-                   }else {if((this.rob.i5 == '')  && (this.quedaste85 == false)){
-                            this.rob.i5 = this.ins8ss;
-                            this.rob.s5 = "I";
-                            this.quedaste81=true;
-                            this.quedaste82=true;
-                            this.quedaste83=true;
-                            this.quedaste84=true;
-                            this.quedaste86=true;
-                   }else {if ((this.rob.i6 == '')  && (this.quedaste86 == false)){
-                          this.rob.i6 = this.ins8ss;
-                          this.rob.s6 = "I";
-                          this.quedaste81=true;
-                          this.quedaste82=true;
-                          this.quedaste83=true;
-                          this.quedaste84=true;
-                          this.quedaste85=true;
-                   } }} }}}
-             } */
-             }else {if((this.rob.e2 == '') ){
-                      
-                       this.rob.e2= this.ins8ss;
-                       this.analizar8();
-                    /* if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-                        if((this.rob.i1 == '')  && (this.quedaste81 == false)){
-                           this.rob.i1 = this.ins8ss;
-                           this.rob.s1 = "I";
-                           this.quedaste82=true;
-                           this.quedaste83=true;
-                           this.quedaste84=true;
-                           this.quedaste85=true;
-                           this.quedaste86=true;
-                           }
-                   else { if ((this.rob.i2 == '')  && (this.quedaste82 == false)){
-                             this.rob.i2 = this.ins8ss;
-                             this.rob.s2 = "I";
-                             this.quedaste81=true;
-                             this.quedaste83=true;
-                             this.quedaste84=true;
-                             this.quedaste85=true;
-                             this.quedaste86=true;
-                             }else{ if ((this.rob.i3 == '')  && (this.quedaste83 == false)){
-                                    this.rob.i3 = this.ins8ss;
-                                    this.rob.s3 = "I";
-                                    this.quedaste81=true;
-                                    this.quedaste82=true;
-                                    this.quedaste84=true;
-                                    this.quedaste85=true;
-                                    this.quedaste86=true;
-                             }else {if ((this.rob.i4 == '')  && (this.quedaste84 == false)){
-                                    this.rob.i4 = this.ins8ss;
-                                    this.rob.s4 = "I";
-                                    this.quedaste81=true;
-                                    this.quedaste82=true;
-                                    this.quedaste83=true;
-                                    this.quedaste85=true;
-                                    this.quedaste86=true;
-                             }else{if ((this.rob.i5 == '')  && (this.quedaste85 == false)){
-                                    this.rob.i5 = this.ins8ss;
-                                    this.rob.s5 = "I";
-                                    this.quedaste81=true;
-                                    this.quedaste82=true;
-                                    this.quedaste83=true;
-                                    this.quedaste84=true;
-                                    this.quedaste86=true;
-                             }else {if ((this.rob.i6 == '')  && (this.quedaste86 == false)){
-                                    this.rob.i6 = this.ins8ss;
-                                    this.rob.s6 = "I";
-                                    this.quedaste81=true;
-                                    this.quedaste82=true;
-                                    this.quedaste83=true;
-                                    this.quedaste84=true;
-                                    this.quedaste85=true;
-                             }} } }}
-                        }
-              } */
-            } else {if ((this.rob.e3 == '') && (this.rob.e1 != this.ins8ss) && (this.rob.e2 != this.ins8ss) ){
-              
-                        this.rob.e3= this.ins8ss;
-                       this.analizar8();
-            }else {if ((this.rob.e4 == '') && (this.rob.e1 != this.ins8ss) && (this.rob.e2 != this.ins8ss)  ){
-                        this.rob.e4= this.ins8ss;
-                       this.analizar8();
-            }}}
-          }
-          }
-        }
-
-        ///// intruccion 9
-        if((this.ins9c != 0) && (this.ins9ss != this.rob.uf1) && (this.ins9ss != this.rob.uf2) ){
-          if((this.rob.e1 == '') || (this.rob.e2 == '')  || (this.rob.e3 == '') ||  (this.rob.e4 == '') ){
-            if((this.rob.e1 == '') ){
-          this.rob.e1= this.ins9ss;
-          this.analizar9();
-          //if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') || (this.rob.i5=='')
-          //|| (this.rob.i6 == '') ){
-            
-            /* if((this.rob.i1 == '') && (this.quedaste91 == false)){
-              this.rob.i1 = this.ins9ss;
-              this.rob.s1 = "I";
-              this.quedaste92=true;
-              this.quedaste93=true;
-              this.quedaste94=true;
-              this.quedaste95=true;
-              this.quedaste96=true;
-            }else {if((this.rob.i2 == '')  && (this.quedaste92 == false)){
-                      this.rob.i2 = this.ins9ss;
-                      this.rob.s2 = "I";
-                      this.quedaste91=true;
-                      this.quedaste93=true;
-                      this.quedaste94=true;
-                      this.quedaste95=true;
-                      this.quedaste96=true;
-                   }else{if((this.rob.i3 == '')  && (this.quedaste93 == false)){
-                            this.rob.i3 = this.ins9ss;
-                            this.rob.s3 = "I";
-                            this.quedaste91=true;
-                            this.quedaste92=true;
-                            this.quedaste94=true;
-                            this.quedaste95=true;
-                            this.quedaste96=true;
-                   }else {if((this.rob.i4 == '')  && (this.quedaste94 == false)){
-                            this.rob.i4 = this.ins9ss;
-                            this.rob.s4 = "I";
-                            this.quedaste91=true;
-                            this.quedaste92=true;
-                            this.quedaste93=true;
-                            this.quedaste95=true;
-                            this.quedaste96=true;
-                   }else {if((this.rob.i5 == '')  && (this.quedaste95 == false)){
-                            this.rob.i5 = this.ins9ss;
-                            this.rob.s5 = "I";
-                            this.quedaste91=true;
-                            this.quedaste92=true;
-                            this.quedaste93=true;
-                            this.quedaste94=true;
-                            this.quedaste96=true;
-                   }else {if ((this.rob.i6 == '')  && (this.quedaste96 == false)){
-                          this.rob.i6 = this.ins9ss;
-                          this.rob.s6 = "I";
-                          this.quedaste91=true;
-                          this.quedaste92=true;
-                          this.quedaste93=true;
-                          this.quedaste94=true;
-                          this.quedaste95=true;
-                   } }} }}} */
-             //}
-             }else {if((this.rob.e2 == '')){
-                       this.rob.e2= this.ins9ss;
-                       this.analizar9();
-                    /* if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') ){
-                        if((this.rob.i1 == '')  && (this.quedaste91 == false)){
-                           this.rob.i1 = this.ins9ss;
-                           this.rob.s1 = "I";
-                           this.quedaste92=true;
-                           this.quedaste93=true;
-                           this.quedaste94=true;
-                           this.quedaste95=true;
-                           this.quedaste96=true;
-                           }
-                   else { if ((this.rob.i2 == '')  && (this.quedaste92 == false)){
-                             this.rob.i2 = this.ins9ss;
-                             this.rob.s2 = "I";
-                             this.quedaste91=true;
-                             this.quedaste93=true;
-                             this.quedaste94=true;
-                             this.quedaste95=true;
-                             this.quedaste96=true;
-                             }else{ if ((this.rob.i3 == '')  && (this.quedaste93 == false)){
-                                    this.rob.i3 = this.ins9ss;
-                                    this.rob.s3 = "I";
-                                    this.quedaste91=true;
-                                    this.quedaste92=true;
-                                    this.quedaste94=true;
-                                    this.quedaste95=true;
-                                    this.quedaste96=true;
-                             }else {if ((this.rob.i4 == '')  && (this.quedaste94 == false)){
-                                    this.rob.i4 = this.ins9ss;
-                                    this.rob.s4 = "I";
-                                    this.quedaste91=true;
-                                    this.quedaste92=true;
-                                    this.quedaste93=true;
-                                    this.quedaste95=true;
-                                    this.quedaste96=true;
-                             }else{if ((this.rob.i5 == '')  && (this.quedaste95 == false)){
-                                    this.rob.i5 = this.ins9ss;
-                                    this.rob.s5 = "I";
-                                    this.quedaste91=true;
-                                    this.quedaste92=true;
-                                    this.quedaste93=true;
-                                    this.quedaste94=true;
-                                    this.quedaste96=true;
-                             }else {if ((this.rob.i6 == '')  && (this.quedaste96 == false)){
-                                    this.rob.i6 = this.ins9ss;
-                                    this.rob.s6 = "I";
-                                    this.quedaste91=true;
-                                    this.quedaste92=true;
-                                    this.quedaste93=true;
-                                    this.quedaste94=true;
-                                    this.quedaste95=true;
-                             }} } }}
-                        }
-              } */
-            }else {if((this.rob.e3 == '')){
-              this.rob.e3= this.ins9ss;
-              this.analizar9();
-           /* if((this.rob.i1 == '') || (this.rob.i2 == '')  || (this.rob.i3 == '') || (this.rob.i4 == '') || (this.rob.i5 == '')
-           || (this.rob.i6 == '') ){
-               if((this.rob.i1 == '')  && (this.quedaste91 == false)){
-                  this.rob.i1 = this.ins9ss;
-                  this.rob.s1 = "I";
-                  this.quedaste92=true;
-                  this.quedaste93=true;
-                  this.quedaste94=true;
-                  this.quedaste95=true;
-                  this.quedaste96=true;
-                  }
-          else { if ((this.rob.i2 == '')  && (this.quedaste92 == false)){
-                    this.rob.i2 = this.ins9ss;
-                    this.rob.s2 = "I";
-                    this.quedaste91=true;
-                    this.quedaste93=true;
-                    this.quedaste94=true;
-                    this.quedaste95=true;
-                    this.quedaste96=true;
-                    }else{ if ((this.rob.i3 == '')  && (this.quedaste93 == false)){
-                           this.rob.i3 = this.ins9ss;
-                           this.rob.s3 = "I";
-                           this.quedaste91=true;
-                           this.quedaste92=true;
-                           this.quedaste94=true;
-                           this.quedaste95=true;
-                           this.quedaste96=true;
-                    }else {if ((this.rob.i4 == '')  && (this.quedaste94 == false)){
-                           this.rob.i4 = this.ins9ss;
-                           this.rob.s4 = "I";
-                           this.quedaste91=true;
-                           this.quedaste92=true;
-                           this.quedaste93=true;
-                           this.quedaste95=true;
-                           this.quedaste96=true;
-                    }else{if ((this.rob.i5 == '')  && (this.quedaste95 == false)){
-                           this.rob.i5 = this.ins9ss;
-                           this.rob.s5 = "I";
-                           this.quedaste91=true;
-                           this.quedaste92=true;
-                           this.quedaste93=true;
-                           this.quedaste94=true;
-                           this.quedaste96=true;
-                    }else {if ((this.rob.i6 == '')  && (this.quedaste96 == false)){
-                           this.rob.i6 = this.ins9ss;
-                           this.rob.s6 = "I";
-                           this.quedaste91=true;
-                           this.quedaste92=true;
-                           this.quedaste93=true;
-                           this.quedaste94=true;
-                           this.quedaste95=true;
-                    }} } }}
-               }
-     } */
-   }else {if (this.rob.e4 == ''){
-    this.rob.e4= this.ins9ss;
-    this.analizar9();
-   }}
-          }
-          }
-        }
-      }
-
-
-      }
-
-    }
-
-    if(this.ciclos > 3){
-
-      if(this.ins7ss != ''){
-        if((this.rob.e1 != this.ins7ss) && (this.rob.e2 != this.ins7ss) && (this.rob.e3 != this.ins7ss)
-        && (this.rob.e4 != this.ins7ss) && (this.rob.e1 != '') && (this.rob.e2 != '') && (this.rob.e3 != '') && (this.rob.e4 != '')){
-          this.rob.d1=this.ins7ss;
-        }
-      }
-
-      if(this.ins8ss != ''){
-        if((this.rob.e1 != this.ins8ss) && (this.rob.e2 != this.ins8ss) && (this.rob.e3 != this.ins8ss)
-        && (this.rob.e4 != this.ins8ss) && (this.rob.e1 != '') && (this.rob.e2 != '') && (this.rob.e3 != '') && (this.rob.e4 != '')){
-          this.rob.d2=this.ins8ss;
-        }
-      }
-
-      if((this.ins9ss != '') && (this.robb[this.ciclos-1].d1 != this.robb[this.ciclos-1].e1) && (this.robb[this.ciclos-1].d1 != this.robb[this.ciclos-1].e2)
-      && (this.robb[this.ciclos-1].d1 != this.robb[this.ciclos-1].e3) && (this.robb[this.ciclos-1].d1 != this.robb[this.ciclos-1].e4)){
-        if((this.rob.e1 != this.ins9ss) && (this.rob.e2 != this.ins9ss) && (this.rob.e3 != this.ins9ss)
-        && (this.rob.e4 != this.ins9ss) && (this.rob.e1 != '') && (this.rob.e2 != '') && (this.rob.e3 != '') && (this.rob.e4 != '')){
-          this.rob.d1=this.ins9ss;
-        }
-      }
-    }
-  }
-}
-}
-
-  
-  //creamos un nuevo objeto para el siguiente ciclo
-  siguienteCiclo(){
-
-    this.rob = new Object;
-
-    this.rob.e1='';
-    this.rob.e2='';
-    this.rob.e3='';
-    this.rob.e4='';
-    this.rob.uf1='';
-    this.rob.uf2='';
-    this.rob.i1='';
-    this.rob.s1='';
-    this.rob.i2='';
-    this.rob.s2='';
-    this.rob.i3='';
-    this.rob.s3='';
-    this.rob.i4='';
-    this.rob.s4='';
-    this.rob.i5='';
-    this.rob.s5='';
-    this.rob.i6='';
-    this.rob.s6='';
-
-    if(this.cantidadDespacho==1){
-    this.agregarDespacho1();
-    this.agregarER1();
-    this.agregarUf1();
-    this.agregarRob4(this.cantidadER,this.cantidadUF);
-    }
-    if(this.cantidadDespacho==2){
-      this.agregarDespacho2();
-      this.agregarER1();
-      this.agregarUf1();
-      this.agregarRob4(this.cantidadER,this.cantidadUF);
-    }
-    if(this.cantidadDespacho==3){
-      this.agregarDespacho3();
-      this.agregarER1();
-      this.agregarUf1();
-      this.agregarRob4(this.cantidadER,this.cantidadUF);
-    }
-    
-    if (!isUndefined(this.rob.d1) || !isUndefined(this.rob.d2) || 
-    this.rob.e1!= "" || this.rob.e2 != "" || this.rob.e3!= ""  || this.rob.e4!= "" || 
-    this.rob.uf1 != "" || this.rob.uf2!= "" ||
-    this.rob.i1 != "" || this.rob.s1 != ""  ||
-    this.rob.i2 != "" || this.rob.s2 != ""  ||
-    this.rob.i3 != "" || this.rob.s3 != ""  ||
-    this.rob.i4 != "" || this.rob.s4 != ""  ||
-    this.rob.i5 != "" || this.rob.s5 != ""  ||
-    this.rob.i6 != "" || this.rob.s6 != ""      
-    ){
-      
-      this.robb.push(this.rob);
-      this.ciclos++;
-   }
-    
-
-  };
 
 
 
@@ -2215,12 +976,177 @@ if(this.ciclos>1){
   agregarEstReser(cantidadER){
    this.cantidadER = cantidadER;
   }
-  agregarUFMultFunc(cantidadUF){
-    this.cantidadUF = cantidadUF;
-
+  agregarUFMultFunc(cantidadMultiFuncion){
+    this.cantidadMultiFuncion = cantidadMultiFuncion;
+  }
+  agregarUFAritmetica(cantidadAritmetica){
+    this.cantidadAritmetica = cantidadAritmetica;
   }
 
+  agregarUFMemoria(cantidadMemoria){
+    this.cantidadMemoria = cantidadMemoria;
   }
+
+  agregarComponente( inst:Array<Instruccion>,  cant:Number, id:string ){
+    let tr = document.createElement("tr");
+
+    for(let i = 0; i < cant;i++){
+        let td = document.createElement("td");
+
+        if (i<inst.length){
+            td.appendChild(document.createTextNode(inst[i].getId()));
+            tr.appendChild(td);
+        }
+        else{
+            td.appendChild(document.createTextNode("-"));
+            tr.appendChild(td);
+        }
+    }
+
+    document.getElementById(id).appendChild(tr);
+}
+
+agregarUF(uf){
+  let tr = document.createElement("tr");
+  for(let i = 0; i < uf.length;i++){
+
+      let td = document.createElement("td");
+
+      if (uf[i].getInstruccion()!= null){
+          td.appendChild(document.createTextNode(uf[i].getInstruccion().getId()));
+          tr.appendChild(td);
+      }
+
+      else
+      {
+          td.appendChild(document.createTextNode("-"));
+          tr.appendChild(td);
+      }
+      
+  }
+  document.getElementById("tablaUnidadFuncional").appendChild(tr);
+}
+
+agregarROB(rob, cant:Number,id:string){
+  let tr = document.createElement("tr");
+
+  for (let i = 0; i < cant; i++){
+
+      let td1 = document.createElement("td");
+      let td2 = document.createElement("td");
+
+      if (rob.getColumbaRob()[i].getInstruccion()!=null){
+
+          if (rob.getColumbaRob()[i].getOtraInstruccion()==null){
+            //le insgresamos la instruccion y el estado a la columna del rob
+              td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId()))
+              td2.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getEstado()));  
+          }
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+      }
+      else{
+          td1.appendChild(document.createTextNode("-"))
+          td2.appendChild(document.createTextNode("-"));
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+      }
+  }
+  document.getElementById(id).appendChild(tr);
+}
+
+
+  public siguienteCiclo(){
+    if (!this.procesador.termino()){
+      this.procesador.siguienteCiclo();
+      this.agregarFilaCiclos(this.procesador.getCiclo());
+      //agregamos en la tabla con la cantidad de despacho
+      this.agregarComponente(this.procesador.getDespacho().instruccion,this.cantidadDespacho,"tablaDespacho");
+      //agregamos en la tabla con la cantidad de er
+      this.agregarComponente(this.procesador.getER().instruccion,this.cantidadER, "tablaEstacionReserva");
+      this.agregarUF(this.procesador.getUF());
+      this.agregarROB(this.procesador.getROB(),this.sizeROB,"tablaROB");
+    }
+  }
+
+  private saveCiclos(){
+    for(let i=0 ; i< this.listInstrucciones.length; i++){
+      for (let l =0 ; l < this.Instrucciones.length; l++)
+        if (this.listInstrucciones[i].getTipo() == this.Instrucciones[l].tipo){
+          this.listInstrucciones[i].setCiclos(this.Instrucciones[l].ciclo);
+        }    
+      }   
+  }
+
+  agregarFilaCiclos(ciclos:number) {  
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.appendChild(document.createTextNode(""+ciclos));
+    tr.appendChild(td);
+    document.getElementById("tablaCiclos").appendChild(tr);
+
+}
+
+private crearTablaComponente(tipo:string, num:number){
+  let j = [];
+  for (let i = 0; i < num; i++) {
+    j.push(tipo+i);
+  }
+  this[tipo] = j;
+}
+
+private crearTablaUnidadFuncional(tipo:string, cantidadMultiFuncion:number, cantidadAritmetica:number, cantidadMemoria:number){
+  let j = [];
+  for (let i = 0; i < cantidadMultiFuncion; i++) {
+    j.push(tipo + "MultiFunc" + i);
+  }
+  for (let i = 0; i < cantidadAritmetica; i++) {
+    j.push(tipo + "Aritmetica" + i);
+  }
+  for (let i = 0; i < cantidadMemoria; i++) {
+    j.push(tipo + "Memoria" +  i);
+  }    
+  this[tipo] = j;
+}
+
+private crearTablaRob(){
+  const j = [];
+  for (let i = 0; i < this.sizeROB; i++) {
+        j.push('I');
+        j.push('S');
+  }
+
+  this['ROB'] = j;
+
+}
+
+
+public ejecutar(){
+  this.guardar();
+  
+
+  //seteamos la tabla de despacho pasandole la cantidad de despacho. 
+  this.crearTablaComponente("Despacho",this.cantidadDespacho);
+  //seteamos la tabla de la estacion de reserva
+  this.crearTablaComponente("EstacionReserva",this.cantidadER);
+  
+  //seteamos la tabla de la unidad funcional
+  this.crearTablaUnidadFuncional("UnidadFuncional",this.cantidadMultiFuncion,this.cantidadAritmetica,this.cantidadMemoria);
+
+  //calculamos el tamaño del rob
+  this.sizeROB = this.cantidadER + this.cantidadMultiFuncion + this.cantidadAritmetica + this.cantidadMemoria;
+
+  //seteamos la tabla del rob
+  this.crearTablaRob();
+  
+  //inicializamos el procesador super escalar con las intrucciones y el despacho, cantidad ER y el tamaño del rob
+  this.procesador = new ProcesadorSuperEscalar(this.listInstrucciones,this.cantidadDespacho,this.cantidadER,this.sizeROB);
+
+  //agregamos la unidad funcional al procesador
+  this.procesador.agregarUF(this.cantidadMultiFuncion,this.cantidadAritmetica,this.cantidadMemoria);
+  
+}
+}
 
 
 

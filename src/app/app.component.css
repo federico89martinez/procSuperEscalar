@@ -34,3 +34,22 @@
 .b1 {
   text-align: left;
 }
+
+
+
+
+
+#tabla-superEscalar {
+  width: auto;
+  overflow-x: auto;
+}
+
+#tabla-superEscalar table {
+  display: table-cell;
+  width: auto;
+}
+
+.superEscalar-table {
+  padding: 0 20px 0 0 !important;
+  border: none !important;   
+}
