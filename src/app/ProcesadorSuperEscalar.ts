@@ -28,13 +28,13 @@ export class ProcesadorSuperEscalar{
     }
 
     public dependeciasRAW(){
-        let entro = false;
+        let termino = false;
         //Se hace una pasada con la primera instruccion con todas y luego con otra y asi sucesivamente
         for (let i = 0; i < this.instruccion.length -1; i++) {
             
           if(this.instruccion[i].getTipo() != "STD")
 
-            for (let j = i+1; j < this.instruccion.length && !entro; j++) {
+            for (let j = i+1; j < this.instruccion.length && !termino; j++) {
 
               if(this.instruccion[j].getTipo() != "STD"){
 
@@ -47,7 +47,7 @@ export class ProcesadorSuperEscalar{
 
                   if(this.instruccion[i].getDst() == this.instruccion[j].getDst()){
 
-                          entro=true;
+                    termino=true;
                          // break;????
 
                   }
@@ -71,14 +71,14 @@ export class ProcesadorSuperEscalar{
 
 
           }
-          entro = false;
+          termino = false;
         }
       }
  
 
       public siguienteCiclo(){ 
 
-        //Primero corroboramos para ver las instrucciones que se completaron o finalizaron
+        //corroboramos para ver las instrucciones que se completaron
         this.rob.instruccionesFinalizadas();       
       
         
@@ -86,12 +86,9 @@ export class ProcesadorSuperEscalar{
         for(let i = 0; i<this.unidadFuncional.length; i++){
             if (this.unidadFuncional[i].getInstruccion()!= null 
                     && this.unidadFuncional[i].getInstruccion().getCiclos() != 0){
-
                 this.unidadFuncional[i].getInstruccion().descontarCiclos();
             }
         }
-
-       
   
          //Actualizamos a la estacion de reserva y al rob
          this.actualizamosERyROB();
@@ -104,47 +101,20 @@ export class ProcesadorSuperEscalar{
         //Actualizo la unidad funcional
         this.actualizarUF();
 
-
-        //Actualizamos de nuevo las instrucciones de la er y rob
-        this.actualizamosERyROB();
-
-
-      
-        let tamanioDespacho = this.despacho.getSize();
-        //Guardo en una variable auxiliar las instrucciones
-        let auxiliar = this.rob.getInstruccionesCargadas();
-
-          
-        for(let i = 0; i < tamanioDespacho;i++){                  
-            
-            let indice = this.rob.intruccionesCompletas(auxiliar);   
-             //Luego se agrega una instruccion finalizada a la er y rob
-            if (!this.estacionReserva.isOcupado() &&  indice != -1){
-                let inst = this.despacho.getInstruccion();
-                //Eleminamos la instruccion de auxiliar
-                auxiliar.shift()
-                inst.setEstados("I");
-                
-                this.estacionReserva.addInstruccion(inst);
-
-                this.rob.getColumbaRob()[indice].addOtraInstruccion(inst);
-            }
-        }
-             
-        
-        //Actualizo la unidad funcional
-        this.actualizarUF();
-
-
         //Actualizo el despacho
         for(let i = 0; i < this.despacho.getGrado() && this.instruccion.length != 0 && !this.despacho.isOcupado(); i++){
             //Agregamos la istruccion al despacho y luego la sacamos de el arreglo de isntrucciones
             this.despacho.addInstruccion(this.instruccion.shift());
         }
         this.ciclo++;
+        
     }
 
+    /*
 
+     El metodo se encarga de cargar una instruccion en la estacion de reserva y en el rob.
+
+    */
     private actualizamosERyROB(){
         let i = 0; 
         while(i < this.despacho.getSize()){
@@ -160,7 +130,10 @@ export class ProcesadorSuperEscalar{
         }
     }
 
-
+    /*
+    El metodo se encarga de remover las instrucciones de la unidad funcional cuando estas tengan ciclos cero 
+    y deja de estar ocupada la uf
+    */
 
     private removerUF(){
 
@@ -173,7 +146,7 @@ export class ProcesadorSuperEscalar{
                     this.unidadFuncional[i].getInstruccion().setEstados("F");
                     //Dejo en null la instruccion
                     this.unidadFuncional[i].removerInstruccion();
-                    //La seteo como ocupada
+
                     this.unidadFuncional[i].setOcupado(false);
 
                 }
@@ -181,14 +154,22 @@ export class ProcesadorSuperEscalar{
         }
     }
 
+    /*
+
+    El metodo se encarga de actualizar la unidad funcional, poniendo la instruccion como ocupado y seteando el estado como ejecutada y a su vez
+    la retira de la estacion de reserva.
+
+    */
+
     private actualizarUF(){
         let i=0;
 
         while( i < this.estacionReserva.instruccion.length){  
 
+            
             let indice = this.obtenerUF(this.estacionReserva.instruccion[i]);
 
-            if (indice != -1){
+            if (indice != null){
                 
                 let inst = this.estacionReserva.instruccion[i];
                 //Corroboro que no haya una dependencia para que no entre a la uf
@@ -220,7 +201,7 @@ export class ProcesadorSuperEscalar{
                 return i;
             }
         }
-        return -1;
+        return null;
      }
 
      private dependencia(inst: Instruccion) {

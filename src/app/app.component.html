@@ -10,103 +10,133 @@
 <h2 style="margin-left: 500px">Procesador Super Escalar</h2>
 
 <h5  style="margin-left: 50px">Número de ciclos de reloj de cada instrucción</h5>
-
-<div class="btn-group" role="group">
-  <button style="margin-left: 50px" type="button" class="btn btn-outline-primary"  >ADD:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-    <option (click)="agregarAdd(1)">1</option>
-    <option (click)="agregarAdd(2)">2</option>
-    <option (click)="agregarAdd(3)">3</option>
-    <option (click)="agregarAdd(4)">4</option>
-    <option (click)="agregarAdd(5)">5</option>
-    <option (click)="agregarAdd(6)">6</option>
-    <option (click)="agregarAdd(7)">7</option>
-    <option (click)="agregarAdd(8)">8</option>
-    <option (click)="agregarAdd(9)">9</option>
-    <option (click)="agregarAdd(10)">10</option>
- </select>
-  </div>
-
   <div class="btn-group" role="group">
-  <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >SUBD:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-    <option (click)="agregarSub(1)">1</option>
-    <option (click)="agregarSub(2)">2</option>
-    <option (click)="agregarSub(3)">3</option>
-    <option (click)="agregarSub(4)">4</option>
-    <option (click)="agregarSub(5)">5</option>
-    <option (click)="agregarSub(6)">6</option>
-    <option (click)="agregarSub(7)">7</option>
-    <option (click)="agregarSub(8)">8</option>
-    <option (click)="agregarSub(9)">9</option>
-    <option (click)="agregarSub(10)">10</option>
-  </select> 
-  </div> 
+    <button style="margin-left: 50px" type="button" class="btn btn-outline-primary" >ADD:</button>
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{addCiclos}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="agregarAdd(1)" (click)="cambiarAddCiclos(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(2)" (click)="cambiarAddCiclos(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(3)" (click)="cambiarAddCiclos(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(4)" (click)="cambiarAddCiclos(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(5)" (click)="cambiarAddCiclos(5)" >5</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(6)" (click)="cambiarAddCiclos(6)" >6</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(7)" (click)="cambiarAddCiclos(7)" >7</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(8)" (click)="cambiarAddCiclos(8)" >8</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(9)" (click)="cambiarAddCiclos(9)" >9</button>
+      <button class="dropdown-item" type="button" (click)="agregarAdd(10)" (click)="cambiarAddCiclos(10)" >10</button>
 
+      
+    </div>
+  
+  </div>
+  <div class="btn-group" role="group">
+    <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >SUBD:</button>
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{subdCiclos}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="agregarSub(1)" (click)="cambiarSubdCiclos(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(2)" (click)="cambiarSubdCiclos(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(3)" (click)="cambiarSubdCiclos(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(4)" (click)="cambiarSubdCiclos(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(5)" (click)="cambiarSubdCiclos(5)" >5</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(6)" (click)="cambiarSubdCiclos(6)" >6</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(7)" (click)="cambiarSubdCiclos(7)" >7</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(8)" (click)="cambiarSubdCiclos(8)" >8</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(9)" (click)="cambiarSubdCiclos(9)" >9</button>
+      <button class="dropdown-item" type="button" (click)="agregarSub(10)" (click)="cambiarSubdCiclos(10)" >10</button>
+
+      
+    </div>
+  
+  </div>
   <div class="btn-group" role="group">
     <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >MULD:</button>
-    <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-      <option (click)="agregarMul(1)">1</option>
-      <option (click)="agregarMul(2)">2</option>
-      <option (click)="agregarMul(3)">3</option>
-      <option (click)="agregarMul(4)">4</option>
-      <option (click)="agregarMul(5)">5</option>
-      <option (click)="agregarMul(6)">6</option>
-      <option (click)="agregarMul(7)">7</option>
-      <option (click)="agregarMul(8)">8</option>
-      <option (click)="agregarMul(9)">9</option>
-      <option (click)="agregarMul(10)">10</option>
-    </select> 
-    </div> 
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{muldCiclos}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="agregarMul(1)" (click)="cambiarMuldCiclos(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(2)" (click)="cambiarMuldCiclos(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(3)" (click)="cambiarMuldCiclos(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(4)" (click)="cambiarMuldCiclos(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(5)" (click)="cambiarMuldCiclos(5)" >5</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(6)" (click)="cambiarMuldCiclos(6)" >6</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(7)" (click)="cambiarMuldCiclos(7)" >7</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(8)" (click)="cambiarMuldCiclos(8)" >8</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(9)" (click)="cambiarMuldCiclos(9)" >9</button>
+      <button class="dropdown-item" type="button" (click)="agregarMul(10)" (click)="cambiarMuldCiclos(10)" >10</button>
 
+      
+    </div>
+  
+  </div>
+  
     <div class="btn-group" role="group">
       <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DIV:</button>
-      <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-        <option (click)="agregarDiv(1)">1</option>
-        <option (click)="agregarDiv(2)">2</option>
-        <option (click)="agregarDiv(3)">3</option>
-        <option (click)="agregarDiv(4)">4</option>
-        <option (click)="agregarDiv(5)">5</option>
-        <option (click)="agregarDiv(6)">6</option>
-        <option (click)="agregarDiv(7)">7</option>
-        <option (click)="agregarDiv(8)">8</option>
-        <option (click)="agregarDiv(9)">9</option>
-        <option (click)="agregarDiv(10)">10</option>
-      </select> 
-      </div> 
-
-        <div class="btn-group" role="group">
-          <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >STD:</button>
-          <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-            <option (click)="agregarStd(1)">1</option>
-            <option (click)="agregarStd(2)">2</option>
-            <option (click)="agregarStd(3)">3</option>
-            <option (click)="agregarStd(4)">4</option>
-            <option (click)="agregarStd(5)">5</option>
-            <option (click)="agregarStd(6)">6</option>
-            <option (click)="agregarStd(7)">7</option>
-            <option (click)="agregarStd(8)">8</option>
-            <option (click)="agregarStd(9)">9</option>
-            <option (click)="agregarStd(10)">10</option>
-          </select> 
-          </div> 
-
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+      {{divCiclos}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button class="dropdown-item" type="button" (click)="agregarDiv(1)" (click)="cambiarDivCiclos(1)" >1</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(2)" (click)="cambiarDivCiclos(2)" >2</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(3)" (click)="cambiarDivCiclos(3)" >3</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(4)" (click)="cambiarDivCiclos(4)" >4</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(5)" (click)="cambiarDivCiclos(5)" >5</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(6)" (click)="cambiarDivCiclos(6)" >6</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(7)" (click)="cambiarDivCiclos(7)" >7</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(8)" (click)="cambiarDivCiclos(8)" >8</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(9)" (click)="cambiarDivCiclos(9)" >9</button>
+        <button class="dropdown-item" type="button" (click)="agregarDiv(10)" (click)="cambiarDivCiclos(10)" >10</button>
+  
+        
+      </div>
+    
+    </div>
+      <div class="btn-group" role="group">
+        <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >STD:</button>
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+        {{stdCiclos}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button class="dropdown-item" type="button" (click)="agregarStd(1)" (click)="cambiarStdCiclos(1)" >1</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(2)" (click)="cambiarStdCiclos(2)" >2</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(3)" (click)="cambiarStdCiclos(3)" >3</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(4)" (click)="cambiarStdCiclos(4)" >4</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(5)" (click)="cambiarStdCiclos(5)" >5</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(6)" (click)="cambiarStdCiclos(6)" >6</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(7)" (click)="cambiarStdCiclos(7)" >7</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(8)" (click)="cambiarStdCiclos(8)" >8</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(9)" (click)="cambiarStdCiclos(9)" >9</button>
+          <button class="dropdown-item" type="button" (click)="agregarStd(10)" (click)="cambiarStdCiclos(10)">10</button>
+    
+          
+        </div>
+      
+      </div>
           <div class="btn-group" role="group">
             <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >LDD:</button>
-            <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-              <option (click)="agregarLdd(1)">1</option>
-              <option (click)="agregarLdd(2)">2</option>
-              <option (click)="agregarLdd(3)">3</option>
-              <option (click)="agregarLdd(4)">4</option>
-              <option (click)="agregarLdd(5)">5</option>
-              <option (click)="agregarLdd(6)">6</option>
-              <option (click)="agregarLdd(7)">7</option>
-              <option (click)="agregarLdd(8)">8</option>
-              <option (click)="agregarLdd(9)">9</option>
-              <option (click)="agregarLdd(10)">10</option>
-            </select> 
-            </div> 
-
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+            {{lddCiclos}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button class="dropdown-item" type="button" (click)="agregarLdd(1)" (click)="cambiarLddCiclos(1)" >1</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(2)" (click)="cambiarLddCiclos(2)" >2</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(3)" (click)="cambiarLddCiclos(3)" >3</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(4)" (click)="cambiarLddCiclos(4)" >4</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(5)" (click)="cambiarLddCiclos(5)" >5</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(6)" (click)="cambiarLddCiclos(6)" >6</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(7)" (click)="cambiarLddCiclos(7)" >7</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(8)" (click)="cambiarLddCiclos(8)" >8</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(9)" (click)="cambiarLddCiclos(9)" >9</button>
+              <button class="dropdown-item" type="button" (click)="agregarLdd(10)" (click)="cambiarLddCiclos(10)">10</button>
+        
+              
+            </div>
+          
+          </div>
 <br>
 
 
@@ -114,129 +144,142 @@
 <h5 style="margin-left: 50px">Agregar una instrucción</h5>
 <div class="btn-group" role="group">
   <button style="margin-left: 50px" type="button" class="btn btn-outline-primary" >INSTRUCTION:</button>
-  <select   type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-    <option selected>---</option>
-    <option (click)="agregarInst(0)">ADD</option>
-    <option (click)="agregarInst(1)">SUBD</option>
-    <option (click)="agregarInst(2)">MULD</option>
-    <option (click)="agregarInst(3)">DIV</option>
-    <option (click)="agregarInst(4)" (click)="agregarOp2(-1)">STD</option>
-    <option (click)="agregarInst(5)" (click)="agregarOp2(-1)">LDD</option>
-  </select> 
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+  {{instruccionTabla}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('ADD')" (click)="agregarInst(0)" >ADD</button>
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('SUBD')" (click)="agregarInst(1)" >SUBD</button>
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('MULD')" (click)="agregarInst(2)" >MULD</button>
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('DIV')" (click)="agregarInst(3)" >DIV</button>
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('STD')" (click)="agregarInst(4)" (click)="agregarOp2(-1)"  (click)="cambiarOp2('--')">STD</button>
+    <button class="dropdown-item" type="button" (click)="cambiarInstru('LDD')" (click)="agregarInst(5)"  (click)="agregarOp2(-1)" (click)="cambiarOp2('--')">LDD</button>
+  </div>
+
 </div>
 
 <div class="btn-group" role="group">
   <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >DST:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-    <option selected>---</option>
-    <option (click)="agregarDst(0)">r0</option>
-    <option (click)="agregarDst(1)">r1</option>
-    <option (click)="agregarDst(2)">r2</option>
-    <option (click)="agregarDst(3)">r3</option>
-    <option (click)="agregarDst(4)">r4</option>
-    <option (click)="agregarDst(5)">r5</option>
-    <option (click)="agregarDst(6)">r6</option>
-    <option (click)="agregarDst(7)">r7</option>
-    <option (click)="agregarDst(8)">r8</option>
-    <option (click)="agregarDst(9)">r9</option>
-    <option (click)="agregarDst(10)">r10</option>
-    <option (click)="agregarDst(11)">r11</option>
-    <option (click)="agregarDst(12)">r12</option>
-    <option (click)="agregarDst(13)">r13</option>
-    <option (click)="agregarDst(14)">r14</option>
-    <option (click)="agregarDst(15)">r15</option>
-    <option (click)="agregarDst(16)">r16</option>
-    <option (click)="agregarDst(17)">r17</option>
-    <option (click)="agregarDst(18)">r18</option>
-    <option (click)="agregarDst(19)">r19</option>
-    <option (click)="agregarDst(20)">r20</option>
-    <option (click)="agregarDst(21)">r21</option>
-    <option (click)="agregarDst(22)">r22</option>
-    <option (click)="agregarDst(23)">r23</option>
-    <option (click)="agregarDst(24)">r24</option>
-    <option (click)="agregarDst(25)">r25</option>
-    <option (click)="agregarDst(26)">r26</option>
-    <option (click)="agregarDst(27)">r27</option>
-    <option (click)="agregarDst(28)">r28</option>
-    <option (click)="agregarDst(29)">r29</option>
-    <option (click)="agregarDst(30)">r30</option>
-   </select> 
-</div> 
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+  {{destino}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r0')" (click)="agregarDst(0)" >r0</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r1')" (click)="agregarDst(1)" >r1</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r2')" (click)="agregarDst(2)" >r2</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r3')" (click)="agregarDst(3)" >r3</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r4')" (click)="agregarDst(4)" >r4</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r5')" (click)="agregarDst(5)" >r5</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r6')" (click)="agregarDst(6)" >r6</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r7')" (click)="agregarDst(7)" >r7</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r8')" (click)="agregarDst(8)" >r8</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r9')" (click)="agregarDst(9)" >r9</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r10')" (click)="agregarDst(10)" >r10</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r11')" (click)="agregarDst(11)" >r11</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r12')" (click)="agregarDst(12)" >r12</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r13')" (click)="agregarDst(13)" >r13</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r14')" (click)="agregarDst(14)" >r14</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r15')" (click)="agregarDst(15)" >r15</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r16')" (click)="agregarDst(16)" >r16</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r17')" (click)="agregarDst(17)" >r17</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r18')" (click)="agregarDst(18)" >r18</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r19')" (click)="agregarDst(19)" >r19</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r20')" (click)="agregarDst(20)" >r20</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r21')" (click)="agregarDst(21)" >r21</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r22')" (click)="agregarDst(22)" >r22</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r23')" (click)="agregarDst(23)" >r23</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r24')" (click)="agregarDst(24)" >r24</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r25')" (click)="agregarDst(25)" >r25</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r26')" (click)="agregarDst(26)" >r26</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r27')" (click)="agregarDst(27)" >r27</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r28')" (click)="agregarDst(28)" >r28</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r29')" (click)="agregarDst(29)" >r29</button>
+    <button class="dropdown-item" type="button" (click)="cambiarDst('r30')" (click)="agregarDst(30)" >r30</button>
+  </div>
+
+</div>
 
 <div class="btn-group" role="group">
   <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >OP1:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled">
-    <option selected>---</option>
-    <option (click)="agregarOp1(0)">r0</option>
-    <option (click)="agregarOp1(1)">r1</option>
-    <option (click)="agregarOp1(2)">r2</option>
-    <option (click)="agregarOp1(3)">r3</option>
-    <option (click)="agregarOp1(4)">r4</option>
-    <option (click)="agregarOp1(5)">r5</option>
-    <option (click)="agregarOp1(6)">r6</option>
-    <option (click)="agregarOp1(7)">r7</option>
-    <option (click)="agregarOp1(8)">r8</option>
-    <option (click)="agregarOp1(9)">r9</option>
-    <option (click)="agregarOp1(10)">r10</option>
-    <option (click)="agregarOp1(11)">r11</option>
-    <option (click)="agregarOp1(12)">r12</option>
-    <option (click)="agregarOp1(13)">r13</option>
-    <option (click)="agregarOp1(14)">r14</option>
-    <option (click)="agregarOp1(15)">r15</option>
-    <option (click)="agregarOp1(16)">r16</option>
-    <option (click)="agregarOp1(17)">r17</option>
-    <option (click)="agregarOp1(18)">r18</option>
-    <option (click)="agregarOp1(19)">r19</option>
-    <option (click)="agregarOp1(20)">r20</option>
-    <option (click)="agregarOp1(21)">r21</option>
-    <option (click)="agregarOp1(22)">r22</option>
-    <option (click)="agregarOp1(23)">r23</option>
-    <option (click)="agregarOp1(24)">r24</option>
-    <option (click)="agregarOp1(25)">r25</option>
-    <option (click)="agregarOp1(26)">r26</option>
-    <option (click)="agregarOp1(27)">r27</option>
-    <option (click)="agregarOp1(28)">r28</option>
-    <option (click)="agregarOp1(29)">r29</option>
-    <option (click)="agregarOp1(30)">r30</option>
-   </select> 
-</div> 
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+  {{op1}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r0')" (click)="agregarOp1(0)" >r0</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r1')" (click)="agregarOp1(1)" >r1</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r2')" (click)="agregarOp1(2)" >r2</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r3')" (click)="agregarOp1(3)" >r3</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r4')" (click)="agregarOp1(4)" >r4</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r5')" (click)="agregarOp1(5)" >r5</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r6')" (click)="agregarOp1(6)" >r6</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r7')" (click)="agregarOp1(7)" >r7</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r8')" (click)="agregarOp1(8)" >r8</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r9')" (click)="agregarOp1(9)" >r9</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r10')" (click)="agregarOp1(10)" >r10</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r11')" (click)="agregarOp1(11)" >r11</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r12')" (click)="agregarOp1(12)" >r12</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r13')" (click)="agregarOp1(13)" >r13</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r14')" (click)="agregarOp1(14)" >r14</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r15')" (click)="agregarOp1(15)" >r15</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r16')" (click)="agregarOp1(16)" >r16</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r17')" (click)="agregarOp1(17)" >r17</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r18')" (click)="agregarOp1(18)" >r18</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r19')" (click)="agregarOp1(19)" >r19</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r20')" (click)="agregarOp1(20)" >r20</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r21')" (click)="agregarOp1(21)" >r21</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r22')" (click)="agregarOp1(22)" >r22</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r23')" (click)="agregarOp1(23)" >r23</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r24')" (click)="agregarOp1(24)" >r24</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r25')" (click)="agregarOp1(25)" >r25</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r26')" (click)="agregarOp1(26)" >r26</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r27')" (click)="agregarOp1(27)" >r27</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r28')" (click)="agregarOp1(28)" >r28</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r29')" (click)="agregarOp1(29)" >r29</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp1('r30')" (click)="agregarOp1(30)" >r30</button>
+  </div>
+
+</div>
+
 <div class="btn-group" role="group">
   <button style="margin-left: 10px" type="button" class="btn btn-outline-primary" >OP2:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="op2Disabled" [disabled]="buttonDisabled">
-    <option selected>---</option>
-    <option (click)="agregarOp2(0)">r0</option>
-    <option (click)="agregarOp2(1)">r1</option>
-    <option (click)="agregarOp2(2)">r2</option>
-    <option (click)="agregarOp2(3)">r3</option>
-    <option (click)="agregarOp2(4)">r4</option>
-    <option (click)="agregarOp2(5)">r5</option>
-    <option (click)="agregarOp2(6)">r6</option>
-    <option (click)="agregarOp2(7)">r7</option>
-    <option (click)="agregarOp2(8)">r8</option>
-    <option (click)="agregarOp2(9)">r9</option>
-    <option (click)="agregarOp2(10)">r10</option>
-    <option (click)="agregarOp2(11)">r11</option>
-    <option (click)="agregarOp2(12)">r12</option>
-    <option (click)="agregarOp2(13)">r13</option>
-    <option (click)="agregarOp2(14)">r14</option>
-    <option (click)="agregarOp2(15)">r15</option>
-    <option (click)="agregarOp2(16)">r16</option>
-    <option (click)="agregarOp2(17)">r17</option>
-    <option (click)="agregarOp2(18)">r18</option>
-    <option (click)="agregarOp2(19)">r19</option>
-    <option (click)="agregarOp2(20)">r20</option>
-    <option (click)="agregarOp2(21)">r21</option>
-    <option (click)="agregarOp2(22)">r22</option>
-    <option (click)="agregarOp2(23)">r23</option>
-    <option (click)="agregarOp2(24)">r24</option>
-    <option (click)="agregarOp2(25)">r25</option>
-    <option (click)="agregarOp2(26)">r26</option>
-    <option (click)="agregarOp2(27)">r27</option>
-    <option (click)="agregarOp2(28)">r28</option>
-    <option (click)="agregarOp2(29)">r29</option>
-    <option (click)="agregarOp2(30)">r30</option>
-   </select>
-</div> 
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled" [disabled]="op2Disabled">
+  {{op2}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r0')" (click)="agregarOp2(0)" >r0</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r1')" (click)="agregarOp2(1)" >r1</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r2')" (click)="agregarOp2(2)" >r2</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r3')" (click)="agregarOp2(3)" >r3</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r4')" (click)="agregarOp2(4)" >r4</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r5')" (click)="agregarOp2(5)" >r5</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r6')" (click)="agregarOp2(6)" >r6</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r7')" (click)="agregarOp2(7)" >r7</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r8')" (click)="agregarOp2(8)" >r8</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r9')" (click)="agregarOp2(9)" >r9</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r10')" (click)="agregarOp2(10)" >r10</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r11')" (click)="agregarOp2(11)" >r11</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r12')" (click)="agregarOp2(12)" >r12</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r13')" (click)="agregarOp2(13)" >r13</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r14')" (click)="agregarOp2(14)" >r14</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r15')" (click)="agregarOp2(15)" >r15</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r16')" (click)="agregarOp2(16)" >r16</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r17')" (click)="agregarOp2(17)" >r17</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r18')" (click)="agregarOp2(18)" >r18</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r19')" (click)="agregarOp2(19)" >r19</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r20')" (click)="agregarOp2(20)" >r20</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r21')" (click)="agregarOp2(21)" >r21</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r22')" (click)="agregarOp2(22)" >r22</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r23')" (click)="agregarOp2(23)" >r23</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r24')" (click)="agregarOp2(24)" >r24</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r25')" (click)="agregarOp2(25)" >r25</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r26')" (click)="agregarOp2(26)" >r26</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r27')" (click)="agregarOp2(27)" >r27</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r28')" (click)="agregarOp2(28)" >r28</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r29')" (click)="agregarOp2(29)" >r29</button>
+    <button class="dropdown-item" type="button" (click)="cambiarOp2('r30')" (click)="agregarOp2(30)" >r30</button>
+  </div>
+
+</div>
 <div class="btn-group" role="group">
 
   <button  style="margin-left: 10px" type="button"  class="btn btn-secondary"  (click)="mostrarIns()" [disabled]="buttonDisabled" >Agregar</button>
@@ -271,69 +314,96 @@
 
 <br>
 <br/>
-<h5 style="margin-left: 100px">Despacho</h5>
-<div class="btn-group" role="group">
-  <button style="margin-left: 100px" type="button" class="btn btn-outline-primary"  >GRADO:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-    <option (click)="agregarDesp(1)">1</option>
-    <option (click)="agregarDesp(2)">2</option>
-    <option (click)="agregarDesp(3)">3</option>
-    <option (click)="agregarDesp(4)">4</option>
-    <option (click)="agregarDesp(5)">5</option>
- </select>
+<h5 style="margin-left: 100px">Despacho   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+     Estaciones de Reserva </h5>
+  <div class="btn-group" role="group">
+    <button style="margin-left: 100px" type="button" class="btn btn-outline-primary" >GRADO:</button>
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{gradoRob}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="cambiarGrado(1)" (click)="agregarDesp(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="cambiarGrado(2)" (click)="agregarDesp(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="cambiarGrado(3)" (click)="agregarDesp(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="cambiarGrado(4)" (click)="agregarDesp(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="cambiarGrado(5)" (click)="agregarDesp(5)" >5</button>
+      
+    </div>
+  
   </div>
-  <br>
-  <br/>
-  <h5 style="margin-left: 100px">Estaciones de Reserva</h5>
-<div class="btn-group" role="group">
-  <button style="margin-left: 100px" type="button" class="btn btn-outline-primary"  >Estaciones:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-    <option (click)="agregarEstReser(1)">1</option>
-    <option (click)="agregarEstReser(2)">2</option>
-    <option (click)="agregarEstReser(3)">3</option>
-    <option (click)="agregarEstReser(4)">4</option>
-    <option (click)="agregarEstReser(5)">5</option>
- </select>
+  <div class="btn-group" role="group">
+    <button style="margin-left: 100px" type="button" class="btn btn-outline-primary" >Estaciones:</button>
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{estacionesRob}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="agregarEstReser(1)" (click)="cambiarER(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="agregarEstReser(2)" (click)="cambiarER(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="agregarEstReser(3)" (click)="cambiarER(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="agregarEstReser(4)" (click)="cambiarER(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="agregarEstReser(5)" (click)="cambiarER(5)" >5</button>
+      
+    </div>
+  
   </div>
+  
   <br>
   <br/>
   <h5 style="margin-left: 100px">Unidades Funcionales</h5>
-<div class="btn-group" role="group">
-  <button style="margin-left: 100px" type="button" class="btn btn-outline-primary"  >Multifuncion:</button>
-  <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-    <option (click)="agregarUFMultFunc(0)">0</option>
-    <option (click)="agregarUFMultFunc(1)">1</option>
-    <option (click)="agregarUFMultFunc(2)">2</option>
-    <option (click)="agregarUFMultFunc(3)">3</option>
-    <option (click)="agregarUFMultFunc(4)">4</option>
-    <option (click)="agregarUFMultFunc(5)">5</option>
- </select>
+
+  <div class="btn-group" role="group">
+    <button style="margin-left: 100px" type="button" class="btn btn-outline-primary" >Multifuncion:</button>
+    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+    {{Multifuncion}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(0)" (click)="cambiarMultiFuncion(0)" >0</button>
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(1)" (click)="cambiarMultiFuncion(1)" >1</button>
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(2)" (click)="cambiarMultiFuncion(2)" >2</button>
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(3)" (click)="cambiarMultiFuncion(3)" >3</button>
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(4)" (click)="cambiarMultiFuncion(4)" >4</button>
+      <button class="dropdown-item" type="button" (click)="agregarUFMultFunc(5)" (click)="cambiarMultiFuncion(5)" >5</button>
+      
+    </div>
+  
   </div>
   <br>
   <br/>
-  <div class="btn-group" role="group">
-    <button style="margin-left: 100px" type="button" class="btn btn-outline-primary"  >Aritmetica:</button>
-    <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-      <option (click)="agregarUFAritmetica(0)">0</option>
-      <option (click)="agregarUFAritmetica(1)">1</option>
-      <option (click)="agregarUFAritmetica(2)">2</option>
-      <option (click)="agregarUFAritmetica(3)">3</option>
-      <option (click)="agregarUFAritmetica(4)">4</option>
-      <option (click)="agregarUFAritmetica(5)">5</option>
-   </select>
+
+    <div class="btn-group" role="group">
+      <button style="margin-left: 100px" type="button" class="btn btn-outline-primary" >Aritmetica:</button>
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+      {{Aritmetica}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(0)" (click)="cambiarAritmetica(0)" >0</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(1)" (click)="cambiarAritmetica(1)" >1</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(2)" (click)="cambiarAritmetica(2)" >2</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(3)" (click)="cambiarAritmetica(3)" >3</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(4)" (click)="cambiarAritmetica(4)" >4</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFAritmetica(5)" (click)="cambiarAritmetica(5)" >5</button>
+        
+      </div>
+    
     </div>
   <br>
   <br/>
-  <div class="btn-group" role="group">
-    <button style="margin-left: 100px" type="button" class="btn btn-outline-primary"  >Memoria:</button>
-    <select type="button" class="btn btn-outline-primary dropdown-toggle" [disabled]="buttonDisabled" >
-      <option (click)="agregarUFMemoria(0)">0</option>
-      <option (click)="agregarUFMemoria(1)">1</option>
-      <option (click)="agregarUFMemoria(2)">2</option>
-      <option (click)="agregarUFMemoria(3)">3</option>
-      <option (click)="agregarUFMemoria(4)">4</option>
-      <option (click)="agregarUFMemoria(5)">5</option>
-   </select>
+
+    <div class="btn-group" role="group">
+      <button style="margin-left: 100px" type="button" class="btn btn-outline-primary" >Memoria:</button>
+      <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  [disabled]="buttonDisabled">
+      {{Memoria}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(0)" (click)="cambiarMemoria(0)" >0</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(1)" (click)="cambiarMemoria(1)" >1</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(2)" (click)="cambiarMemoria(2)" >2</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(3)" (click)="cambiarMemoria(3)" >3</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(4)" (click)="cambiarMemoria(4)" >4</button>
+        <button class="dropdown-item" type="button" (click)="agregarUFMemoria(5)" (click)="cambiarMemoria(5)" >5</button>
+        
+      </div>
+    
     </div>
   <br>
   <br/>
@@ -345,14 +415,13 @@
 </div>
 
 
-
 <br>
 <br/>
    <br>
    <br/>
    <div class="row">
     <div class = "col-md-12 bpadding-10">
-    <button id="btn-next" type="button"  style="margin-left: 100px;" class="btn btn-secondary" (click)="siguienteCiclo()" *ngIf="mostrarTabla">Siguiente ciclo</button>
+    <button id="btn-next" type="button"  style="margin-left: 100px;" class="btn btn-secondary"  (click)="siguienteCiclo()" *ngIf="mostrarTabla">Siguiente ciclo</button>
   </div>
   </div>
 

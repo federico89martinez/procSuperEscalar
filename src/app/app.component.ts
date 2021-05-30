@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
-import { InstantiateExpr } from '@angular/compiler';
+import { InstantiateExpr, ThrowStmt } from '@angular/compiler';
 import { Instru } from 'src/app/models/instruccion';
 import { In } from 'src/app/models/instruccion';
 import { Ins } from 'src/app/models/instruccion';
@@ -9,10 +9,6 @@ import { isUndefined } from 'util';
 
 import { Instruccion } from './Instruccion';
 import { ProcesadorSuperEscalar } from './ProcesadorSuperEscalar';
-
-
-
-
 
 
 
@@ -170,14 +166,14 @@ export class AppComponent implements OnInit{
  agregarLdd(ldd){
    this.ciclosLdd=ldd;
  }
-
+ buttonDisabledOp2: boolean = false;
  buttonDisabled: boolean = false;
  buttonEjecutar: boolean = true;
  op2Disabled: boolean = false;
  verTabla: boolean = false;
 
  guardar(){
-  //alert('Se guardaron los datos');
+  alert('Se guardaron los datos');
   this.buttonDisabled = true;
   this.buttonEjecutar = false;
    if(this.cantidadMultiFuncion == 0 && this.cantidadAritmetica == 0 && this.cantidadMemoria == 0){
@@ -185,7 +181,8 @@ export class AppComponent implements OnInit{
     alert('Se precisa seleccionar al menos una unidad funcional');
     this.mostrarTabla = false;
 
-  }else this.mostrarTabla = true;
+  }
+    else this.mostrarTabla = true;
 
 
  }
@@ -205,6 +202,7 @@ export class AppComponent implements OnInit{
   if(ins == "SUBD") this.op2Disabled = false;
   if(ins == "MULD") this.op2Disabled = false;
   if(ins == "DIV") this.op2Disabled = false;
+  
  }
 
 
@@ -220,7 +218,76 @@ export class AppComponent implements OnInit{
     this.obtenerInstru(this.ins); 
   }
 
-  
+  numOrder = 1;
+  instruccionTabla : any;
+  destino : any;
+  op1Tabla: any;
+  op2Tabla: any;
+  gradoRob: any;
+  estacionesRob: any;
+  Multifuncion: any;
+  Aritmetica: any;
+  Memoria: any;
+  addCiclos: any;
+  subdCiclos: any;
+  muldCiclos: any;
+  divCiclos: any;
+  stdCiclos:any;
+  lddCiclos:any;
+
+ cambiarDst(num){
+    this.destino = num;
+    
+}
+cambiarInstru(num){
+  this.instruccionTabla = num;
+}
+
+cambiarOp1(num){
+  this.op1Tabla = num;
+}
+
+cambiarOp2(num){
+  this.op2Tabla = num;
+}
+
+cambiarGrado(num){
+  this.gradoRob = num;
+}
+cambiarER(num){
+  this.estacionesRob = num;
+}
+
+cambiarMultiFuncion(num){
+  this.Multifuncion = num;
+}
+
+cambiarAritmetica(num){
+  this.Aritmetica = num;
+}
+cambiarMemoria(num){
+  this.Memoria = num;
+}
+
+cambiarAddCiclos(num){
+  this.addCiclos = num;
+}
+
+cambiarSubdCiclos(num){
+  this.subdCiclos = num;
+}
+cambiarMuldCiclos(num){
+  this.muldCiclos = num;
+}
+cambiarDivCiclos(num){
+  this.divCiclos = num;
+}
+cambiarStdCiclos(num){
+  this.stdCiclos = num;
+}
+cambiarLddCiclos(num){
+  this.lddCiclos = num;
+}
 
   agregarDst(dst){
     if(dst == 0) this.dst= "r0";
@@ -325,7 +392,7 @@ export class AppComponent implements OnInit{
     if(op2 == 28) this.op2= "r28";
     if(op2 == 29) this.op2= "r29";
     if(op2 == 30) this.op2= "r30";
-
+    this.buttonDisabledOp2 = true;
 
   }
 
@@ -385,9 +452,10 @@ export class AppComponent implements OnInit{
     //ingresamos al arreglo el objeto
     this.instruccion.push(this.instru);
     this.valido=false;   
-    //this.listInstrucciones.push(this.instru);
     this.idInstruccion = this.listInstrucciones.length + 1;
-    //let instNueva = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"MULTIFUNCT");
+    /*
+    Se van ingresando las intrucciones dependiendo de su tipo
+    */
     if(this.ins == "ADD"){               
       let instruccionIngresar = new  Instruccion("S" + this.idInstruccion,this.ins, this.instru.d,this.instru.op1,this.instru.op2,"ARITMETICA");
       this.listInstrucciones.push(instruccionIngresar);
@@ -438,9 +506,7 @@ export class AppComponent implements OnInit{
         if(tipoInstruccion.tipo == "LDD")
         tipoInstruccion.ciclo = this.ciclosLdd;
       }
-     }    
-    //let instNueva = new  Instruccion("S" + this.idInstruccion,"ADD", "DST","OP1","","MULTIFUNCT");
-    
+     }        
   }
   
   guardarCiclos(){
@@ -474,500 +540,6 @@ export class AppComponent implements OnInit{
   ciclosDiv: number = 1;
   ciclosStd: number = 1;
   ciclosLdd: number = 1;
-
-  agregarDespacho1(){
- 
-    //agregamos en el primer ciclo las intrucciones dependiendo de la cantidad de despachos
-    
-         
-     //ins1ss es la isntruccion y ins1c es la cantidad de ciclos que tiene
-     
-     if(this.cantidadDespacho == 1 ){
-           if(this.ciclos == -1){
-            if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
-                this.ins1ss=this.instrucciones2[this.i].ss;
-                this.ins1c =this.instrucciones2[this.i].c;
-                this.instrucciones2.splice(this.i,1);
-                this.rob.d1=this.ins1ss;   
-                this.ciclos++;         
-            }
-          }
-            //if(this.ciclos > 0 && this.ciclos < 2){
-              if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
-                if(this.ins2ss == ""){
-                  this.ins2ss=this.instrucciones2[this.i].ss;
-                  this.ins2c=this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins2ss;
-                }else if(this.ins3ss == ''){
-                  this.ins3ss=this.instrucciones2[this.i].ss;
-                  this.ins3c =this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins3ss; 
-
-                }else if (this.ins4ss == ''){
-                  this.ins4ss=this.instrucciones2[this.i].ss;
-                  this.ins4c =this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins4ss; 
-                }
-                else if (this.ins5ss == ''){
-                  this.ins5ss=this.instrucciones2[this.i].ss;
-                  this.ins5c =this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins5ss; 
-                }else if (this.ins6ss == ''){
-                  this.ins6ss=this.instrucciones2[this.i].ss;
-                  this.ins6c =this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins6ss; 
-                }
-                else if (this.ins7ss == ''){
-                  this.ins7ss=this.instrucciones2[this.i].ss;
-                  this.ins7c =this.instrucciones2[this.i].c;
-                  this.instrucciones2.splice(this.i,1);
-                  this.rob.d1=this.ins7ss; 
-                }
-
-            }
-        }
-         
- }
-  agregarDespacho2(){
-   if(this.cantidadDespacho == 2){
-      if(this.ciclos == -1){
-        if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
-            this.ins1ss=this.instrucciones2[this.i].ss;
-            this.ins1c =this.instrucciones2[this.i].c;
-            this.instrucciones2.splice(this.i,1);
-            this.rob.d1=this.ins1ss;   
-            this.ciclos++;         
-        }
-        if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
-          this.ins2ss=this.instrucciones2[this.i].ss;
-          this.ins2c =this.instrucciones2[this.i].c;
-          this.instrucciones2.splice(this.i,1);
-          this.rob.d2=this.ins2ss;     
-       }
-       }
-       if(this.ciclos>0){
-      if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
-          this.ins3ss=this.instrucciones2[this.i].ss;
-          this.ins3c =this.instrucciones2[this.i].c;
-          this.instrucciones2.splice(this.i,1);
-          this.rob.d1=this.ins3ss;     
-      }
-      if(isUndefined(this.rob.d4) && this.instrucciones2.length!= 0 ){
-        this.ins4ss=this.instrucciones2[this.i].ss;
-        this.ins4c =this.instrucciones2[this.i].c;
-        this.instrucciones2.splice(this.i,1);
-        this.rob.d2=this.ins4ss;     
-        }
-      }
-      
-    }
-  }
-  agregarDespacho3(){
-    if(this.ciclos == -1){
-      if(isUndefined(this.rob.d1) && this.instrucciones2.length!= 0 ){
-          this.ins1ss=this.instrucciones2[this.i].ss;
-          this.ins1c =this.instrucciones2[this.i].c;
-          this.instrucciones2.splice(this.i,1);
-          this.rob.d1=this.ins1ss;   
-          this.ciclos++;         
-      }
-      if(isUndefined(this.rob.d2) && this.instrucciones2.length!= 0 ){
-        this.ins2ss=this.instrucciones2[this.i].ss;
-        this.ins2c =this.instrucciones2[this.i].c;
-        this.instrucciones2.splice(this.i,1);
-        this.rob.d2=this.ins2ss;     
-     }
-     if(isUndefined(this.rob.d3) && this.instrucciones2.length!= 0 ){
-      this.ins3ss=this.instrucciones2[this.i].ss;
-      this.ins3c =this.instrucciones2[this.i].c;
-      this.instrucciones2.splice(this.i,1);
-      this.rob.d3=this.ins3ss;     
-   }
-   if(this.instrucciones2.length!= 0 ){
-    this.ins4ss=this.instrucciones2[this.i].ss;
-    this.ins4c =this.instrucciones2[this.i].c;
-    this.instrucciones2.splice(this.i,1); 
- }
-     }
-     if(this.ciclos>0){
-    if(isUndefined(this.rob.d3) && (this.robb[this.ciclos-1].d3 != this.robb[this.ciclos-1].e1) 
-         && (!isUndefined(this.robb[this.ciclos-1].d3)) ){
-        this.rob.d3=this.ins3ss;     
-    }
-    //if(this.ciclos>1){
-    if((this.robb[this.ciclos-1].d2 != this.robb[this.ciclos-1].e1) 
-    && (!isUndefined(this.robb[this.ciclos-1].d2) )){
-      this.rob.d2=this.ins4ss;      
-      }
-    //}
-  }
-  }
-
-  
-  agregarER1(){
-  if(this.ciclos > 0) { 
-
-
-      // if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
-      //   if(this.ins1ss != '')
-      //   this.rob.e1=this.ins1ss;
-      //   else if(this.ins2ss!= '')
-      //   this.rob.e1=this.ins2ss;
-      // }
-
-      if(this.ciclos > 1){
-        if(this.ins1c != 0){
-          if(this.ins2c != 0 && this.ins1c != 0 ){
-              this.rob.e1 = this.ins2ss;
-              this.rob.uf1= this.ins1ss;
-          }
-        }else if (this.ins1c == 0 && this.ins2c != 0 && this.ins3c != 0){
-          this.rob.e1 = this.ins3ss;
-          this.rob.uf1 = this.ins2ss;
-        }else if (this.ins2c == 0 && this.ins3c != 0 ){
-          if(this.ins4c != 0){
-            this.rob.e1 = this.ins4ss;}
-          this.rob.uf1 = this.ins3ss
-        }else if (this.ins3c == 0 && this.ins4c != 0){
-          this.rob.e1 = this.ins4ss;
-          this.rob.uf1 = this.ins4ss
-        }else if (this.ins4c == 0 && this.ins5c != 0){
-          this.rob.e1 = this.ins5ss;
-          this.rob.uf1 = this.ins5ss
-        }
-
-      }
-    
-    if(this.cantidadER == 2){
-      if((this.robb[this.ciclos-1].uf1 == '') && (this.ins1c != 0)){
-        this.rob.e1=this.ins1ss;
-      }
-      if((this.robb[this.ciclos-1].uf2 == '') && (this.ins2c != 0)){
-        this.rob.e2=this.ins2ss;
-      }
-    }
-   //parche para solo probar con ER
-   if(this.cantidadER != 1){
-      if(this.ciclos > 1){
-        
-       //if((this.rob.e1 == this.rob.uf1))
-      // console.log(this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
-       //console.log(this.ins3ss != this.robb[this.ciclos-1].uf1)
-       if((this.ins3ss != '') && (this.ins3c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins3ss != this.robb[this.ciclos-1].uf1)
-           && (((this.robb[this.ciclos-1].e1 != '') && (this.robb[this.ciclos-1].uf1!='') ))){
-           //this.rob.e1=this.ins3ss;
-           if((this.rob.i1 == '') || (this.rob.i2 == '') || (this.rob.i3 == '') || (this.rob.i4 == '')){
-            if(this.rob.i1 == '' ){}
-            if(this.rob.i2 == '' ){}
-            if(this.rob.i3 == '' ){this.rob.e1=this.ins3ss; }
-            if(this.rob.i4 == '' ){this.rob.e2=this.ins4ss; }
-            //if(this.rob.i5 == '' ){this.rob.e3=this.ins5ss; }
-
-           }
-        } }
-        /* else{if(this.robb[this.ciclos-1].e1 != this.robb[this.ciclos-1].uf1){
-          if(this.rob.i3 == '' ){this.rob.i3=this.ins3ss; this.rob.s3="I"; this.rob.e1=this.ins3ss};
-        } */
-
-      }
-      if(this.ciclos > 2){
-      { if((this.ins5ss != '') && (this.ins5c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1 ) && (this.ins5ss != this.robb[this.ciclos-1].uf1)){
-           if(this.rob.i5 == '' ){this.rob.e3=this.ins5ss; }
-           if(this.rob.i6 == '' ){this.rob.e4=this.ins6ss; }
-        }
-
-
-      }
-      }
-    }
-
-    if(this.ciclos > 3){
-      if((this.ins7ss != '') && (this.ins7c != 0 )){
-        if((this.robb[this.ciclos-1].e1 == this.robb[this.ciclos-1].uf1) 
-        || (this.robb[this.ciclos-1].e2 == this.robb[this.ciclos-1].uf1) 
-        || (this.robb[this.ciclos-1].e3 == this.robb[this.ciclos-1].uf1)
-        || (this.robb[this.ciclos-1].e4 == this.robb[this.ciclos-1].uf1)  
-        && (this.ins7ss != this.robb[this.ciclos-1].uf1)){
-          if(this.rob.i1 == '' ){this.rob.e1=this.ins7ss; }
-        }
-      }
-    }
-
-    
-
-    }
-  }
-    
-  }
-
-  agregarER2(){
-    if(this.ciclos > 0) { 
-        if(this.ciclos == 1){
-          this.rob.e1 = this.ins1ss;
-          this.rob.e2 = this.ins2ss;
-        }
-      if(this.ciclos > 1){
-        if(this.ins1c != 0){
-          if(this.ins2c != 0 && this.instrucciones2.length == 0){
-                this.rob.e2 = this.ins2ss;
-          }
-
-          if(this.ins2c != 0 && this.ins3c != 0 && this.ins1c != 0 ){
-              this.rob.e1 = this.ins2ss;
-              this.rob.e2 = this.ins3ss;
-              this.rob.uf1= this.ins1ss;
-          }
-        }else if (this.ins1c == 0 && this.ins2c != 0 && this.ins3c != 0){
-          this.rob.e1 = this.ins3ss;
-          if(this.ins4c != 0){
-              this.rob.e2 = this.ins4ss;
-          }
-          this.rob.uf1 = this.ins2ss;
-        }else if (this.ins2c == 0 && this.ins3c != 0 ){
-          if(this.ins4c != 0){
-            this.rob.e2 = this.ins4ss;}
-          this.rob.uf1 = this.ins3ss
-         }else if (this.ins3c == 0 && this.ins4c != 0){
-           this.rob.e2 = this.ins4ss;
-           this.rob.uf1 = this.ins4ss
-        }else if (this.ins4c == 0 && this.ins5c != 0){
-          this.rob.e1 = this.ins5ss;
-          this.rob.uf1 = this.ins5ss
-        }
-
-      }
-    } 
-  }
-  agregarUf1(){
-    if (this.ciclos > 0) {
-
-    if(this.cantidadUF == 1){
-
-       if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-       this.rob.uf1 = this.ins1ss;
-       }
-       if(this.ciclos > 1){
-        if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 != '') {
-          this.rob.uf1 = this.ins1ss;
-        }
-       if(this.ins2c != 0 && this.ins1c == 0 && this.robb[this.ciclos-1].uf1 != ''){
-        this.rob.uf1 = this.ins2ss;
-        }
-        if(this.ins3c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-          this.rob.uf1 = this.ins3ss;
-        }
-        if(this.ins4c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-          this.rob.uf1 = this.ins4ss;
-        }
-        if(this.ins5c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-          this.rob.uf1 = this.ins5ss;
-        }
-      }
-       
-
-    }
-   
-      
-  }
-  }
-
-  agregarUf2(){
-    if(this.ciclos> 0){
-    if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-      this.rob.uf1 = this.ins1ss;
-      }
-      if(this.ins2c != 0 && this.robb[this.ciclos-1].uf2 == ''){
-        this.rob.uf2 = this.ins2ss;
-      }
-      if(this.ciclos > 1){
-       if(this.ins1c != 0 && this.robb[this.ciclos-1].uf1 != '') {
-         this.rob.uf1 = this.ins1ss;
-       }
-      if(this.ins2c != 0 &&  this.robb[this.ciclos-1].uf1 != ''){
-       this.rob.uf2 = this.ins2ss;
-       }
-       if(this.ins3c != 0 && this.ins1c == 0  &&  this.robb[this.ciclos-1].uf1 != ''){
-         this.rob.uf1 = this.ins3ss;
-       }else if (this.ins3c != 0 && this.ins2c == 0  &&  this.robb[this.ciclos-1].uf1 != ''){
-         this.rob.uf2 = this.ins3ss;
-       }
-       if(this.ins4c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-         this.rob.uf1 = this.ins4ss;
-       }
-       if(this.ins5c != 0 && this.robb[this.ciclos-1].uf1 == ''){
-         this.rob.uf1 = this.ins5ss;
-       }
-     }
-    }
-    
-  }
-  
-   agregarRob4(cantidadER,cantidadUF){
-
-    // ER == 1 && UF == 1  ROB 4
-    // ER == 2 && UF == 1 || ER == 1 && UF == 2  ROB 6
-    // ER == 2 && UF == 2  || ER == 3 && UF == 1 || ER == 1 && UF == 3 ROB 8 PODEMOS HACERLO HASTA ACA?
-    // ER == 1 && UF == 4 || ER == 2 && UF == 3  || ER == 3 && UF == 2 || ER == 4 && UF == 1 ROB 10
-    // ER == 1 && UF == 5  || ER = 2 && UF=4 || cantidadER == 3 && cantidadUF==3 || cantidadER == 4 && cantidadUF==2  || cantidadER == 5 && cantidadUF==1 ROB 12
-    // cantidadER == 2 && cantidadUF==5 ||  cantidadER == 3 && cantidadUF==4 || cantidadER == 4 && cantidadUF==3 || cantidadER == 5 && cantidadUF==2 ROB 14 
-    // cantidadER == 3 && cantidadUF==5 || "cantidadER == 4 && cantidadUF==4 || cantidadER == 5 && cantidadUF==3 ROB 16
-    // cantidadER == 4 && cantidadUF==5 ||  cantidadER == 5 && cantidadUF==4 ROB 18
-    // cantidadER == 5 && cantidadUF==5  ROB 20
-
-    if (this.ciclos > 0){
-
-      //ROB 4
-      if(cantidadER == 1 && cantidadUF == 1){
- 
-        if(this.rob.i1 == '') {
-       
-          if(this.ins1c != 0){
-           this.ins1c--;
-           this.rob.i1 = this.rob.uf1;
-           this.rob.s1 = "X";
-         //if(this.ins2ss == ''){ 
-           if((this.ins2c == 0) && (this.ins3c == 0)) {
-             //this.robb.push(this.rob);
-             
-         }
-         
-           }else{
-              if((this.ins1c == 0) && (this.v1)){
-                this.rob.i1 = this.ins1ss;
-                this.rob.s1 = "F";
-                this.v1 = false;
-          
-                if((this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss == '') || (this.ins2c == 0) && (this.ins3c == 0) && (this.ins2ss != '')){
-                  //this.robb.push(this.rob);
-                }
-                
-              }
-        
-             }
-      
-         if ((this.ins1c == 0 && !this.v) && (this.rob.s1 != "F") && this.ins2c != 0){
-            this.ins2c--;
-            this.rob.i1 = this.rob.uf1;
-            this.rob.s1 = "X";  
-
-          }else {
-            if((this.ins2c == 0) && (this.v2) && (this.robb[this.ciclos-1].i2 != this.ins2ss)){ //no debe entrar s2
-                  this.rob.i1 = this.ins2ss;
-                  this.rob.s1 = "F";
-                  this.v2 = false;
-                }
-            }
-            
-        if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v1) && (this.ins3c != 0)){
-        this.ins3c--;
-        this.rob.i1 = this.rob.uf1;
-        this.rob.s1 = "X";
-        } else if((this.ins3c == 0) && ("" != this.ins3ss) && (this.v3)){
-          this.rob.i1 = this.ins3ss;
-          this.rob.s1 = "F";
-          this.v3 = false;
-        }            //se pone en espera la instruccion en el rob
-        else if(this.ins3c != 0 && (this.rob.e1 == this.ins3ss)){
-          this.rob.i1 = this.rob.e1;
-          this.rob.s1 = "I";
-        }
-
-        if((this.ins1c == 0 && !this.v) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c != 0 )){
-          this.ins4c--;
-          this.rob.i1 = this.rob.uf1;
-          this.rob.s1 = "X";
-
-          } else if((this.ins4c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins4ss))  && ("" != this.ins4ss) && (this.v4)){
-            this.rob.i1 = this.ins4ss;
-            this.rob.s1 = "F";
-            this.v4 = false;
-          }
-          else if(this.ins3c == 0 && this.ins4c != 0 && (this.rob.e1 == this.ins4ss) && (this.robb[this.ciclos-1].i2 != this.ins4ss)){
-            this.rob.i1 = this.rob.e1;
-            this.rob.s1 = "I";
-          }
-
-          if((this.ins1c == 0 && !this.v1) && (this.ins2c == 0 && !this.v2) && (this.ins3c == 0 && !this.v3) && (this.ins4c == 0 && !this.v4)
-          && (this.ins5c != 0)){
-            this.ins5c--;
-            this.rob.i1 = this.rob.uf1;
-            this.rob.s1 = "X";
-            //
-            } else if((this.ins5c == 0) && ((this.robb[this.ciclos-1].i1 == this.ins5ss) || (this.robb[this.ciclos-1].i2 == this.ins5ss)) && ("" != this.ins5ss) ){
-              this.rob.i1 = this.ins5ss;
-              this.rob.s1 = "F";
-             // this.v5 = false;
-            }
-
-          
-
-   } 
-   if (this.rob.i2 == ''){
-        if((this.rob.uf1 == this.rob.e1 || this.rob.uf1 != "") && ((this.ins2ss == this.rob.uf1) || (this.ins4ss == this.rob.uf1)) ){
-          if (this.ins2c != 0){
-            this.ins2c--;
-            this.rob.i2 = this.rob.uf1;
-            this.rob.s2 = "X";  
-
-          }else if((this.ins2c == 0) && (this.ins2ss != "") && (this.v2)){
-                  this.rob.i2 = this.ins2ss;
-                  this.rob.s2 = "F";
-                  this.v2 = false;
-
-          }else if (this.ins4c != 0){
-            this.ins4c--;
-            this.rob.i2 = this.rob.uf1;
-            this.rob.s2 = "X";  
-
-          }else if (this.ins5c != 0){
-            this.ins5c--;
-            this.rob.i2 = this.rob.uf1;
-            this.rob.s2 = "X";  
-          }
-         //le ponemos en espera al rob con la instruccion 
-        }else if(this.ins2c != 0 && (this.rob.e1 == this.ins2ss)){
-            this.rob.i2 = this.rob.e1;
-            this.rob.s2 = "I";
-
-        }else if(this.ins3c != 0 && (this.rob.e1 == this.ins3ss)){
-          this.rob.i2 = this.rob.e1;
-          this.rob.s2 = "I";
-      }else if(this.ins4c != 0 && (this.rob.e1 == this.ins4ss)){
-        this.rob.i2 = this.rob.e1;
-        this.rob.s2 = "I";
-    }
-        
-        else if ((this.ins2c == 0) && ("" != this.ins2ss) && (this.robb[this.ciclos-1].i2 == this.ins2ss) && (this.v2) ){
-                  this.rob.i2 = this.ins2ss;
-                  this.rob.s2 = "F";
-                  this.v2= false;
-        }else if ((this.ins4c == 0) && ("" != this.ins4ss) && (this.robb[this.ciclos-1].i2 == this.ins4ss) && (this.v4)){
-          this.rob.i2 = this.ins4ss;
-          this.rob.s2 = "F";
-          this.v4 = false;
-        }else if ((this.ins5c == 0) && ("" != this.ins5ss) &&  (this.robb[this.ciclos-1].i2 == this.ins5ss)){
-          this.rob.i2 = this.ins5ss;
-          this.rob.s2 = "F";
-          //this.v5 = false;
-        }
-        
-   }
- 
-  } 
-
-    }
-  }       
-
-
-
-
 
  // agregamos la cantidad de despacho, ER, UF
   agregarDesp(cantidadDespacho){

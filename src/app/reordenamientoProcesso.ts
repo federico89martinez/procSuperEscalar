@@ -24,12 +24,12 @@ export class reordenamientoProcesso{
 
 
     public addInstruccion (instruccion:Instruccion){
-        let a = false;
-        for (let i = 0; i < this.columnaRob.length && !a; i++) {
+        let terminar = false;
+        for (let i = 0; i < this.columnaRob.length && !terminar; i++) {
             if (this.columnaRob[i].getInstruccion() == null){
                 this.columnaRob[i].addInstruccion(instruccion);
                 //probar con break
-                a = true;
+                terminar = true;
             }
         }
     }
@@ -48,10 +48,14 @@ export class reordenamientoProcesso{
             
                     
         }
-        return -1;
+        return null;
     }   
 
-  
+    /*
+
+    Este metodo se encarga de que una vez finalizadas las instrucciones sacarlas del arreglo de instrucciones cargadas
+
+    */
 
     public instruccionesFinalizadas(){
             let count = 0; let i = 0;
@@ -66,13 +70,12 @@ export class reordenamientoProcesso{
                         //seteamos en vacio la instruccion
                         this.columnaRob[i].setInstruccion();
                        // break;
-                        i=-1;
                     }
                     else{
                         this.columnaRob[i].addInstruccion(this.columnaRob[i].getOtraInstruccion())
                         this.columnaRob[i].setOtraInstruccion();
                     }      
-                    //retiramos la instruccion del arreglo          
+                    //retiramos la instruccion cargadas del arreglo          
                     this.instruccionesCargadas.shift();
                     count++;
                     }
@@ -84,7 +87,7 @@ export class reordenamientoProcesso{
 
    
 
-    //--------- instrucciones si estan ocupadas y completas
+    //--------- instrucciones si estan ocupadas y completas--------------
     public isOcupado(){
         for(let i = 0; i< this.columnaRob.length; i++)
             if (this.columnaRob[i].getInstruccion() == null)
@@ -98,7 +101,7 @@ export class reordenamientoProcesso{
         return false;
     }
 
-    ///  -------------------- getters and setters
+    ///  -------------------- getters and setters-----------------
 
     public getInstruccionesCargadas(){
         return this.instruccionesCargadas.slice(0);
