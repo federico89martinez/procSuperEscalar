@@ -61,14 +61,15 @@ export class reordenamientoProcesso{
             let count = 0; let i = 0;
             //tamanio del rob y la cantidad de despachos
             while ((count < this.numeroGrado) && (i<this.tamanio)){
-                    if (this.columnaRob[i].getInstruccion()!= null )
-                        if (this.columnaRob[i].getInstruccion().getId() == this.instruccionesCargadas[0].getId() &&
-                                 this.columnaRob[i].getInstruccion().getEstado() == "F" )
+             if (this.columnaRob[i].getInstruccion()!= null )
+                    if (this.columnaRob[i].getInstruccion().getId() == this.instruccionesCargadas[0].getId() &&
+                            this.columnaRob[i].getInstruccion().getEstado() == "F" )
                     {  
                     //analizar con 2 arreglos de instrucciones
                     if(this.columnaRob[i].getOtraInstruccion() == null){ 
                         //seteamos en vacio la instruccion
                         this.columnaRob[i].setInstruccion();
+                        
                        // break;
                     }
                     else{
@@ -77,6 +78,7 @@ export class reordenamientoProcesso{
                     }      
                     //retiramos la instruccion cargadas del arreglo          
                     this.instruccionesCargadas.shift();
+                    i=-1
                     count++;
                     }
             i++;

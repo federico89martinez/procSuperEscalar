@@ -448,8 +448,14 @@ cambiarLddCiclos(num){
     this.instru.d=this.dst;
     this.instru.op1=this.op1;
     this.instru.op2=this.op2;
-
-    //ingresamos al arreglo el objeto
+    
+    //ingresamos al arreglo el objeto para la tabla
+    if(this.instru.i == 'STD'){
+      this.instru.d = '(' + this.dst  +')';
+    }else if (this.instru.i == 'LDD'){
+      this.instru.op1 = '(' + this.op1 + ')';
+    }
+    
     this.instruccion.push(this.instru);
     this.valido=false;   
     this.idInstruccion = this.listInstrucciones.length + 1;
