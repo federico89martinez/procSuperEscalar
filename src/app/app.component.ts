@@ -619,6 +619,9 @@ agregarROB(rob, cant:Number,id:string){
             //le insgresamos la instruccion y el estado a la columna del rob
               td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId()))
               td2.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getEstado()));  
+          }else{
+            td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId() + "/" + rob.getColumbaRob()[i].getOtraInstruccion.getid()));
+            td2.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getEstado() + "/" + rob.getColumbaRob()[i].getOtraInstruccion().getEstado()));
           }
           tr.appendChild(td1);
           tr.appendChild(td2);

@@ -9,6 +9,7 @@ export class ColumnaRob{
 
     constructor(){
         this.instruccion = null;
+        this.otraInstruccion = null;
         this.ocupado = false;
     }
 
