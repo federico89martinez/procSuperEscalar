@@ -10,6 +10,7 @@ export class reordenamientoProcesso{
     private tamanio: number;
     private numeroGrado: number;
     private columnaRob = new Array<ColumnaRob>();
+    
     private instruccionesCargadas: Array <Instruccion>;
 
 
@@ -69,7 +70,7 @@ export class reordenamientoProcesso{
                     if(this.columnaRob[i].getOtraInstruccion() == null){ 
                         //seteamos en vacio la instruccion
                         this.columnaRob[i].setInstruccion();
-                        
+                        i=-1;
                        // break;
                     }
                     else{
@@ -78,7 +79,7 @@ export class reordenamientoProcesso{
                     }      
                     //retiramos la instruccion cargadas del arreglo          
                     this.instruccionesCargadas.shift();
-                    i=-1
+                    //i=-1
                     count++;
                     }
             i++;

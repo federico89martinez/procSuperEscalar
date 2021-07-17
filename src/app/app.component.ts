@@ -620,7 +620,7 @@ agregarROB(rob, cant:Number,id:string){
               td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId()))
               td2.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getEstado()));  
           }else{
-            td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId() + "/" + rob.getColumbaRob()[i].getOtraInstruccion.getid()));
+            td1.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getId() + "/" + rob.getColumbaRob()[i].getOtraInstruccion().getId()));
             td2.appendChild(document.createTextNode(rob.getColumbaRob()[i].getInstruccion().getEstado() + "/" + rob.getColumbaRob()[i].getOtraInstruccion().getEstado()));
           }
           tr.appendChild(td1);

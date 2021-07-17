@@ -18,7 +18,7 @@ export class ColumnaRob{
     }
 
     public addOtraInstruccion(instruccion:Instruccion){
-        this.otraInstruccion= instruccion;
+        this.otraInstruccion = instruccion;
     }
 
     public setInstruccion(){
@@ -34,7 +34,7 @@ export class ColumnaRob{
     }
 
     public setOtraInstruccion(){
-        return this.otraInstruccion=null;
+        this.otraInstruccion=null;
     }
 
 }

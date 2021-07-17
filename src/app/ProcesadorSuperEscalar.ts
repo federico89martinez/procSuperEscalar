@@ -80,8 +80,7 @@ export class ProcesadorSuperEscalar{
 
         //corroboramos para ver las instrucciones que se completaron
         this.rob.instruccionesFinalizadas();       
-      
-        
+
         //Decrementamos los ciclos
         for(let i = 0; i<this.unidadFuncional.length; i++){
             if (this.unidadFuncional[i].getInstruccion()!= null 
@@ -89,17 +88,32 @@ export class ProcesadorSuperEscalar{
                 this.unidadFuncional[i].getInstruccion().descontarCiclos();
             }
         }
-  
-         //Actualizamos a la estacion de reserva y al rob
-         this.actualizamosERyROB();
-         
+        this.actualizamosERyROB();
+         //Corroboramos remover las instrucciones de la unidad funcional
+         this.removerUF();
 
-        //Corroboramos remover las instrucciones de la unidad funcional
-        this.removerUF();
-
-
-        //Actualizo la unidad funcional
+         //Actualizo la unidad funcional
         this.actualizarUF();
+                 
+                  
+         
+         let aux = this.rob.getInstruccionesCargadas();
+         let tamanioDespascho = this.despacho.getSize();
+
+         //logica para las instrucciones de I/F
+         for(let i = 0; i < tamanioDespascho;i++){                  
+             let indice = this.rob.intruccionesCompletas(aux);                    
+             if (!this.estacionReserva.isOcupado() &&  indice != -1){
+                 let inst = this.despacho.getInstruccion();
+                 
+                 inst.setEstados("I");
+
+                 aux.shift();
+                 this.estacionReserva.addInstruccion(inst);
+                 this.rob.getColumbaRob()[indice].addOtraInstruccion(inst);
+             }
+         }
+                      
 
         //Actualizo el despacho
         for(let i = 0; i < this.despacho.getGrado() && this.instruccion.length != 0 && !this.despacho.isOcupado(); i++){
